@@ -1,3 +1,4 @@
+<div class="container">
 <h1>Detalle del producto</h1>
 <p><a href="?controller=producto">Volver al listado</a></p>
 
@@ -8,3 +9,4 @@
 <p>
     <a href="?controller=producto&action=destroy&id=<?= (int) $producto->getId() ?>">Eliminar</a>
 </p>
+</div>
