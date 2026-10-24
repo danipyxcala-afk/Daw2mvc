@@ -1,0 +1,252 @@
+/*  Base común  */
+.boton,
+.boton-nav {
+    box-sizing: border-box;
+    /* mismo alto en <a> y <button> */
+}
+
+.boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 50px;
+    padding: 10px 32px;
+    border: 0;
+    border-radius: var(--radio-pildora);
+    font-family: var(--fuente-negrita);
+    font-size: 20px;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+/* Lo de dentro del botón (texto, icono) hereda su color y fuente */
+.boton *,
+.boton-nav * {
+    color: inherit;
+    font-family: inherit;
+}
+
+.boton:focus-visible,
+.boton-nav:focus-visible {
+    outline: 3px solid var(--azul-claro);
+    outline-offset: 3px;
+}
+
+/*  Primario  */
+.boton--primario {
+    background-color: var(--azul-claro);
+    color: var(--blanco);
+}
+
+.boton--primario:hover {
+    background-color: var(--azul-oscuro);
+    color: var(--blanco);
+}
+
+.boton--primario.is-activo,
+.boton--primario[aria-pressed="true"],
+.boton--primario[aria-current="page"] {
+    background-color: var(--azul-medio);
+    color: var(--blanco);
+}
+
+/*  Secundario (con flecha)  */
+.boton--secundario {
+    background-color: var(--azul-oscuro);
+    color: var(--blanco);
+}
+
+.boton--secundario:hover {
+    background-color: var(--azul-claro);
+    color: var(--blanco);
+}
+
+.boton--secundario.is-activo,
+.boton--secundario[aria-pressed="true"],
+.boton--secundario[aria-current="page"] {
+    background-color: var(--azul-medio);
+    color: var(--blanco);
+}
+
+/*  Secundario invertido  */
+.boton--secundario.boton--invertido {
+    background-color: var(--azul-claro);
+    color: var(--blanco);
+}
+
+.boton--secundario.boton--invertido:hover {
+    background-color: var(--azul-oscuro);
+    color: var(--blanco);
+}
+
+.boton--secundario.boton--invertido.is-activo,
+.boton--secundario.boton--invertido[aria-pressed="true"],
+.boton--secundario.boton--invertido[aria-current="page"] {
+    background-color: var(--azul-medio);
+}
+
+.boton--secundario.boton--invertido:disabled,
+.boton--secundario.boton--invertido[aria-disabled="true"] {
+    background-color: var(--gris-texto);
+    color: var(--gris-desactivado-texto);
+}
+
+/*  Desactivado (primario y secundario)  */
+.boton:disabled,
+.boton[aria-disabled="true"] {
+    background-color: var(--gris-texto);
+    color: var(--gris-desactivado-texto);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/*  Filtro (píldoras de la carta: Todo, Hamburguesas...)  */
+.boton--filtro {
+    min-height: 40px;
+    padding: 8px 28px;
+    font-family: var(--fuente-texto);
+    font-size: 16px;
+    background-color: var(--gris-fondo);
+    color: var(--azul-oscuro);
+}
+
+.boton--filtro:hover {
+    background-color: var(--azul-suave);
+    color: var(--azul-oscuro);
+}
+
+.boton--filtro.is-activo,
+.boton--filtro[aria-pressed="true"],
+.boton--filtro[aria-current="page"] {
+    background-color: var(--azul-claro);
+    color: var(--blanco);
+}
+
+/*  Tamaños  */
+.boton--sm {
+    /* "Ver carta", "Pedir ya" pequeños */
+    min-height: 40px;
+    padding: 8px 24px;
+    font-size: 16px;
+}
+
+.boton--bloque {
+    /* "Continuar", "Añadir al carrito" */
+    display: flex;
+    width: 100%;
+}
+
+/*  Iconos dentro del botón  */
+.boton__icono {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    background-color: currentColor;
+    -webkit-mask: var(--icono) center / contain no-repeat;
+            mask: var(--icono) center / contain no-repeat;
+}
+
+.boton--sm .boton__icono {
+    width: 20px;
+    height: 20px;
+}
+
+/* Secundario: flecha diagonal ↗ en normal, flecha recta → en el resto de estados */
+.boton--secundario .boton__icono {
+    --icono: url("../../img/icons/negro/svg/flecha-diagonal.svg");
+}
+
+.boton--secundario:hover .boton__icono,
+.boton--secundario.is-activo .boton__icono,
+.boton--secundario[aria-pressed="true"] .boton__icono,
+.boton--secundario[aria-current="page"] .boton__icono,
+.boton--secundario:disabled .boton__icono,
+.boton--secundario[aria-disabled="true"] .boton__icono {
+    --icono: url("../../img/icons/negro/svg/flecha-derecha.svg");
+}
+
+/*  Nav (texto con flecha que se gira)  */
+.boton-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 6px 4px;
+    border: 0;
+    background: none;
+    color: var(--azul-oscuro);
+    font-family: var(--fuente-negrita);
+    font-size: 20px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.boton-nav .boton__icono {
+    --icono: url("../../img/icons/negro/svg/flecha-abajo.svg");
+}
+
+.boton-nav:hover .boton__icono,
+.boton-nav.is-activo .boton__icono,
+.boton-nav[aria-expanded="true"] .boton__icono,
+.boton-nav[aria-current="page"] .boton__icono,
+.boton-nav:disabled .boton__icono,
+.boton-nav[aria-disabled="true"] .boton__icono {
+    --icono: url("../../img/icons/negro/svg/flecha-arriba.svg");
+}
+
+.boton-nav:hover {
+    color: var(--azul-oscuro);
+}
+
+.boton-nav.is-activo,
+.boton-nav[aria-current="page"] {
+    color: var(--azul-medio);
+}
+
+.boton-nav:disabled,
+.boton-nav[aria-disabled="true"] {
+    color: var(--gris-texto);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .boton {
+        transition: none;
+    }
+}
+
+/*  Botón de icono (carrito, menú, "+" de la carta)  */
+.btn-icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color .15s ease;
+}
+
+.btn-icono:hover {
+    background-color: var(--gris-fondo);
+}
+
+.btn-icono:focus-visible {
+    outline: 2px solid var(--azul-claro);
+    outline-offset: 2px;
+}
+
+/* El "+" azul de la carta: sin fondo gris en hover, solo se oscurece */
+.btn-icono--primario:hover {
+    background-color: transparent;
+    opacity: .8;
+}

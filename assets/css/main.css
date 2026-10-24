@@ -1,0 +1,19 @@
+/* Fuentes */
+@import url("satoshi.css");
+
+/*  Base */
+@import url("base/variables.css");
+@import url("base/base.css");
+
+/*  Layout */
+@import url("layout/header.css");
+@import url("layout/footer.css");
+
+/* Componentes */
+@import url("componentes/botones.css");
+@import url("componentes/card-producto.css");
+@import url("componentes/tabla.css");
+@import url("componentes/formularios.css");
+
+/* 5. Páginas */
+@import url("paginas/home.css");

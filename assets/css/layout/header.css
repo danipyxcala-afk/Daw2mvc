@@ -1,0 +1,58 @@
+/*  Barra  */
+.encabezado {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 32px;
+    background-color: rgba(169, 169, 169, 0.7);
+    border-radius: var(--radio-grande);
+}
+
+/*  Logo  */
+.logoheader {
+    height: 50px;
+    width: auto;
+}
+
+/*  Menú principal  */
+.encabezado__nav {
+    display: flex;
+    gap: 40px;
+}
+
+.encabezado__enlace {
+    font-family: var(--fuente-negrita);
+    font-size: 20px;
+}
+
+/*  Carrito y menú  */
+.encabezado__acciones {
+    display: flex;
+    gap: 8px;
+}
+
+/*  Responsive  */
+/* En móvil: logo y botones arriba, menú en una segunda fila */
+@media (max-width: 576px) {
+    .encabezado {
+        padding: 8px 16px;
+        border-radius: 28px;
+    }
+
+    .logoheader {
+        height: 36px;
+    }
+
+    .encabezado__nav {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 32px;
+    }
+
+    .encabezado__enlace {
+        font-size: 18px;
+    }
+}

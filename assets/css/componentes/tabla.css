@@ -1,0 +1,28 @@
+.tabla-contenedor {
+    overflow-x: auto;
+    margin-bottom: 40px;
+}
+
+.tabla {
+    width: 100%;
+    max-width: 640px;
+    border-collapse: collapse;
+}
+
+.tabla th,
+.tabla td {
+    padding: 8px 12px;
+    border: 1px solid #CCCCCC;
+    text-align: left;
+}
+
+.tabla th {
+    font-family: var(--fuente-negrita);
+    background-color: var(--gris-fondo);
+}
+
+/* Enlaces Ver / Eliminar */
+.tabla__acciones a {
+    margin-right: 12px;
+    text-decoration: underline;
+}

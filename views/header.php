@@ -1,19 +1,21 @@
-<div class="container">
-    <div class="container mt-5 mb-5 encabezado pb-2 pt-2">
-        <div class="col">
-            <div class="row align-items-start">
-                <div class="col-5">
-                    <img src="" alt="">
-                </div>
-                <div class="col-5">
-                    <button>Inicio</button>
-                    <button>Carta</button>
-                </div>
-                <div class="col-2">
-                    <button>C</button>
-                    <button>P</button>
-                </div>
-            </div>
+<header class="container my-5">
+    <div class="encabezado">
+
+        <img src="<?= url ?>/assets/img/logo/logo-claro.png" alt="Sigmeat" class="logoheader">
+
+        <nav class="encabezado__nav" aria-label="Menú principal">
+            <a href="#" class="encabezado__enlace">Inicio</a>
+            <a href="#" class="encabezado__enlace">Carta</a>
+        </nav>
+
+        <div class="encabezado__acciones">
+            <a href="#" class="btn-icono" aria-label="Ver carrito">
+                <img src="<?= url ?>assets/img/icons/negro/svg/carrito.svg" alt="" width="24" height="24">
+            </a>
+            <a href="#" class="btn-icono" aria-label="Abrir menú">
+                <img src="<?= url ?>assets/img/icons/negro/svg/menu.svg" alt="" width="24" height="24">
+            </a>
         </div>
+
     </div>
-</div>
+</header>

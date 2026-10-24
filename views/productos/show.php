@@ -1,12 +1,19 @@
 <div class="container">
-<h1>Detalle del producto</h1>
-<p><a href="?controller=producto">Volver al listado</a></p>
+    <h1>Detalle del producto</h1>
+    <p><a href="?controller=producto" class="enlace-volver">Volver al listado</a></p>
 
-<p><strong>Nombre:</strong> <?= htmlspecialchars($producto->getNombre(), ENT_QUOTES, 'UTF-8') ?></p>
-<p><strong>Talla:</strong> <?= htmlspecialchars($producto->getTalla(), ENT_QUOTES, 'UTF-8') ?></p>
-<p><strong>Precio:</strong> <?= number_format((float) $producto->getPrecio(), 2, ',', '.') ?> €</p>
+    <dl class="detalle">
+        <dt>Nombre</dt>
+        <dd><?= htmlspecialchars($producto->getNombre(), ENT_QUOTES, 'UTF-8') ?></dd>
 
-<p>
-    <a href="?controller=producto&action=destroy&id=<?= (int) $producto->getId() ?>">Eliminar</a>
-</p>
+        <dt>Talla</dt>
+        <dd><?= htmlspecialchars($producto->getTalla(), ENT_QUOTES, 'UTF-8') ?></dd>
+
+        <dt>Precio</dt>
+        <dd><?= number_format((float) $producto->getPrecio(), 2, ',', '.') ?> €</dd>
+    </dl>
+
+    <p>
+        <a href="?controller=producto&action=destroy&id=<?= (int) $producto->getId() ?>" class="boton boton--secundario boton--sm">Eliminar</a>
+    </p>
 </div>

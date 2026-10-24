@@ -1,0 +1,37 @@
+/*  Banda exterior  */
+footer {
+    background-color: var(--azul-oscuro);
+}
+
+/*  Caja gris interior  */
+.footer {
+    padding: 56px 32px 40px;
+    background-color: var(--gris-fondo);
+    border-radius: var(--radio-grande) var(--radio-grande) 0 0;
+}
+
+/*  Llamada a la acción  */
+.footer__cta {
+    text-align: center;
+    margin-bottom: 56px;
+}
+
+.footer__cta p {
+    margin-bottom: 20px;
+}
+
+/*  Columnas de enlaces  */
+.footer__titulo {
+    margin-bottom: 8px;
+    font-family: var(--fuente-negrita);
+}
+
+.footer__lista {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer__lista li {
+    margin-bottom: 6px;
+}

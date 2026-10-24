@@ -1,38 +1,42 @@
 <footer class="pt-2 mt-5">
-    <div class="container pt-5 mt-5 footer">
-        <div class="container text-center">
-            <div class="row align-items-start">
-                <div class="container">
-                    <h3>¿Hambre? Haz tu pedido</h3>
-                    <p>Listo en minutos a tu manera</p>
-                    <button>Pedir ya</button>
-                </div>
+    <div class="container footer">
+
+        <section class="footer__cta">
+            <h2>¿Hambre? ¡Haz tu pedido!</h2>
+            <p>Listo en minutos a tu manera</p>
+            <button type="button" class="boton boton--primario">Pedir ya</button>
+        </section>
+
+        <div class="row g-4 footer__enlaces">
+            <div class="col-12 col-md-3">
+                <img src="<?= url ?>/assets/img/logo/logo-claro.png" alt="Sigmeat" class="logoheader">
             </div>
+
+            <nav class="col-6 col-md-3" aria-label="Sigmeat">
+                <p class="footer__titulo">Sigmeat</p>
+                <ul class="footer__lista">
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Carta</a></li>
+                </ul>
+            </nav>
+
+            <nav class="col-6 col-md-3" aria-label="Legal">
+                <p class="footer__titulo">Legal</p>
+                <ul class="footer__lista">
+                    <li><a href="#">Aviso legal</a></li>
+                    <li><a href="#">Política de privacidad</a></li>
+                    <li><a href="#">Cookies</a></li>
+                </ul>
+            </nav>
+
+            <nav class="col-6 col-md-3" aria-label="Contacto">
+                <p class="footer__titulo">¿Hablamos?</p>
+                <ul class="footer__lista">
+                    <li><a href="#">Contacta con nosotros</a></li>
+                    <li><a href="#">Instagram</a></li>
+                </ul>
+            </nav>
         </div>
 
-        <div class="container mt-5">
-            <div class="row align-items-start">
-                <div class="container col">
-                    <img src="#" alt="">
-                </div>
-                <div class="container col footerWhite">
-                    <p class="fw-bold">Sigmeat</p>
-                    <p><a href="">Inicio</a></p>
-                    <p><a href="">Carta</a></p>
-                </div>
-                <div class="container col footerWhite">
-                    <p class="fw-bold">Legal</p>
-                    <p><a href="#">Aviso legal</a></p>
-                    <p><a href="#">Politica de privacidad</a></p>
-                    <p><a href="#">Cookies</a></p>
-
-                </div>
-                <div class="container col footerWhite">
-                    <p class="fw-bold">¿Hablanos?</p>
-                    <p><a href="#">Contacta con nosotros</a></p>
-                    <p><a href="#">Instagram</a></p>
-                </div>
-            </div>
-        </div>
     </div>
 </footer>

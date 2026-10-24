@@ -1,0 +1,75 @@
+/*  Contenedor  */
+.card-producto {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/*  Caja de color: categoría + imagen  */
+.card-producto__media {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    aspect-ratio: 6 / 5;
+    padding: 16px;
+    border-radius: var(--radio-tarjeta);
+    background-color: var(--azul-oscuro);
+}
+
+/* Variantes de color por categoría */
+.card-producto__media--claro {
+    background-color: var(--azul-claro);
+}
+
+.card-producto__media--medio {
+    background-color: var(--azul-medio);
+}
+
+.card-producto__categoria {
+    margin: 0;
+    font-family: var(--fuente-negrita);
+    color: var(--blanco);
+    text-align: center;
+}
+
+/* La imagen ocupa el espacio que deja la categoría y nunca se deforma */
+.card-producto__img {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    height: 70%;
+    object-fit: contain;
+}
+
+/*  Texto debajo de la caja  */
+.card-producto__info {
+    display: flex;
+    flex-direction: column;
+    padding-top: 12px;
+}
+
+.card-producto__nombre {
+    margin: 0 0 4px;
+    font-size: 22px;
+}
+
+.card-producto__desc {
+    margin: 0 0 12px;
+    font-size: 14px;
+}
+
+/*   precio a la izquierda, botón a la derecha  */
+.card-producto__pie {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.card-producto__precio {
+    margin: 0;
+    font-family: var(--fuente-negrita);
+    font-size: 20px;
+}

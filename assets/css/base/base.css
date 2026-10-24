@@ -1,0 +1,51 @@
+/*  Página  */
+body {
+    font-family: var(--fuente-texto);
+    color: var(--azul-oscuro);
+    background-color: var(--blanco);
+}
+
+/*  Títulos  */
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--fuente-negrita);
+    font-weight: bold;
+    color: var(--azul-oscuro);
+}
+
+h1 { font-size: 64px; }
+h2 { font-size: 40px; }
+h3 { font-size: 30px; }
+h4 { font-size: 22px; }
+
+/*  Párrafos  */
+p {
+    font-size: 16px;
+}
+/* Para párrafo en negrita usa la clase fw-bold de Bootstrap */
+
+/*  Enlaces 
+   Sin esto, Bootstrap los pone azules y subrayados */
+a {
+    color: var(--azul-oscuro);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--azul-claro);
+}
+
+/*  Utilidades  */
+.textblanco {
+    color: var(--blanco);
+}
+
+/*  Responsive  */
+@media (max-width: 576px) {
+    h1 { font-size: 40px; }
+    h2 { font-size: 30px; }
+    h3 { font-size: 24px; }
+    h4 { font-size: 20px; }
+}

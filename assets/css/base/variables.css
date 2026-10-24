@@ -1,0 +1,30 @@
+/* 
+   VARIABLES
+
+   Para usarlos: color: var(--azul-claro); */
+
+:root {
+    /*  Colores primarios  */
+    --azul-oscuro: #000035;
+    --azul-medio:  #262651;
+    --azul-claro:  #5564EA;
+
+    /*  Fondos  */
+    --blanco:      #FFFFFF;
+    --gris-fondo:  #F0F0F0;
+    --azul-suave:  #E2E3F5;
+
+    /*  Texto  */
+    --gris-texto:  #A9A9A9;
+    --negro:       #000000;
+    --gris-desactivado-texto: #E4E4E4;
+
+    /*  Tipografía  */
+    --fuente-texto:   'Satoshi Light', sans-serif;
+    --fuente-negrita: 'Satoshi Bold', sans-serif;
+
+    /*  Bordes redondeados  */
+    --radio-tarjeta: 20px;
+    --radio-grande:  50px;
+    --radio-pildora: 999px;
+}

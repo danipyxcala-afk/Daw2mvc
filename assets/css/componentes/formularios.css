@@ -1,0 +1,55 @@
+/*  Formulario  */
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 320px;
+}
+
+.formulario label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-family: var(--fuente-negrita);
+}
+
+.formulario input,
+.formulario select {
+    padding: 8px 12px;
+    font: inherit;
+    font-family: var(--fuente-texto);
+    border: 1px solid var(--azul-oscuro);
+    border-radius: 12px;
+}
+
+.formulario input:focus-visible,
+.formulario select:focus-visible {
+    outline: 2px solid var(--azul-claro);
+    outline-offset: 2px;
+}
+
+.formulario .boton {
+    align-self: flex-start;
+    margin-top: 8px;
+}
+
+/*  Detalle (lista nombre / valor)  */
+.detalle {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 8px 24px;
+    max-width: 480px;
+}
+
+.detalle dt {
+    font-family: var(--fuente-negrita);
+}
+
+.detalle dd {
+    margin: 0;
+}
+
+/*  Enlace "Volver"  */
+.enlace-volver {
+    text-decoration: underline;
+}
