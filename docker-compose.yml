@@ -1,0 +1,26 @@
+# Base de datos MySQL del proyecto Daw2mvc (Sigmeat)
+# Es lo mismo que el "docker run" de la práctica, pero guardado en un archivo.
+#
+# Arrancar:                     docker compose up -d
+# Parar:                        docker compose down
+# Borrar datos y empezar de 0:  docker compose down -v
+
+services:
+  mysql-db:
+    image: mysql:latest
+    container_name: mysql-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root          # igual que -e MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3308:3306"                      # igual que -p 3308:3306 (evita choque con el MySQL de XAMPP, y el MySQL local esta en 3307)
+    volumes:
+      - mysql_data:/var/lib/mysql        # los datos se guardan aunque se borre el contenedor
+      # Scripts que se ejecutan la primera vez, en orden alfabético (por eso el 00, 01 y 02)
+      # TEMPORAL: tablas de prueba del profesor (camisetas). Borrar esta línea al terminar el proyecto.
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/00-init-profesor.sql
+      - ./sql/CreacionBD.sql:/docker-entrypoint-initdb.d/01-CreacionBD.sql
+      - ./sql/InsertarDatosBD.sql:/docker-entrypoint-initdb.d/02-InsertarDatosBD.sql
+
+volumes:
+  mysql_data:
