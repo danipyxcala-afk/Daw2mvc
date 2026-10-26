@@ -13,7 +13,7 @@
             </div>
 
             <nav class="col-6 col-md-3" aria-label="Sigmeat">
-                <p class="footer__titulo">Sigmeat</p>
+                <p class="footer__titulo fw-bold">Sigmeat</p>
                 <ul class="footer__lista">
                     <li><a href="#">Inicio</a></li>
                     <li><a href="#">Carta</a></li>
@@ -21,7 +21,7 @@
             </nav>
 
             <nav class="col-6 col-md-3" aria-label="Legal">
-                <p class="footer__titulo">Legal</p>
+                <p class="footer__titulo fw-bold">Legal</p>
                 <ul class="footer__lista">
                     <li><a href="#">Aviso legal</a></li>
                     <li><a href="#">Política de privacidad</a></li>
@@ -30,7 +30,7 @@
             </nav>
 
             <nav class="col-6 col-md-3" aria-label="Contacto">
-                <p class="footer__titulo">¿Hablamos?</p>
+                <p class="footer__titulo fw-bold">¿Hablamos?</p>
                 <ul class="footer__lista">
                     <li><a href="#">Contacta con nosotros</a></li>
                     <li><a href="#">Instagram</a></li>

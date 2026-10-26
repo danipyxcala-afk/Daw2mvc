@@ -1,10 +1,10 @@
 <?php
 class categorias
 {
-    private $id;
-    private $nombre;
-    private $descripcion;
-    private $activa;
+    protected $id;
+    protected $nombre;
+    protected $descripcion;
+    protected $activa;
 
     public function __construct(
         $id = null,

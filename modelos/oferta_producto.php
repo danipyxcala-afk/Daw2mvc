@@ -1,8 +1,8 @@
 <?php
 class oferta_producto
 {
-    private $oferta_id;
-    private $producto_id;
+    protected $oferta_id;
+    protected $producto_id;
 
     public function __construct(
         $oferta_id = null,

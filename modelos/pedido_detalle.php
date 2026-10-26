@@ -1,13 +1,13 @@
 <?php
 class pedido_detalle
 {
-    private $id;
-    private $pedido_id;
-    private $producto_id;
-    private $nombre_producto;
-    private $precio_unitario;
-    private $cantidad;
-    private $subtotal;
+    protected $id;
+    protected $pedido_id;
+    protected $producto_id;
+    protected $nombre_producto;
+    protected $precio_unitario;
+    protected $cantidad;
+    protected $subtotal;
 
     public function __construct(
         $id = null,

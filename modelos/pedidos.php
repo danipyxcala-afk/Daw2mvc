@@ -1,15 +1,15 @@
 <?php
 class pedidos
 {
-    private $id;
-    private $usuario_id;
-    private $estado;
-    private $fecha_pedido;
-    private $subtotal;
-    private $descuento;
-    private $total;
-    private $metodo_pago;
-    private $estado_pago;
+    protected $id;
+    protected $usuario_id;
+    protected $estado;
+    protected $fecha_pedido;
+    protected $subtotal;
+    protected $descuento;
+    protected $total;
+    protected $metodo_pago;
+    protected $estado_pago;
 
     public function __construct(
         $id = null,

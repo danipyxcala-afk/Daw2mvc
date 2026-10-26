@@ -1,9 +1,9 @@
 <?php
 class producto_ingrediente
 {
-    private $producto_id;
-    private $ingrediente_id;
-    private $cantidad;
+    protected $producto_id;
+    protected $ingrediente_id;
+    protected $cantidad;
 
     public function __construct(
         $producto_id = null,

@@ -1,15 +1,15 @@
 <?php
 class ofertas
 {
-    private $id;
-    private $nombre;
-    private $descripcion;
-    private $tipo;
-    private $valor;
-    private $codigo;
-    private $fecha_inicio;
-    private $fecha_fin;
-    private $activa;
+    protected $id;
+    protected $nombre;
+    protected $descripcion;
+    protected $tipo;
+    protected $valor;
+    protected $codigo;
+    protected $fecha_inicio;
+    protected $fecha_fin;
+    protected $activa;
 
     public function __construct(
         $id = null,

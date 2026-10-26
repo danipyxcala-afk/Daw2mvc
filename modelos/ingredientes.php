@@ -1,10 +1,10 @@
 <?php
 class ingredientes
 {
-    private $id;
-    private $nombre;
-    private $precio_extra;
-    private $activo;
+    protected $id;
+    protected $nombre;
+    protected $precio_extra;
+    protected $activo;
 
     public function __construct(
         $id = null,

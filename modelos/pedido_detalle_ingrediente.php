@@ -1,12 +1,12 @@
 <?php
 class pedido_detalle_ingrediente
 {
-    private $id;
-    private $pedido_detalle_id;
-    private $ingrediente_id;
-    private $nombre_ingrediente;
-    private $precio_extra;
-    private $accion;
+    protected $id;
+    protected $pedido_detalle_id;
+    protected $ingrediente_id;
+    protected $nombre_ingrediente;
+    protected $precio_extra;
+    protected $accion;
 
     public function __construct(
         $id = null,

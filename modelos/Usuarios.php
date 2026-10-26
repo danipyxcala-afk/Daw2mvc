@@ -1,15 +1,15 @@
 <?php
 class usuarios
 {
-    private $id;
-    private $nombre;
-    private $email;
-    private $password;
-    private $telefono;
-    private $direccion;
-    private $fecha_nacimiento;
-    private $rol;
-    private $fecha_registro;
+    protected $id;
+    protected $nombre;
+    protected $email;
+    protected $password;
+    protected $telefono;
+    protected $direccion;
+    protected $fecha_nacimiento;
+    protected $rol;
+    protected $fecha_registro;
 
     public function __construct(
         $id = null,

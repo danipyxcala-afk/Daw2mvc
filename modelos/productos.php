@@ -1,13 +1,13 @@
 <?php
 class productos
 {
-    private $id;
-    private $categoria_id;
-    private $nombre;
-    private $descripcion;
-    private $precio;
-    private $imagen;
-    private $activo;
+    protected $id;
+    protected $categoria_id;
+    protected $nombre;
+    protected $descripcion;
+    protected $precio;
+    protected $imagen;
+    protected $activo;
 
     public function __construct(
         $id = null,
