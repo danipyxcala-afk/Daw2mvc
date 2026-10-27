@@ -1,6 +1,6 @@
 <?php
-include_once("config/dataBase.php");
-include_once("modelos/hamburguesas.php");
+include_once(__DIR__ . "/../config/database.php");
+include_once(__DIR__ . "/../modelos/Hamburguesas.php");
 class HamburguesasDAO
 {
     public static function getAll()

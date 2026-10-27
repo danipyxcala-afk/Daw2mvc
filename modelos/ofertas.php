@@ -22,15 +22,33 @@ class Ofertas
         $fecha_fin = null,
         $activa = null
     ) {
-        $this->id = $id;
-        $this->nombre = $nombre;
-        $this->descripcion = $descripcion;
-        $this->tipo = $tipo;
-        $this->valor = $valor;
-        $this->codigo = $codigo;
-        $this->fecha_inicio = $fecha_inicio;
-        $this->fecha_fin = $fecha_fin;
-        $this->activa = $activa;
+        if ($id !== null) {
+            $this->id = $id;
+        }
+        if ($nombre !== null) {
+            $this->nombre = $nombre;
+        }
+        if ($descripcion !== null) {
+            $this->descripcion = $descripcion;
+        }
+        if ($tipo !== null) {
+            $this->tipo = $tipo;
+        }
+        if ($valor !== null) {
+            $this->valor = $valor;
+        }
+        if ($codigo !== null) {
+            $this->codigo = $codigo;
+        }
+        if ($fecha_inicio !== null) {
+            $this->fecha_inicio = $fecha_inicio;
+        }
+        if ($fecha_fin !== null) {
+            $this->fecha_fin = $fecha_fin;
+        }
+        if ($activa !== null) {
+            $this->activa = $activa;
+        }
     }
 
     /**

@@ -16,12 +16,24 @@ class Pedido_detalle_ingrediente
         $precio_extra = null,
         $accion = null
     ) {
-        $this->id = $id;
-        $this->pedido_detalle_id = $pedido_detalle_id;
-        $this->ingrediente_id = $ingrediente_id;
-        $this->nombre_ingrediente = $nombre_ingrediente;
-        $this->precio_extra = $precio_extra;
-        $this->accion = $accion;
+        if ($id !== null) {
+            $this->id = $id;
+        }
+        if ($pedido_detalle_id !== null) {
+            $this->pedido_detalle_id = $pedido_detalle_id;
+        }
+        if ($ingrediente_id !== null) {
+            $this->ingrediente_id = $ingrediente_id;
+        }
+        if ($nombre_ingrediente !== null) {
+            $this->nombre_ingrediente = $nombre_ingrediente;
+        }
+        if ($precio_extra !== null) {
+            $this->precio_extra = $precio_extra;
+        }
+        if ($accion !== null) {
+            $this->accion = $accion;
+        }
     }
 
     /**

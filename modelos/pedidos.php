@@ -22,15 +22,33 @@ class Pedidos
         $metodo_pago = null,
         $estado_pago = null
     ) {
-        $this->id = $id;
-        $this->usuario_id = $usuario_id;
-        $this->estado = $estado;
-        $this->fecha_pedido = $fecha_pedido;
-        $this->subtotal = $subtotal;
-        $this->descuento = $descuento;
-        $this->total = $total;
-        $this->metodo_pago = $metodo_pago;
-        $this->estado_pago = $estado_pago;
+        if ($id !== null) {
+            $this->id = $id;
+        }
+        if ($usuario_id !== null) {
+            $this->usuario_id = $usuario_id;
+        }
+        if ($estado !== null) {
+            $this->estado = $estado;
+        }
+        if ($fecha_pedido !== null) {
+            $this->fecha_pedido = $fecha_pedido;
+        }
+        if ($subtotal !== null) {
+            $this->subtotal = $subtotal;
+        }
+        if ($descuento !== null) {
+            $this->descuento = $descuento;
+        }
+        if ($total !== null) {
+            $this->total = $total;
+        }
+        if ($metodo_pago !== null) {
+            $this->metodo_pago = $metodo_pago;
+        }
+        if ($estado_pago !== null) {
+            $this->estado_pago = $estado_pago;
+        }
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
-include_once("config/dataBase.php");
-include_once("modelos/ingredientes.php");
-include_once("modelos/producto_ingrediente.php");
+include_once(__DIR__ . "/../config/database.php");
+include_once(__DIR__ . "/../modelos/ingredientes.php");
+include_once(__DIR__ . "/../modelos/producto_ingrediente.php");
 class IngredientesDAO
 {
     public static function getAll()

@@ -10,9 +10,15 @@ class Producto_ingrediente
         $ingrediente_id = null,
         $cantidad = null
     ) {
-        $this->producto_id = $producto_id;
-        $this->ingrediente_id = $ingrediente_id;
-        $this->cantidad = $cantidad;
+        if ($producto_id !== null) {
+            $this->producto_id = $producto_id;
+        }
+        if ($ingrediente_id !== null) {
+            $this->ingrediente_id = $ingrediente_id;
+        }
+        if ($cantidad !== null) {
+            $this->cantidad = $cantidad;
+        }
     }
 
     /**

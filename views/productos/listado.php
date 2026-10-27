@@ -2,7 +2,8 @@
     <h1>Nuestra carta</h1>
 
     <div class="row g-4 my-4">
-        <?php foreach ($productos as $producto) { ?>
+        <?php foreach ($productos as $producto) { 
+            var_dump($producto)?>
             <div class="col-12 col-md-6 col-lg-4">
                 <article class="card-producto">
 

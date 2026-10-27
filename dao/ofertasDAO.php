@@ -1,7 +1,7 @@
 <?php
-include_once("config/dataBase.php");
-include_once("modelos/ofertas.php");
-include_once("modelos/oferta_producto.php");
+include_once(__DIR__ . "/../config/database.php");
+include_once(__DIR__ . "/../modelos/ofertas.php");
+include_once(__DIR__ . "/../modelos/oferta_producto.php");
 class OfertasDAO
 {
     public static function getAll()

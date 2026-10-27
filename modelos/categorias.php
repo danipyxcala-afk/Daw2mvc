@@ -12,10 +12,18 @@ class Categorias
         $descripcion = null,
         $activa = null
     ) {
-        $this->id = $id;
-        $this->nombre = $nombre;
-        $this->descripcion = $descripcion;
-        $this->activa = $activa;
+        if ($id !== null) {
+            $this->id = $id;
+        }
+        if ($nombre !== null) {
+            $this->nombre = $nombre;
+        }
+        if ($descripcion !== null) {
+            $this->descripcion = $descripcion;
+        }
+        if ($activa !== null) {
+            $this->activa = $activa;
+        }
     }
 
     /**

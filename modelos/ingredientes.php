@@ -12,10 +12,18 @@ class Ingredientes
         $precio_extra = null,
         $activo = null
     ) {
-        $this->id = $id;
-        $this->nombre = $nombre;
-        $this->precio_extra = $precio_extra;
-        $this->activo = $activo;
+        if ($id !== null) {
+            $this->id = $id;
+        }
+        if ($nombre !== null) {
+            $this->nombre = $nombre;
+        }
+        if ($precio_extra !== null) {
+            $this->precio_extra = $precio_extra;
+        }
+        if ($activo !== null) {
+            $this->activo = $activo;
+        }
     }
 
     /**

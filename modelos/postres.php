@@ -1,4 +1,4 @@
-<?php include_once("modelos/productos.php");
+<?php include_once(__DIR__."/productos.php");
 
 class Postres extends productos
 {

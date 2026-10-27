@@ -18,13 +18,27 @@ abstract class Productos
         $imagen = null,
         $activo = null
     ) {
-        $this->id = $id;
-        $this->categoria_id = $categoria_id;
-        $this->nombre = $nombre;
-        $this->descripcion = $descripcion;
-        $this->precio = $precio;
-        $this->imagen = $imagen;
-        $this->activo = $activo;
+        if ($id !== null) {
+            $this->id = $id;
+        }
+        if ($categoria_id !== null) {
+            $this->categoria_id = $categoria_id;
+        }
+        if ($nombre !== null) {
+            $this->nombre = $nombre;
+        }
+        if ($descripcion !== null) {
+            $this->descripcion = $descripcion;
+        }
+        if ($precio !== null) {
+            $this->precio = $precio;
+        }
+        if ($imagen !== null) {
+            $this->imagen = $imagen;
+        }
+        if ($activo !== null) {
+            $this->activo = $activo;
+        }
     }
 
     /**

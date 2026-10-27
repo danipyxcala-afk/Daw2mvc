@@ -13,7 +13,7 @@
                 <img src="<?= url ?>assets/img/icons/negro/svg/carrito.svg" alt="" width="24" height="24">
             </a>
             <a href="#" class="btn-icono" aria-label="Abrir menú">
-                <img src="<?= url ?>assets/img/icons/negro/svg/menu.svg" alt="" width="24" height="24">
+                <img src="<?= url ?>assets/img/icons/negro/svg/usuario.svg" alt="" width="24" height="24">
             </a>
         </div>
 

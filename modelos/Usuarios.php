@@ -22,15 +22,33 @@ class Usuarios
         $rol = null,
         $fecha_registro = null
     ) {
-        $this->id = $id;
-        $this->nombre = $nombre;
-        $this->email = $email;
-        $this->password = $password;
-        $this->telefono = $telefono;
-        $this->direccion = $direccion;
-        $this->fecha_nacimiento = $fecha_nacimiento;
-        $this->rol = $rol;
-        $this->fecha_registro = $fecha_registro;
+        if ($id !== null) {
+            $this->id = $id;
+        }
+        if ($nombre !== null) {
+            $this->nombre = $nombre;
+        }
+        if ($email !== null) {
+            $this->email = $email;
+        }
+        if ($password !== null) {
+            $this->password = $password;
+        }
+        if ($telefono !== null) {
+            $this->telefono = $telefono;
+        }
+        if ($direccion !== null) {
+            $this->direccion = $direccion;
+        }
+        if ($fecha_nacimiento !== null) {
+            $this->fecha_nacimiento = $fecha_nacimiento;
+        }
+        if ($rol !== null) {
+            $this->rol = $rol;
+        }
+        if ($fecha_registro !== null) {
+            $this->fecha_registro = $fecha_registro;
+        }
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
-include_once("config/dataBase.php");
-include_once("modelos/pedidos.php");
-include_once("modelos/pedido_detalle.php");
-include_once("modelos/pedido_detalle_ingrediente.php");
+include_once(__DIR__ . "/../config/database.php");
+include_once(__DIR__ . "/../modelos/pedidos.php");
+include_once(__DIR__ . "/../modelos/pedido_detalle.php");
+include_once(__DIR__ . "/../modelos/pedido_detalle_ingrediente.php");
 class PedidosDAO
 {
     public static function getAll()

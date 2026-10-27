@@ -1,6 +1,6 @@
 <?php
-include_once("config/dataBase.php");
-include_once("modelos/postres.php");
+include_once(__DIR__ . "/../config/database.php");
+include_once(__DIR__ . "/../modelos/postres.php");
 class PostresDAO
 {
     public static function getAll()

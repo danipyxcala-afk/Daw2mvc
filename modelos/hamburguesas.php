@@ -1,6 +1,6 @@
-<?php include_once("modelos/productos.php");
+<?php include_once(__DIR__."/productos.php");
 
-class Hamburgesas extends productos
+class Hamburguesas extends productos
 {
     public function __construct(
         $id = null,
