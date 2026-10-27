@@ -1,5 +1,5 @@
 <?php
-class ingredientes
+class Ingredientes
 {
     protected $id;
     protected $nombre;
@@ -99,3 +99,4 @@ class ingredientes
     }
 
 }
+?>

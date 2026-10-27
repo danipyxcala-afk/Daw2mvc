@@ -1,5 +1,5 @@
 <?php
-class productos
+abstract class Productos
 {
     protected $id;
     protected $categoria_id;
@@ -168,3 +168,4 @@ class productos
     }
 
 }
+?>

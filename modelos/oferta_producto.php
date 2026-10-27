@@ -1,5 +1,5 @@
 <?php
-class oferta_producto
+class Oferta_producto
 {
     protected $oferta_id;
     protected $producto_id;
@@ -53,3 +53,4 @@ class oferta_producto
     }
 
 }
+?>

@@ -1,5 +1,5 @@
 <?php
-class ofertas
+class Ofertas
 {
     protected $id;
     protected $nombre;
@@ -214,3 +214,4 @@ class ofertas
     }
 
 }
+?>

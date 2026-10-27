@@ -1,5 +1,5 @@
 <?php
-class pedido_detalle
+class Pedido_detalle
 {
     protected $id;
     protected $pedido_id;
@@ -168,3 +168,4 @@ class pedido_detalle
     }
 
 }
+?>

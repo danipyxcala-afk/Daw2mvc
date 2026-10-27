@@ -1,5 +1,5 @@
 <?php
-class usuarios
+class Usuarios
 {
     protected $id;
     protected $nombre;
@@ -215,3 +215,4 @@ class usuarios
 
 
 }
+?>

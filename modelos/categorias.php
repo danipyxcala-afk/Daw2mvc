@@ -1,5 +1,5 @@
 <?php
-class categorias
+class Categorias
 {
     protected $id;
     protected $nombre;
@@ -99,3 +99,4 @@ class categorias
     }
 
 }
+?>

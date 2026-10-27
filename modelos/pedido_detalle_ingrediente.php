@@ -1,5 +1,5 @@
 <?php
-class pedido_detalle_ingrediente
+class Pedido_detalle_ingrediente
 {
     protected $id;
     protected $pedido_detalle_id;
@@ -145,3 +145,4 @@ class pedido_detalle_ingrediente
     }
 
 }
+?>

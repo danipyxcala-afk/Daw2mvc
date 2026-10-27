@@ -1,5 +1,5 @@
 <?php
-class pedidos
+class Pedidos
 {
     protected $id;
     protected $usuario_id;
@@ -214,3 +214,4 @@ class pedidos
     }
 
 }
+?>
