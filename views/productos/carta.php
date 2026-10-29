@@ -14,22 +14,33 @@
         <h1>Nuestra carta</h1>
 
         <div class="container">
-            <button type="button" class="boton boton--filtro">Todo</button>
+            <form action="<?= url ?>productos/carta?" method="GET">
+                <a href="<?= url ?>index.php?controller=productos&action=carta&pildora=Todo"
+                    class="boton boton--filtro <?= ($_GET['pildora']) == "Todo" ? 'is-activo' : '' ?>">
+                    Todo
+                </a>
+                <?php
+                foreach ($categorias as $categoria) { ?>
 
-            <?php
-            foreach ($categorias as $categoria) { ?>
-                <button type="button"
-                    class="boton boton--filtro"><?= htmlspecialchars($categoria->getNombre(), ENT_QUOTES, 'UTF-8') ?></button>
+                    <a href="<?= url ?>index.php?controller=productos&action=carta&pildora=<?= $categoria->getNombre() ?>"
+                        class="boton boton--filtro <?= ($_GET['pildora']) == $categoria->getNombre() ? 'is-activo' : '' ?>">
+                        <?= htmlspecialchars($categoria->getNombre(), ENT_QUOTES, 'UTF-8') ?>
+                    </a>
+                <?php }
+                ?>
 
-            <?php }
-            ?>
+            </form>
         </div>
 
         <div class="row g-4 my-4">
             <?php
-            foreach ($listadoProductos as $test) {
-                foreach ($test as $producto) {
-                    //var_dump($producto);
+            // echo "<pre>";
+            // var_dump($listadoProductos);
+            // echo "</pre>";
+            foreach ($listadoProductos as $out) {
+
+                foreach ($out as $producto) {
+                    //var_dump($listadoProductos);
                     if ($producto->getActivo()) {
                         ?>
 
