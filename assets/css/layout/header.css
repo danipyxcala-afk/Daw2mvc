@@ -6,8 +6,17 @@
     justify-content: space-between;
     gap: 16px;
     padding: 10px 32px;
-    background-color: rgba(169, 169, 169, 0.7);
+    background-color: rgba(169, 169, 169, 0.5);
     border-radius: var(--radio-grande);
+    backdrop-filter: blur(10px);
+
+}
+
+header {
+    position: sticky;
+    top: 1rem !important;
+    z-index: 10;
+
 }
 
 /*  Logo  */

@@ -1,11 +1,13 @@
 <header class="container my-5">
-    <div class="encabezado">
 
+    <div class="encabezado">
         <img src="<?= url ?>/assets/img/logo/logo-claro.png" alt="Sigmeat" class="logoheader">
 
         <nav class="encabezado__nav" aria-label="Menú principal">
-            <a href="#" class="encabezado__enlace">Inicio</a>
-            <a href="#" class="encabezado__enlace">Carta</a>
+            <a href="http://localhost/php/segundo/Daw2mvc/index.php?controller=home"
+                class="encabezado__enlace">Inicio</a>
+            <a href="http://localhost/php/segundo/Daw2mvc/index.php?controller=productos"
+                class="encabezado__enlace">Carta</a>
         </nav>
 
         <div class="encabezado__acciones">

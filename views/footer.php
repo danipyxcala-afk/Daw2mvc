@@ -19,7 +19,6 @@
                     <li><a href="#">Carta</a></li>
                 </ul>
             </nav>
-
             <nav class="col-6 col-md-3" aria-label="Legal">
                 <p class="footer__titulo fw-bold">Legal</p>
                 <ul class="footer__lista">
@@ -28,7 +27,6 @@
                     <li><a href="#">Cookies</a></li>
                 </ul>
             </nav>
-
             <nav class="col-6 col-md-3" aria-label="Contacto">
                 <p class="footer__titulo fw-bold">¿Hablamos?</p>
                 <ul class="footer__lista">
@@ -37,6 +35,5 @@
                 </ul>
             </nav>
         </div>
-
     </div>
 </footer>
