@@ -1,5 +1,5 @@
-<footer class="pt-2 mt-5">
-    <div class="container footer">
+<footer class="pt-2">
+    <div class="container footer mt-5">
 
         <section class="footer__cta">
             <h2>¿Hambre? ¡Haz tu pedido!</h2>

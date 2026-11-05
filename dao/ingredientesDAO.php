@@ -101,6 +101,32 @@ class IngredientesDAO
         $con->close();
         return $ingredientes;
     }
+    // Ingredientes de un producto con su nombre y precio (para la pantalla de detalle).
+    // Devuelve arrays porque mezcla datos de las dos tablas.
+    public static function getDetalleByProducto($producto_id)
+    {
+        //Conexion a BBDD + Consulta
+        $con = DataBase::connect();
+        $stmt = $con->prepare(
+            "SELECT i.id, i.nombre, i.precio_extra, pi.cantidad
+             FROM producto_ingrediente pi
+             INNER JOIN ingredientes i ON i.id = pi.ingrediente_id
+             WHERE pi.producto_id = ? AND i.activo = 1
+             ORDER BY i.id"
+        );
+        $stmt->bind_param("i", $producto_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $ingredientes = [];
+        while ($ingrediente = $result->fetch_assoc()) {
+            $ingredientes[] = $ingrediente;
+        }
+        //Cerramos conexiones
+        $stmt->close();
+        $con->close();
+        return $ingredientes;
+    }
     public static function insertProducto($producto_ingrediente)
     {
         //Conexion a BBDD + Consulta

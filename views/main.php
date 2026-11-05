@@ -15,7 +15,17 @@
     <?php include_once __DIR__ . "/header.php"; ?>
 
     <main>
-        <?php include_once $view; ?>
+            <?php if (isset($_SESSION['aviso'])) { ?>
+                <div class="container">
+                    <div class="alert alert-info" role="status">
+                        <?= htmlspecialchars($_SESSION['aviso'], ENT_QUOTES, 'UTF-8') ?>
+                    </div>
+                </div>
+                <?php
+                // El aviso se muestra una sola vez
+                unset($_SESSION['aviso']);
+            } ?>
+            <?php include_once $view; ?>
     </main>
 
     <?php include_once __DIR__ . "/footer.php"; ?>

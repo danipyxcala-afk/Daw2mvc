@@ -1,19 +1,30 @@
-/* Fuentes */
+/* ARCHIVO PRINCIPAL
+   Es el único CSS que se enlaza en main.php. Desde aquí se cargan todos los demás
+   con @import, así cada parte de la web tiene su propio archivo y es fácil de encontrar.
+   El orden importa: si dos reglas valen lo mismo, gana la que se carga más tarde.
+
+   Cómo se leen los nombres de las clases:
+   - bloque             -> un componente entero. Ejemplo: .card-producto
+   - bloque__parte      -> una pieza de ese componente. Ejemplo: .card-producto__img
+   - bloque--variante   -> una versión distinta del componente. Ejemplo: .boton--primario */
+
+/* Fuentes: las letras Satoshi */
 @import url("satoshi.css");
 
-/*  Base */
+/* Base: variables y estilos generales de toda la web */
 @import url("base/variables.css");
 @import url("base/base.css");
 
-/*  Layout */
+/* Layout: las partes que se repiten en todas las páginas */
 @import url("layout/header.css");
 @import url("layout/footer.css");
 
-/* Componentes */
+/* Componentes: piezas que se pueden reutilizar en varias páginas */
 @import url("componentes/botones.css");
 @import url("componentes/card-producto.css");
 @import url("componentes/tabla.css");
 @import url("componentes/formularios.css");
 
-/* 5. Páginas */
+/* Páginas: estilos propios de una página concreta */
 @import url("paginas/home.css");
+@import url("paginas/producto.css");

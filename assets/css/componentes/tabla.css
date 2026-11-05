@@ -1,14 +1,21 @@
+/* TABLA
+   Se usa en el listado de productos. */
+
+/* Caja que envuelve la tabla: si no cabe en la pantalla, se desplaza de lado
+   y no rompe el resto de la página */
 .tabla-contenedor {
     overflow-x: auto;
     margin-bottom: 40px;
 }
 
+/* La tabla. border-collapse une los bordes de las celdas en una sola línea */
 .tabla {
     width: 100%;
     max-width: 640px;
     border-collapse: collapse;
 }
 
+/* Todas las celdas: th son las de cabecera y td las normales */
 .tabla th,
 .tabla td {
     padding: 8px 12px;
@@ -16,12 +23,13 @@
     text-align: left;
 }
 
+/* Las celdas de cabecera se distinguen con negrita y fondo gris */
 .tabla th {
     font-family: var(--fuente-negrita);
     background-color: var(--gris-fondo);
 }
 
-/* Enlaces Ver / Eliminar */
+/* Enlaces Ver y Eliminar de cada fila */
 .tabla__acciones a {
     margin-right: 12px;
     text-decoration: underline;

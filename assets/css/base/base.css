@@ -1,11 +1,14 @@
-/*  Página  */
+/* ESTILOS GENERALES
+   Se aplican a toda la web sin tener que poner ninguna clase. */
+
+/* Fuente, color de texto y fondo por defecto de todas las páginas */
 body {
     font-family: var(--fuente-texto);
     color: var(--azul-oscuro);
     background-color: var(--blanco);
 }
 
-/*  Títulos  */
+/* Todos los títulos comparten fuente, grosor y color */
 h1,
 h2,
 h3,
@@ -15,34 +18,36 @@ h4 {
     color: var(--azul-oscuro);
 }
 
+/* Cada título tiene su tamaño: h1 es el más grande */
 h1 { font-size: 64px; }
 h2 { font-size: 40px; }
 h3 { font-size: 30px; }
 h4 { font-size: 22px; }
 
-/*  Párrafos  */
+/* Tamaño de texto normal.
+   Para poner un párrafo en negrita usamos la clase fw-bold de Bootstrap */
 p {
     font-size: 16px;
 }
-/* Para párrafo en negrita usa la clase fw-bold de Bootstrap */
 
-/*  Enlaces 
-   Sin esto, Bootstrap los pone azules y subrayados */
+/* Enlaces: sin esto, Bootstrap los pone azules y subrayados */
 a {
     color: var(--azul-oscuro);
     text-decoration: none;
 }
 
+/* :hover significa "cuando el ratón está encima" */
 a:hover {
     color: var(--azul-claro);
 }
 
-/*  Utilidades  */
+/* Clase de ayuda para poner texto blanco sobre fondos oscuros o fotos */
 .textblanco {
     color: var(--blanco);
 }
 
-/*  Responsive  */
+/* @media aplica estas reglas solo si se cumple la condición.
+   Aquí: en pantallas de 576px o menos (móvil) los títulos son más pequeños */
 @media (max-width: 576px) {
     h1 { font-size: 40px; }
     h2 { font-size: 30px; }

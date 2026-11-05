@@ -20,7 +20,7 @@
                     Todo
                 </a>
                 <?php
-                foreach ($categorias as $categoria) { ?>
+                foreach ($categoriasActivas as $categoria) { ?>
 
                     <a href="<?= url ?>index.php?controller=productos&action=carta&pildora=<?= $categoria->getNombre() ?>"
                         class="boton boton--filtro <?= ($_GET['pildora']) == $categoria->getNombre() ? 'is-activo' : '' ?>">
@@ -34,6 +34,13 @@
 
         <div class="row g-4 my-4">
             <?php
+            $colorPorCategoria = [];
+            $posicion = 0;
+            foreach ($categoriasActivas as $categoria) {
+                $colorPorCategoria[$categoria->getId()] = $coloresCategorias[$posicion % count($coloresCategorias)];
+                $posicion++;
+            }
+
             // echo "<pre>";
             // var_dump($listadoProductos);
             // echo "</pre>";
@@ -47,7 +54,8 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <article class="card-producto">
 
-                                <div class="card-producto__media">
+                                <a href="<?= url ?>index.php?controller=productos&action=detalle&id=<?= (int) $producto->getId() ?>"
+                                    class="card-producto__media <?= isset($colorPorCategoria[$producto->getCategoria_id()]) ? 'categoria-card--' . $colorPorCategoria[$producto->getCategoria_id()] : '' ?>">
                                     <p class="card-producto__categoria">
                                         <?php foreach ($categorias as $cat) {
                                             if ($cat->getID() == $producto->getCategoria_id()) { ?>
@@ -58,7 +66,7 @@
                                     <img class="card-producto__img" src="<?= url . "assets/" . $producto->getImagen() ?>"
                                         alt="<?= htmlspecialchars($producto->getNombre(), ENT_QUOTES, 'UTF-8') ?>" width="400"
                                         height="400" loading="lazy">
-                                </div>
+                                </a>
 
                                 <div class="card-producto__info">
                                     <h2 class="card-producto__nombre">
@@ -73,7 +81,8 @@
                                             <?= htmlspecialchars($producto->getprecio(), ENT_QUOTES, 'UTF-8') ?>€
                                         </p>
 
-                                        <a href="#" class="boton boton--primario boton--sm" aria-label="Editar producto">
+                                        <a href="<?= url ?>index.php?controller=productos&action=detalle&id=<?= (int) $producto->getId() ?>"
+                                            class="boton boton--primario boton--sm" aria-label="Editar producto">
                                             Editar
                                         </a>
 

@@ -1,30 +1,31 @@
-/* 
-   VARIABLES
+/* VARIABLES
+   Guardamos aquí los colores, fuentes y bordes de la web.
+   Si queremos cambiar un color, lo cambiamos aquí y se actualiza en todas partes.
 
-   Para usarlos: color: var(--azul-claro); */
+   Para usarlas: color: var(--azul-claro); */
 
+/* :root es la raíz de la página, así las variables se pueden usar en cualquier sitio */
 :root {
-    /*  Colores primarios  */
+    /* Colores principales de la marca */
     --azul-oscuro: #000035;
     --azul-medio:  #262651;
     --azul-claro:  #5564EA;
 
-    /*  Fondos  */
+    /* Colores de fondo */
     --blanco:      #FFFFFF;
     --gris-fondo:  #F0F0F0;
     --azul-suave:  #E2E3F5;
 
-    /*  Texto  */
+    /* Colores de texto y de elementos desactivados */
     --gris-texto:  #A9A9A9;
-    --negro:       #000000;
     --gris-desactivado-texto: #E4E4E4;
 
-    /*  Tipografía  */
+    /* Fuentes: si Satoshi no carga, se usa otra sin adornos (sans-serif) */
     --fuente-texto:   'Satoshi Light', sans-serif;
     --fuente-negrita: 'Satoshi Bold', sans-serif;
 
-    /*  Bordes redondeados  */
+    /* Bordes redondeados: cuanto mayor el número, más redondo */
     --radio-tarjeta: 20px;
     --radio-grande:  50px;
-    --radio-pildora: 999px;
+    --radio-pildora: 999px; /* tan grande que los lados quedan totalmente redondos */
 }

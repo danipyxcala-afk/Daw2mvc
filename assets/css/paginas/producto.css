@@ -1,0 +1,256 @@
+/* PÁGINA DE PRODUCTO
+   El cliente personaliza un producto: quita ingredientes, añade extras y elige la cantidad. */
+
+/* Separación con el pie de página */
+.producto {
+    margin-bottom: 64px;
+}
+
+/* Migas de pan: indican en qué parte de la web estamos */
+.producto__migas {
+    margin-bottom: 24px;
+    font-size: 14px;
+}
+
+/* Caja de color con la foto. El color lo da la clase .categoria-card--* (en home.css) */
+.producto__media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1; /* caja cuadrada */
+    padding: 24px;
+    border-radius: var(--radio-tarjeta);
+    background-color: var(--azul-oscuro);
+}
+
+/* La foto se ve entera y nunca se deforma */
+.producto__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.producto__nombre {
+    margin-bottom: 4px;
+    font-size: 40px;
+}
+
+.producto__precio {
+    margin-bottom: 8px;
+    font-family: var(--fuente-negrita);
+    font-size: 24px;
+    color: var(--azul-claro);
+}
+
+/* Cada bloque del formulario. fieldset trae borde y relleno de serie: los quitamos */
+.producto__grupo {
+    margin: 24px 0 0;
+    padding: 0;
+    border: 0;
+}
+
+/* Títulos pequeños: "Ingredientes base" y "Añade extras" */
+.producto__subtitulo {
+    margin-bottom: 8px;
+    font-family: var(--fuente-negrita);
+    font-size: 14px;
+    text-transform: uppercase; /* escribe el texto en mayúsculas */
+    color: var(--azul-claro);
+}
+
+/* INGREDIENTES BASE */
+
+/* Rejilla con 4 píldoras por fila, todas del mismo ancho */
+.producto__ingredientes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.ingrediente {
+    cursor: pointer;
+}
+
+/* La píldora azul. La casilla real está oculta y lo que se ve es este texto */
+.ingrediente__nombre {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 36px;
+    padding: 4px 12px;
+    border-radius: var(--radio-pildora);
+    background-color: var(--azul-claro);
+    color: var(--blanco);
+    font-size: 14px;
+    text-align: center;
+    transition: background-color .15s ease;
+}
+
+/* "+" selecciona lo que va justo después. Si la casilla está marcada,
+   el ingrediente está quitado: la píldora se pone gris y tachada */
+.ingrediente__check:checked + .ingrediente__nombre {
+    background-color: var(--gris-texto);
+    text-decoration: line-through;
+}
+
+/* Contorno al llegar a la píldora con el teclado */
+.ingrediente__check:focus-visible + .ingrediente__nombre {
+    outline: 3px solid var(--azul-oscuro);
+    outline-offset: 2px;
+}
+
+/* Ingrediente que no se puede quitar: el cursor avisa de que no responde */
+.ingrediente__check:disabled + .ingrediente__nombre {
+    cursor: not-allowed;
+}
+
+/* EXTRAS */
+
+/* Fila de un extra: casilla, nombre y precio */
+.extra {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    padding: 12px;
+    border: 1px solid var(--azul-claro);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Fila con la casilla marcada. :has mira si la fila contiene una casilla marcada */
+.extra:has(.extra__check:checked) {
+    background-color: var(--azul-suave);
+}
+
+/* accent-color cambia el color de la casilla */
+.extra__check {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    accent-color: var(--azul-claro);
+}
+
+/* flex: 1 ocupa el espacio libre y empuja el precio a la derecha */
+.extra__nombre {
+    flex: 1;
+    font-family: var(--fuente-negrita);
+}
+
+.extra__precio {
+    font-family: var(--fuente-negrita);
+    font-size: 14px;
+}
+
+/* TOTAL Y COMPRA */
+
+/* Fila del total, con una línea azul encima y otra debajo */
+.producto__total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+    padding: 12px 0;
+    border-top: 1px solid var(--azul-claro);
+    border-bottom: 1px solid var(--azul-claro);
+    font-family: var(--fuente-negrita);
+    font-size: 32px;
+}
+
+/* Cantidad a la izquierda y botón a la derecha */
+.producto__comprar {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 16px;
+}
+
+/* flex: 1 hace que el botón ocupe todo el ancho que queda */
+.producto__anadir {
+    flex: 1;
+}
+
+.cantidad {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cantidad__texto {
+    font-family: var(--fuente-negrita);
+}
+
+/* Píldora gris que agrupa los botones - y + con el número */
+.cantidad__selector {
+    display: flex;
+    align-items: center;
+    border-radius: var(--radio-pildora);
+    background-color: var(--gris-fondo);
+}
+
+.cantidad__boton {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    color: var(--azul-oscuro);
+    font-family: var(--fuente-negrita);
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.cantidad__boton:hover {
+    background-color: var(--azul-suave);
+}
+
+/* El número. appearance: textfield quita las flechitas que trae un input de número */
+.cantidad__numero {
+    width: 40px;
+    border: 0;
+    background: none;
+    color: var(--azul-oscuro);
+    font-family: var(--fuente-negrita);
+    text-align: center;
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+/* Lo mismo que la regla anterior, para Chrome, Edge y Safari */
+.cantidad__numero::-webkit-outer-spin-button,
+.cantidad__numero::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* En móvil: píldoras de 2 en 2, título más pequeño y botón debajo de la cantidad */
+@media (max-width: 576px) {
+    .producto__ingredientes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .producto__nombre {
+        font-size: 30px;
+    }
+
+    .producto__total {
+        font-size: 24px;
+    }
+
+    .producto__comprar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .cantidad {
+        justify-content: space-between;
+    }
+}
+
+/* Si el usuario tiene pedido en su sistema reducir animaciones, quitamos la transición */
+@media (prefers-reduced-motion: reduce) {
+    .ingrediente__nombre {
+        transition: none;
+    }
+}

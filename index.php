@@ -1,6 +1,9 @@
 <?php
 include_once("config/parameters.php");
 
+// La sesión guarda el carrito y los avisos entre una página y otra
+session_start();
+
 
 function showError($code, $message)
 {

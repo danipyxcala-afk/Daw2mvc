@@ -1,4 +1,7 @@
-/*  Formulario  */
+/* FORMULARIOS Y DETALLE
+   Se usan en las páginas de crear producto y de ver un producto. */
+
+/* El formulario: coloca los campos uno debajo de otro */
 .formulario {
     display: flex;
     flex-direction: column;
@@ -6,6 +9,7 @@
     max-width: 320px;
 }
 
+/* Cada etiqueta, con su texto encima del campo */
 .formulario label {
     display: flex;
     flex-direction: column;
@@ -13,27 +17,31 @@
     font-family: var(--fuente-negrita);
 }
 
+/* Los campos donde se escribe o se elige una opción */
 .formulario input,
 .formulario select {
     padding: 8px 12px;
-    font: inherit;
+    font: inherit; /* usa la misma letra que el resto de la página */
     font-family: var(--fuente-texto);
     border: 1px solid var(--azul-oscuro);
     border-radius: 12px;
 }
 
+/* :focus-visible marca el campo activo cuando navegamos con el teclado */
 .formulario input:focus-visible,
 .formulario select:focus-visible {
     outline: 2px solid var(--azul-claro);
     outline-offset: 2px;
 }
 
+/* El botón del formulario, a la izquierda y sin estirarse a todo el ancho */
 .formulario .boton {
     align-self: flex-start;
     margin-top: 8px;
 }
 
-/*  Detalle (lista nombre / valor)  */
+/* Detalle: lista de datos de un producto, en dos columnas (nombre y valor).
+   max-content ajusta la primera al texto y 1fr da a la segunda el resto del espacio */
 .detalle {
     display: grid;
     grid-template-columns: max-content 1fr;
@@ -41,15 +49,17 @@
     max-width: 480px;
 }
 
+/* dt es el nombre del dato: va en negrita */
 .detalle dt {
     font-family: var(--fuente-negrita);
 }
 
+/* dd es el valor del dato: le quitamos el margen que trae por defecto */
 .detalle dd {
     margin: 0;
 }
 
-/*  Enlace "Volver"  */
+/* Enlace "Volver al listado", subrayado para que se vea que se puede pulsar */
 .enlace-volver {
     text-decoration: underline;
 }

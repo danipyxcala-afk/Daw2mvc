@@ -1,16 +1,21 @@
-/*  Banda exterior  */
+/* PIE DE PÁGINA */
+
+/* La etiqueta footer es la banda azul oscuro de fondo.
+   Se ve en las esquinas redondeadas de la caja gris */
 footer {
     background-color: var(--azul-oscuro);
 }
 
-/*  Caja gris interior  */
+/* La clase .footer es la caja gris de dentro, con las esquinas de arriba redondeadas.
+   El orden de border-radius es: arriba izquierda, arriba derecha, abajo derecha, abajo izquierda */
 .footer {
     padding: 56px 32px 40px;
     background-color: var(--gris-fondo);
     border-radius: var(--radio-grande) var(--radio-grande) 0 0;
 }
 
-/*  Llamada a la acción  */
+/* Llamada a la acción: el mensaje que invita a pedir, centrado.
+   CTA viene del inglés "call to action" */
 .footer__cta {
     text-align: center;
     margin-bottom: 56px;
@@ -20,19 +25,20 @@ footer {
     margin-bottom: 20px;
 }
 
-/*  Columnas de enlaces  */
+/* Título de cada columna de enlaces */
 .footer__titulo {
     margin-bottom: 8px;
     font-family: var(--fuente-negrita);
 }
 
+/* Lista de enlaces: quitamos los puntos y los márgenes que trae por defecto */
 .footer__lista {
     margin: 0;
     padding: 0;
     list-style: none;
-    
 }
 
+/* Separación entre un enlace y el siguiente */
 .footer__lista li {
     margin-bottom: 6px;
 }

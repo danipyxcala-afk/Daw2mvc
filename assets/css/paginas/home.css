@@ -1,16 +1,210 @@
+/* PÁGINA DE INICIO
+   Estilos de cada sección de la home, en el mismo orden en que aparecen. */
+
+/* PORTADA: la foto grande con el título */
 .EntradaHome {
+    /* Dos fondos a la vez: una capa azul semitransparente encima de la foto,
+       para oscurecerla y que el texto se lea mejor */
     background-image:
         linear-gradient(rgba(0, 0, 53, 0.25), rgba(0, 0, 53, 0.25)),
         url("../../img/home/home1.png");
-    background-size: cover;
+    background-size: cover; /* la foto cubre toda la sección */
     background-position: center;
 
     min-height: 600px;
+    /* Centra el contenido en vertical y en horizontal */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     padding: 180px 16px 60px;
-    margin-top: -170px;
+    margin-top: -170px; /* sube la sección para que la foto quede detrás de la cabecera */
+}
+
+/* BANDA AZUL con las palabras Fresco, Artesanal, A tu gusto... */
+.tags {
+    background: var(--azul-claro);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* ¿QUÉ DEFINE A SIGMEAT? */
+
+/* Lista de ventajas: una debajo de otra y sin los puntos de la lista */
+.define__lista {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Cada ventaja: el círculo con el check a la izquierda y el texto a la derecha */
+.define__item {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.define__item h4 {
+    margin-bottom: 8px;
+}
+
+.define__item p {
+    margin: 0;
+}
+
+/* Círculo azul con el check blanco */
+.define__check {
+    flex-shrink: 0; /* evita que el círculo se aplaste si el texto es largo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background-color: var(--azul-claro);
+    border-radius: 50%;
+}
+
+/* ELIGE TU CATEGORÍA */
+
+/* La sección con el fondo gris */
+.categorias {
+    padding-top: 48px;
+    padding-bottom: 48px;
+    background-color: var(--gris-fondo);
+}
+
+/* Texto bajo el título. max-width evita que las líneas sean demasiado largas */
+.categorias__intro {
+    max-width: 560px;
+    margin: 16px 0 32px;
+    color: var(--azul-claro);
+}
+
+/* Tarjeta de categoría: toda ella es un enlace a la carta filtrada */
+.categoria-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    height: 100%;
+    aspect-ratio: 1 / 1; /* tarjeta cuadrada */
+    padding: 24px 16px 16px;
+    border-radius: var(--radio-tarjeta);
+    transition: transform .15s ease; /* hace suave el movimiento del hover */
+}
+
+/* Al pasar el ratón, la tarjeta sube un poco */
+.categoria-card:hover {
+    transform: translateY(-4px);
+}
+
+/* Contorno al llegar a la tarjeta con el teclado */
+.categoria-card:focus-visible {
+    outline: 3px solid var(--azul-claro);
+    outline-offset: 3px;
+}
+
+/* Colores de cada categoría. El nombre del color lo pone PHP, con el método
+   getColoresCat(), por eso no aparecen escritos tal cual en las vistas.
+   También se usan en las tarjetas de producto de la carta */
+.categoria-card--oscuro {
+    background-color: var(--azul-oscuro);
+}
+
+.categoria-card--medio {
+    background-color: var(--azul-medio);
+}
+
+.categoria-card--claro {
+    background-color: var(--azul-claro);
+}
+
+.categoria-card--gris {
+    background-color: var(--gris-texto);
+}
+
+/* Nombre de la categoría */
+.categoria-card__nombre {
+    margin: 0;
+    font-size: 22px;
+    color: var(--blanco);
+    text-align: center;
+}
+
+/* La imagen ocupa el espacio que deja el nombre y nunca se deforma */
+.categoria-card__img {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    object-fit: contain;
+}
+
+/* En móvil, tarjetas con menos relleno y texto más pequeño */
+@media (max-width: 576px) {
+    .categoria-card {
+        padding: 16px 8px 8px;
+        gap: 8px;
+    }
+
+    .categoria-card__nombre {
+        font-size: 18px;
+    }
+}
+
+/* Si el usuario tiene pedido en su sistema reducir animaciones, quitamos la transición */
+@media (prefers-reduced-motion: reduce) {
+    .categoria-card {
+        transition: none;
+    }
+}
+
+/* CONSTRUYENDO EL FUTURO */
+
+/* Contenedor: pone las dos fotos en fila */
+.futuro {
+    display: flex;
+    min-height: 600px;
+    padding-bottom: 16px; /* deja ver una franja azul común debajo de las dos fotos */
+    background-color: var(--azul-oscuro);
+}
+
+/* Foto estrecha de la izquierda.
+   flex: 0 0 16% significa: no crece, no se encoge y mide el 16% del ancho */
+.futuro__lateral {
+    flex: 0 0 16%;
+    background-image: url("../../img/home/home3.png");
+    background-size: cover;
+    background-position: center top;
+}
+
+/* Foto grande con el marco azul oscuro a la izquierda. Ocupa el resto del ancho */
+.futuro__principal {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* el título queda arriba y el botón abajo */
+    padding: 80px 48px 48px 80px;
+    /* Igual que en la portada: capa oscura encima de la foto */
+    background-image:
+        linear-gradient(rgba(0, 0, 53, 0.3), rgba(0, 0, 53, 0.3)),
+        url("../../img/home/home2.png");
+    background-size: cover;
+    background-position: center;
+    border-left: 32px solid var(--azul-oscuro);
+}
+
+/* En móvil, la sección es más baja y con menos relleno */
+@media (max-width: 576px) {
+    .futuro {
+        min-height: 420px;
+    }
+
+    .futuro__principal {
+        padding: 40px 24px 24px;
+        border-left-width: 16px;
+    }
 }
