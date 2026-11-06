@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
 <body>
     <div class="container">
         <nav class="producto__migas">
             <a href="<?= url ?>index.php?controller=home">Inicio</a> / 
             <a href="<?= url ?>index.php?controller=productos">Carta</a>
         </nav>
-        
+
         <h1>Nuestra carta</h1>
 
         <div class="container">
@@ -106,5 +97,3 @@
 
     </div>
 </body>
-
-</html>

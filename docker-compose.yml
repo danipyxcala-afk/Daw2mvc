@@ -17,8 +17,6 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql        # los datos se guardan aunque se borre el contenedor
       # Scripts que se ejecutan la primera vez, en orden alfabético (por eso el 00, 01 y 02)
-      # TEMPORAL: tablas de prueba del profesor (camisetas). Borrar esta línea al terminar el proyecto.
-      - ./sql/init.sql:/docker-entrypoint-initdb.d/00-init-profesor.sql
       - ./sql/CreacionBD.sql:/docker-entrypoint-initdb.d/01-CreacionBD.sql
       - ./sql/InsertarDatosBD.sql:/docker-entrypoint-initdb.d/02-InsertarDatosBD.sql
 
