@@ -8,7 +8,8 @@
     background-image:
         linear-gradient(rgba(0, 0, 53, 0.25), rgba(0, 0, 53, 0.25)),
         url("../../img/home/home1.png");
-    background-size: cover; /* la foto cubre toda la sección */
+    background-size: cover;
+    /* la foto cubre toda la sección */
     background-position: center;
 
     min-height: 600px;
@@ -19,7 +20,8 @@
     justify-content: center;
     text-align: center;
     padding: 180px 16px 60px;
-    margin-top: -170px; /* sube la sección para que la foto quede detrás de la cabecera */
+    margin-top: -170px;
+    /* sube la sección para que la foto quede detrás de la cabecera */
 }
 
 /* BANDA AZUL con las palabras Fresco, Artesanal, A tu gusto... */
@@ -58,7 +60,8 @@
 
 /* Círculo azul con el check blanco */
 .define__check {
-    flex-shrink: 0; /* evita que el círculo se aplaste si el texto es largo */
+    flex-shrink: 0;
+    /* evita que el círculo se aplaste si el texto es largo */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,6 +78,8 @@
     padding-top: 48px;
     padding-bottom: 48px;
     background-color: var(--gris-fondo);
+    /* Para ponerlo conjuta las 2 secciones*/
+    margin-bottom: -50px;
 }
 
 /* Texto bajo el título. max-width evita que las líneas sean demasiado largas */
@@ -91,10 +96,12 @@
     align-items: center;
     gap: 16px;
     height: 100%;
-    aspect-ratio: 1 / 1; /* tarjeta cuadrada */
+    aspect-ratio: 1 / 1;
+    /* tarjeta cuadrada */
     padding: 24px 16px 16px;
     border-radius: var(--radio-tarjeta);
-    transition: transform .15s ease; /* hace suave el movimiento del hover */
+    transition: transform .15s ease;
+    /* hace suave el movimiento del hover */
 }
 
 /* Al pasar el ratón, la tarjeta sube un poco */
@@ -168,7 +175,8 @@
 .futuro {
     display: flex;
     min-height: 600px;
-    padding-bottom: 16px; /* deja ver una franja azul común debajo de las dos fotos */
+    padding-bottom: 16px;
+    /* deja ver una franja azul común debajo de las dos fotos */
     background-color: var(--azul-oscuro);
 }
 
@@ -186,7 +194,8 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* el título queda arriba y el botón abajo */
+    justify-content: space-between;
+    /* el título queda arriba y el botón abajo */
     padding: 80px 48px 48px 80px;
     /* Igual que en la portada: capa oscura encima de la foto */
     background-image:

@@ -28,3 +28,4 @@
 /* Páginas: estilos propios de una página concreta */
 @import url("paginas/home.css");
 @import url("paginas/producto.css");
+@import url("paginas/acceso.css");

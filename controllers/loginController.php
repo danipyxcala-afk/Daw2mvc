@@ -12,6 +12,9 @@ class loginController
         $view = "views/PanelUsuario/registro.php";
         include_once 'views/main.php';
     }
+    public function login(){
+        
+    }
 }
 
 ?>

@@ -1,0 +1,38 @@
+/* PÁGINA DE ACCESO
+   La tarjeta de las pantallas de iniciar sesión y de registro. */
+
+/* La tarjeta: fondo gris claro y bordes redondeados, para separarla del resto de la página */
+.acceso {
+    padding: 40px;
+    background-color: var(--gris-fondo);
+    border-radius: var(--radio-tarjeta);
+}
+
+/* El título: más pequeño que un h1 normal (64px) para que quepa bien en la tarjeta */
+.acceso__titulo {
+    margin-bottom: 8px;
+    font-size: 40px;
+}
+
+/* El enlace a registro: subrayado para que se vea que se puede pulsar */
+.acceso__enlace {
+    font-family: var(--fuente-negrita);
+    text-decoration: underline;
+}
+
+/* El texto "(opcional)" de la etiqueta: con letra normal para que destaque menos que el nombre del campo */
+.acceso__opcional {
+    font-family: var(--fuente-texto);
+    font-size: 14px;
+}
+
+/* En móvil: menos relleno, así los campos aprovechan mejor el ancho de la pantalla */
+@media (max-width: 576px) {
+    .acceso {
+        padding: 24px;
+    }
+
+    .acceso__titulo {
+        font-size: 32px;
+    }
+}

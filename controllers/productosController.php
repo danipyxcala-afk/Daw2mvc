@@ -86,76 +86,8 @@ class ProductosController
         $view = "views/productos/detalle.php";
         include_once 'views/main.php';
     }
-
-    // Recibe el formulario de detalle y guarda el producto en el carrito de la sesión
-    public function anadirCarrito()
-    {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->redirigir("index.php?controller=productos");
-        }
-
-        $producto = $this->getProductoActivo($_POST['id'] ?? 0);
-        $ingredientes = $this->getIngredientesProducto($producto);
-
-        // Solo nos fiamos de los ids: nombres y precios se leen siempre de la base de datos,
-        // así nadie puede cambiar un precio o colar un ingrediente de otro producto desde el navegador
-        $idsQuitados = array_map('intval', (array) ($_POST['quitados'] ?? []));
-        $idsExtras = array_map('intval', (array) ($_POST['extras'] ?? []));
-
-        $quitados = [];
-        foreach ($ingredientes['base'] as $ingrediente) {
-            if (!$ingrediente['fija'] && in_array((int) $ingrediente['id'], $idsQuitados)) {
-                $quitados[] = [
-                    'ingrediente_id' => (int) $ingrediente['id'],
-                    'nombre' => $ingrediente['nombre'],
-                ];
-            }
-        }
-
-        // El producto debe conservar al menos un ingrediente base
-        if (count($ingredientes['base']) > 0 && count($quitados) === count($ingredientes['base'])) {
-            $_SESSION['aviso'] = "Deja al menos un ingrediente en tu producto.";
-            $this->redirigir("index.php?controller=productos&action=detalle&id=" . (int) $producto->getId());
-        }
-
-        $extras = [];
-        $precioUnitario = (float) $producto->getPrecio();
-        foreach ($ingredientes['extras'] as $ingrediente) {
-            if (in_array((int) $ingrediente['id'], $idsExtras)) {
-                $extras[] = [
-                    'ingrediente_id' => (int) $ingrediente['id'],
-                    'nombre' => $ingrediente['nombre'],
-                    'precio_extra' => (float) $ingrediente['precio_extra'],
-                ];
-                $precioUnitario += (float) $ingrediente['precio_extra'];
-            }
-        }
-
-        $cantidad = max(1, min(self::CANTIDAD_MAXIMA, (int) ($_POST['cantidad'] ?? 1)));
-
-        // La clave identifica el producto y su personalización:
-        // si se repite exactamente igual sumamos la cantidad, si no, es otra línea del carrito
-        $clave = $producto->getId()
-            . '|' . implode(',', array_column($quitados, 'ingrediente_id'))
-            . '|' . implode(',', array_column($extras, 'ingrediente_id'));
-
-        if (isset($_SESSION['carrito'][$clave])) {
-            $total = $_SESSION['carrito'][$clave]['cantidad'] + $cantidad;
-            $_SESSION['carrito'][$clave]['cantidad'] = min(self::CANTIDAD_MAXIMA, $total);
-        } else {
-            $_SESSION['carrito'][$clave] = [
-                'producto_id' => (int) $producto->getId(),
-                'nombre' => $producto->getNombre(),
-                'imagen' => $producto->getImagen(),
-                'precio_unitario' => round($precioUnitario, 2),
-                'cantidad' => $cantidad,
-                'quitados' => $quitados,
-                'extras' => $extras,
-            ];
-        }
-
-        $_SESSION['aviso'] = $producto->getNombre() . " se ha añadido al carrito.";
-        $this->redirigir("index.php?controller=productos");
+    public function anadirCarrito(){
+        //TODO logica
     }
 
     // Busca el producto en cada categoría. Si no existe o no está activo, muestra el error 404

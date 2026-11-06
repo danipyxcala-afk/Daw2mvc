@@ -1,30 +1,33 @@
 /* FORMULARIOS Y DETALLE
-   Se usan en las páginas de crear producto y de ver un producto. */
+   El formulario de Sigmeat se usa en las pantallas de iniciar sesión y de registro.
+   El ancho lo marca quien lo contiene, y cada campo se separa del siguiente con la clase mb-3 de Bootstrap. */
 
 /* El formulario: coloca los campos uno debajo de otro */
 .formulario {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    max-width: 320px;
 }
 
-/* Cada etiqueta, con su texto encima del campo */
+/* El texto de cada etiqueta, encima de su campo */
 .formulario label {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
     font-family: var(--fuente-negrita);
 }
 
 /* Los campos donde se escribe o se elige una opción */
 .formulario input,
 .formulario select {
-    padding: 8px 12px;
+    min-height: 50px; /* la misma altura que los botones */
+    padding: 8px 24px;
     font: inherit; /* usa la misma letra que el resto de la página */
     font-family: var(--fuente-texto);
     border: 1px solid var(--azul-oscuro);
-    border-radius: 12px;
+    border-radius: var(--radio-pildora);
+}
+
+/* Bootstrap añade un brillo azul al enfocar un campo: lo quitamos y dejamos solo nuestro contorno */
+.formulario .form-control:focus {
+    border-color: var(--azul-oscuro);
+    box-shadow: none;
 }
 
 /* :focus-visible marca el campo activo cuando navegamos con el teclado */
@@ -34,9 +37,8 @@
     outline-offset: 2px;
 }
 
-/* El botón del formulario, a la izquierda y sin estirarse a todo el ancho */
+/* El botón del formulario, un poco separado del último campo */
 .formulario .boton {
-    align-self: flex-start;
     margin-top: 8px;
 }
 

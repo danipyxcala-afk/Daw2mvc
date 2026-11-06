@@ -31,7 +31,7 @@
     </div>
 </section>
 
-<div class="container">
+<div class="container defineSigmeat">
     <section class="mt-5">
         <div class="container text-center">
             <h2>¿Que define a Sigmeat?</h2>
