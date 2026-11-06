@@ -1,7 +1,7 @@
 <header class="container">
 
     <div class="encabezado">
-        <a href="<?= url ?>/index.php?controller=home" class="encabezado__logo">
+        <a href="<?= url ?>index.php?controller=home" class="encabezado__logo">
             <img src="<?= url ?>/assets/img/logo/logo-claro.png" alt="Sigmeat" class="logoheader">
         </a>
         <nav class="encabezado__nav">
@@ -19,7 +19,7 @@
                     <span class="encabezado__contador"><?= $productosEnCarrito ?></span>
                 <?php } ?>
             </a>
-            <a href="#" class="btn-icono" aria-label="Abrir menú">
+            <a href="<?= url ?>index.php?controller=login" class="btn-icono" aria-label="Abrir menú">
                 <img src="<?= url ?>assets/img/icons/negro/svg/usuario.svg" alt="" width="24" height="24">
             </a>
         </div>

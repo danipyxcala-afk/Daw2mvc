@@ -96,7 +96,7 @@
                 <h2 class="mb-0">Elige tu categoría</h2>
             </div>
             <div class="col-md-6 text-md-end">
-                <a href="<?= url ?>index.php?controller=productos" class="boton boton--secundario boton--invertido">
+                <a href="<?= url ?>index.php?controller=productos" class="boton boton--secundario">
                     Ver nuestra carta
                     <img src="<?= url ?>assets/img/icons/blanco/svg/flecha-diagonal.svg" alt="" width="20" height="20">
                 </a>

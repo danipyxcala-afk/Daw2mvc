@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container ">
     <h1>Registro de usuario</h1>
     <form action="<?= url ?>PanelUsuario/registro" method="POST">
         <div class="form-group">
@@ -15,4 +15,5 @@
         </div>
         <button type="submit" class="btn btn-primary">Registrarse</button>
     </form>
+    <a href="<?= url ?>index.php?controller=login">¿Ya tienes cuenta? ¡Ve al Log In!</a>
 </div>

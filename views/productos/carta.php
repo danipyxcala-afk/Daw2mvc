@@ -9,8 +9,11 @@
 
 <body>
     <div class="container">
-        <p>Inicio / <b>Carta</b></p>
-
+        <nav class="producto__migas">
+            <a href="<?= url ?>index.php?controller=home">Inicio</a> / 
+            <a href="<?= url ?>index.php?controller=productos">Carta</a>
+        </nav>
+        
         <h1>Nuestra carta</h1>
 
         <div class="container">

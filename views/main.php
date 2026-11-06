@@ -15,6 +15,7 @@
     <?php include_once __DIR__ . "/header.php"; ?>
 
     <main>
+        <!-- Notificaciones cuando se actualiza algo en carrito -->
             <?php if (isset($_SESSION['aviso'])) { ?>
                 <div class="container">
                     <div class="alert alert-info" role="status">
