@@ -19,7 +19,7 @@
                     <span class="encabezado__contador"><?= $productosEnCarrito ?></span>
                 <?php } ?>
             </a>
-            <a href="<?= url ?>index.php?controller=login" class="btn-icono" aria-label="Abrir menú">
+            <a href="<?= url ?>index.php?controller=user" class="btn-icono" aria-label="Abrir menú">
                 <img src="<?= url ?>assets/img/icons/negro/svg/usuario.svg" alt="" width="24" height="24">
             </a>
         </div>

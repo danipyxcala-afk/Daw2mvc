@@ -465,7 +465,7 @@ INSERT INTO oferta_producto (oferta_id, producto_id) VALUES
 -- 5. USUARIOS (1 admin + 24 usuarios de prueba)
 -- ---------------------------------------------------------------------
 INSERT INTO usuarios (id, nombre, email, password, telefono, direccion, fecha_nacimiento, rol, fecha_registro) VALUES
-  (1, 'Admin Sigmeat', 'admin@sigmeat.test', 'admin', '600000000', 'Calle Mayor 1, local 2', NULL, 'admin', '2026-08-25 09:00:00'),
+  (1, 'Admin Sigmeat', 'admin@sigmeat.test', '$2y$10$P.LLrNVexnTNFva6qgKg/uk1nBizfTLudeDQja73.0Tp64N9fAvzu', '600000000', 'Calle Mayor 1, local 2', NULL, 'admin', '2026-08-25 09:00:00'),
   (2, 'Lucía Fernández Gil', 'lucia.fernandez@alumnos.test', '$2y$12$GcBfEFscl09vVVOMoyJc5upqmabfpyGoN.ntpb3hXYs/QprTVxqxa', '610001234', 'Calle Mayor 3, 1º A', '2002-01-01', 'usuario', '2026-09-01 10:00:00'),
   (3, 'Marc Soler Puig', 'marc.soler@alumnos.test', '$2y$12$GcBfEFscl09vVVOMoyJc5upqmabfpyGoN.ntpb3hXYs/QprTVxqxa', '611001271', 'Avenida de la Universidad 5, 2º B', '2003-06-08', 'usuario', '2026-09-03 10:07:00'),
   (4, 'Carla Martínez Ruiz', 'carla.martinez@alumnos.test', '$2y$12$GcBfEFscl09vVVOMoyJc5upqmabfpyGoN.ntpb3hXYs/QprTVxqxa', '612001308', 'Calle del Campus 7, 3º C', '2004-11-15', 'usuario', '2026-09-05 10:14:00'),

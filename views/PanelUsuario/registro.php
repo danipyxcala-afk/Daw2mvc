@@ -1,7 +1,7 @@
 <div class="container mb-5">
     <nav class="producto__migas" aria-label="Migas de pan">
         <a href="<?= url ?>index.php?controller=home">Inicio</a> /
-        <a href="<?= url ?>index.php?controller=login">Iniciar sesión</a> /
+        <a href="<?= url ?>index.php?controller=user&action=plogin">Iniciar sesión</a> /
         <span>Registro</span>
     </nav>
 
@@ -13,7 +13,7 @@
 
                 <!-- Cada name coincide con su columna de la tabla usuarios.
                      Rol y fecha de registro no se piden: tienen valor por defecto en la base de datos -->
-                <form class="formulario" action="<?= url ?>PanelUsuario/registro" method="POST">
+                <form class="formulario" action="<?= url ?>?controller=user&action=registro" method="POST">
                     <div class="mb-3">
                         <label class="form-label" for="nombre">Nombre</label>
                         <input type="text" class="form-control" id="nombre" name="nombre" maxlength="100"
@@ -58,7 +58,7 @@
 
                 <p class="text-center mt-4 mb-0">
                     ¿Ya tienes cuenta?
-                    <a class="acceso__enlace" href="<?= url ?>index.php?controller=login">Inicia sesión</a>
+                    <a class="acceso__enlace" href="<?= url ?>index.php?controller=user&action=plogin">Inicia sesión</a>
                 </p>
             </section>
         </div>

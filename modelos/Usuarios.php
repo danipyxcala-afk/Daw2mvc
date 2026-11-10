@@ -22,6 +22,7 @@ class Usuarios
         $rol = null,
         $fecha_registro = null
     ) {
+        // Asignamos los valores a las propiedades del objeto solo si no son nulos
         if ($id !== null) {
             $this->id = $id;
         }
@@ -45,6 +46,8 @@ class Usuarios
         }
         if ($rol !== null) {
             $this->rol = $rol;
+        }else{
+            $this->rol = 'usuario'; // Valor por defecto para el rol
         }
         if ($fecha_registro !== null) {
             $this->fecha_registro = $fecha_registro;

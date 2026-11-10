@@ -1,6 +1,7 @@
 <?php
-include_once(__DIR__ . "/../config/database.php");
-include_once(__DIR__ . "/../modelos/usuarios.php");
+include_once(__DIR__ . "/../config/dataBase.php");
+include_once(__DIR__ . "/../modelos/Usuarios.php");
+
 class UsuariosDAO
 {
     public static function getAll()
@@ -44,6 +45,19 @@ class UsuariosDAO
         return $usuario ?: null;
 
     }
+    public static function getByEmail($email)
+    {
+        $con = DataBase::connect();
+        $stmt = $con->prepare("SELECT * FROM usuarios WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $usuario = $result->fetch_object("Usuarios");
+        $stmt->close();
+        $con->close();
+        return $usuario ?: null;
+    }
+
     public static function insert($usuario)
     {
         //Conexion a BBDD + Consulta
@@ -57,7 +71,8 @@ class UsuariosDAO
         $direccion = $usuario->getDireccion();
         $fecha_nacimiento = $usuario->getFecha_nacimiento();
         $rol = $usuario->getRol();
-        // Asignamos los valores a los parámetros de la consulta el sssssss significa string string string string string string string
+        // Asignamos los valores a los parámetros de la consulta
+        // "sssssds" indica los tipos de datos de los parámetros: s = string, d = double, i = integer
         $stmt->bind_param("sssssss", $nombre, $email, $password, $telefono, $direccion, $fecha_nacimiento, $rol);
         // Ejecutamos la consulta
         $stmt->execute();
@@ -67,7 +82,8 @@ class UsuariosDAO
         $con->close();
 
     }
-    public static function delete($id){
+    public static function delete($id)
+    {
         //Conexion a BBDD + Consulta
         $con = DataBase::connect();
         $stmt = $con->prepare("DELETE FROM usuarios WHERE id = ?");
@@ -81,5 +97,3 @@ class UsuariosDAO
 
 }
 ?>
-
-
