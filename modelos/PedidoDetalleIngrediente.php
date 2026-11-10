@@ -1,5 +1,5 @@
 <?php
-class Pedido_detalle_ingrediente
+class PedidoDetalleIngrediente
 {
     protected $id;
     protected $pedido_detalle_id;
@@ -59,7 +59,7 @@ class Pedido_detalle_ingrediente
     /**
      * Get the value of pedido_detalle_id
      */
-    public function getPedido_detalle_id()
+    public function getPedidoDetalleId()
     {
         return $this->pedido_detalle_id;
     }
@@ -69,7 +69,7 @@ class Pedido_detalle_ingrediente
      *
      * @return  self
      */
-    public function setPedido_detalle_id($pedido_detalle_id)
+    public function setPedidoDetalleId($pedido_detalle_id)
     {
         $this->pedido_detalle_id = $pedido_detalle_id;
 
@@ -79,7 +79,7 @@ class Pedido_detalle_ingrediente
     /**
      * Get the value of ingrediente_id
      */
-    public function getIngrediente_id()
+    public function getIngredienteId()
     {
         return $this->ingrediente_id;
     }
@@ -89,7 +89,7 @@ class Pedido_detalle_ingrediente
      *
      * @return  self
      */
-    public function setIngrediente_id($ingrediente_id)
+    public function setIngredienteId($ingrediente_id)
     {
         $this->ingrediente_id = $ingrediente_id;
 
@@ -99,7 +99,7 @@ class Pedido_detalle_ingrediente
     /**
      * Get the value of nombre_ingrediente
      */
-    public function getNombre_ingrediente()
+    public function getNombreIngrediente()
     {
         return $this->nombre_ingrediente;
     }
@@ -109,7 +109,7 @@ class Pedido_detalle_ingrediente
      *
      * @return  self
      */
-    public function setNombre_ingrediente($nombre_ingrediente)
+    public function setNombreIngrediente($nombre_ingrediente)
     {
         $this->nombre_ingrediente = $nombre_ingrediente;
 
@@ -119,7 +119,7 @@ class Pedido_detalle_ingrediente
     /**
      * Get the value of precio_extra
      */
-    public function getPrecio_extra()
+    public function getPrecioExtra()
     {
         return $this->precio_extra;
     }
@@ -129,7 +129,7 @@ class Pedido_detalle_ingrediente
      *
      * @return  self
      */
-    public function setPrecio_extra($precio_extra)
+    public function setPrecioExtra($precio_extra)
     {
         $this->precio_extra = $precio_extra;
 

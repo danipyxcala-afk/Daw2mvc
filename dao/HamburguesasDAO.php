@@ -1,14 +1,14 @@
 <?php
-include_once(__DIR__ . "/../config/database.php");
-include_once(__DIR__ . "/../modelos/bebidas.php");
-class BebidasDAO
+include_once(__DIR__ . "/../config/DataBase.php");
+include_once(__DIR__ . "/../modelos/Hamburguesas.php");
+class HamburguesasDAO
 {
     public static function getAll()
     {
         //Conexion a BBDD + Consultas
         $con = DataBase::connect();
         //importante poner en mayus para que salga en rojo :3
-        $stmt = $con->prepare("SELECT * FROM productos WHERE categoria_id = 3");
+        $stmt = $con->prepare("SELECT * FROM productos WHERE categoria_id = 1");
         // Esto asignara a cada ? el valor que queramos
         // $stmt->bind_param("i", $id);
         //Ejecuta la query
@@ -16,27 +16,27 @@ class BebidasDAO
         $result = $stmt->get_result();
 
         // Creamos Array guardar datos
-        $bebidas = [];
+        $hamburguesas = [];
         //utilizamos fetch object par aque sepa de que clase tiene que utilizar el constructor
-        while ($bebida = $result->fetch_object("bebidas")) {
-            $bebidas[] = $bebida;
+        while ($hamburguesa = $result->fetch_object("Hamburguesas")) {
+            $hamburguesas[] = $hamburguesa;
         }
         //Cerramos conexiones
         $stmt->close();
         $con->close();
-        return $bebidas;
+        return $hamburguesas;
     }
     public static function getById($id)
     {
         //Conexion a BBDD + Consulta
         $con = DataBase::connect();
-        $stmt = $con->prepare("SELECT * FROM productos WHERE id = ? AND categoria_id = 3");
+        $stmt = $con->prepare("SELECT * FROM productos WHERE id = ? AND categoria_id = 1");
         // Esto asignara a cada ? el valor que queramos
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        $producto = $result->fetch_object("bebidas");
+        $producto = $result->fetch_object("Hamburguesas");
         //Cerramos conexiones
         $stmt->close();
         $con->close();
@@ -50,7 +50,7 @@ class BebidasDAO
         $con = DataBase::connect();
         $stmt = $con->prepare("INSERT INTO productos (categoria_id, nombre, descripcion, precio, imagen, activo) VALUES (?, ?, ?, ?, ?, ?)");
         // Obtenemos los valores del objeto producto
-        $categoria_id = $producto->getCategoria_id();
+        $categoria_id = $producto->getCategoriaId();
         $nombre = $producto->getNombre();
         $descripcion = $producto->getDescripcion();
         $precio = $producto->getPrecio();
@@ -69,7 +69,7 @@ class BebidasDAO
     public static function delete($id){
         //Conexion a BBDD + Consulta
         $con = DataBase::connect();
-        $stmt = $con->prepare("DELETE FROM productos WHERE id = ? AND categoria_id = 3");
+        $stmt = $con->prepare("DELETE FROM productos WHERE id = ? AND categoria_id = 1");
         // Asignamos el valor del parámetro de la consulta
         $stmt->bind_param("i", $id);
         $stmt->execute();

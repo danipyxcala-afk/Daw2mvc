@@ -42,7 +42,7 @@ a:hover {
 }
 
 /* Clase de ayuda para poner texto blanco sobre fondos oscuros o fotos */
-.textblanco {
+.texto-blanco {
     color: var(--blanco);
 }
 

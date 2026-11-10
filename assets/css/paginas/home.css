@@ -2,7 +2,7 @@
    Estilos de cada sección de la home, en el mismo orden en que aparecen. */
 
 /* PORTADA: la foto grande con el título */
-.EntradaHome {
+.entrada-home {
     /* Dos fondos a la vez: una capa azul semitransparente encima de la foto,
        para oscurecerla y que el texto se lea mejor */
     background-image:

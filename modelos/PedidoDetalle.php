@@ -1,5 +1,5 @@
 <?php
-class Pedido_detalle
+class PedidoDetalle
 {
     protected $id;
     protected $pedido_id;
@@ -64,7 +64,7 @@ class Pedido_detalle
     /**
      * Get the value of pedido_id
      */
-    public function getPedido_id()
+    public function getPedidoId()
     {
         return $this->pedido_id;
     }
@@ -74,7 +74,7 @@ class Pedido_detalle
      *
      * @return  self
      */
-    public function setPedido_id($pedido_id)
+    public function setPedidoId($pedido_id)
     {
         $this->pedido_id = $pedido_id;
 
@@ -84,7 +84,7 @@ class Pedido_detalle
     /**
      * Get the value of producto_id
      */
-    public function getProducto_id()
+    public function getProductoId()
     {
         return $this->producto_id;
     }
@@ -94,7 +94,7 @@ class Pedido_detalle
      *
      * @return  self
      */
-    public function setProducto_id($producto_id)
+    public function setProductoId($producto_id)
     {
         $this->producto_id = $producto_id;
 
@@ -104,7 +104,7 @@ class Pedido_detalle
     /**
      * Get the value of nombre_producto
      */
-    public function getNombre_producto()
+    public function getNombreProducto()
     {
         return $this->nombre_producto;
     }
@@ -114,7 +114,7 @@ class Pedido_detalle
      *
      * @return  self
      */
-    public function setNombre_producto($nombre_producto)
+    public function setNombreProducto($nombre_producto)
     {
         $this->nombre_producto = $nombre_producto;
 
@@ -124,7 +124,7 @@ class Pedido_detalle
     /**
      * Get the value of precio_unitario
      */
-    public function getPrecio_unitario()
+    public function getPrecioUnitario()
     {
         return $this->precio_unitario;
     }
@@ -134,7 +134,7 @@ class Pedido_detalle
      *
      * @return  self
      */
-    public function setPrecio_unitario($precio_unitario)
+    public function setPrecioUnitario($precio_unitario)
     {
         $this->precio_unitario = $precio_unitario;
 

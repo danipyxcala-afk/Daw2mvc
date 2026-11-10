@@ -244,7 +244,7 @@
 }
 
 /* BOTÓN DE ICONO: botón redondo que solo lleva un icono (carrito, usuario, "+" de la carta) */
-.btn-icono {
+.boton-icono {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -259,17 +259,17 @@
     transition: background-color .15s ease;
 }
 
-.btn-icono:hover {
+.boton-icono:hover {
     background-color: var(--gris-fondo);
 }
 
-.btn-icono:focus-visible {
+.boton-icono:focus-visible {
     outline: 2px solid var(--azul-claro);
     outline-offset: 2px;
 }
 
 /* El "+" azul de la carta: sin fondo gris en hover, solo se vuelve algo transparente */
-.btn-icono--primario:hover {
+.boton-icono--primario:hover {
     background-color: transparent;
     opacity: .8;
 }

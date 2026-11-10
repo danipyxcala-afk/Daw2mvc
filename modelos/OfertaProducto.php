@@ -1,5 +1,5 @@
 <?php
-class Oferta_producto
+class OfertaProducto
 {
     protected $oferta_id;
     protected $producto_id;
@@ -19,7 +19,7 @@ class Oferta_producto
     /**
      * Get the value of oferta_id
      */
-    public function getOferta_id()
+    public function getOfertaId()
     {
         return $this->oferta_id;
     }
@@ -29,7 +29,7 @@ class Oferta_producto
      *
      * @return  self
      */
-    public function setOferta_id($oferta_id)
+    public function setOfertaId($oferta_id)
     {
         $this->oferta_id = $oferta_id;
 
@@ -39,7 +39,7 @@ class Oferta_producto
     /**
      * Get the value of producto_id
      */
-    public function getProducto_id()
+    public function getProductoId()
     {
         return $this->producto_id;
     }
@@ -49,7 +49,7 @@ class Oferta_producto
      *
      * @return  self
      */
-    public function setProducto_id($producto_id)
+    public function setProductoId($producto_id)
     {
         $this->producto_id = $producto_id;
 

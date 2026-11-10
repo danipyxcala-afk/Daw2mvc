@@ -174,7 +174,7 @@ class Ofertas
     /**
      * Get the value of fecha_inicio
      */
-    public function getFecha_inicio()
+    public function getFechaInicio()
     {
         return $this->fecha_inicio;
     }
@@ -184,7 +184,7 @@ class Ofertas
      *
      * @return  self
      */
-    public function setFecha_inicio($fecha_inicio)
+    public function setFechaInicio($fecha_inicio)
     {
         $this->fecha_inicio = $fecha_inicio;
 
@@ -194,7 +194,7 @@ class Ofertas
     /**
      * Get the value of fecha_fin
      */
-    public function getFecha_fin()
+    public function getFechaFin()
     {
         return $this->fecha_fin;
     }
@@ -204,7 +204,7 @@ class Ofertas
      *
      * @return  self
      */
-    public function setFecha_fin($fecha_fin)
+    public function setFechaFin($fecha_fin)
     {
         $this->fecha_fin = $fecha_fin;
 

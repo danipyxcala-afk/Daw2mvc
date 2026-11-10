@@ -1,8 +1,8 @@
 <?php
-include_once(__DIR__ . "/../config/database.php");
-include_once(__DIR__ . "/../modelos/pedidos.php");
-include_once(__DIR__ . "/../modelos/pedido_detalle.php");
-include_once(__DIR__ . "/../modelos/pedido_detalle_ingrediente.php");
+include_once(__DIR__ . "/../config/DataBase.php");
+include_once(__DIR__ . "/../modelos/Pedidos.php");
+include_once(__DIR__ . "/../modelos/PedidoDetalle.php");
+include_once(__DIR__ . "/../modelos/PedidoDetalleIngrediente.php");
 class PedidosDAO
 {
     public static function getAll()
@@ -20,7 +20,7 @@ class PedidosDAO
         // Creamos Array guardar datos
         $pedidos = [];
         //utilizamos fetch object par aque sepa de que clase tiene que utilizar el constructor
-        while ($pedido = $result->fetch_object("pedidos")) {
+        while ($pedido = $result->fetch_object("Pedidos")) {
             $pedidos[] = $pedido;
         }
         //Cerramos conexiones
@@ -38,7 +38,7 @@ class PedidosDAO
         $stmt->execute();
         $result = $stmt->get_result();
 
-        $pedido = $result->fetch_object("pedidos");
+        $pedido = $result->fetch_object("Pedidos");
         //Cerramos conexiones
         $stmt->close();
         $con->close();
@@ -52,13 +52,13 @@ class PedidosDAO
         $con = DataBase::connect();
         $stmt = $con->prepare("INSERT INTO pedidos (usuario_id, estado, subtotal, descuento, total, metodo_pago, estado_pago) VALUES (?, ?, ?, ?, ?, ?, ?)");
         // Obtenemos los valores del objeto pedido
-        $usuario_id = $pedido->getUsuario_id();
+        $usuario_id = $pedido->getUsuarioId();
         $estado = $pedido->getEstado();
         $subtotal = $pedido->getSubtotal();
         $descuento = $pedido->getDescuento();
         $total = $pedido->getTotal();
-        $metodo_pago = $pedido->getMetodo_pago();
-        $estado_pago = $pedido->getEstado_pago();
+        $metodo_pago = $pedido->getMetodoPago();
+        $estado_pago = $pedido->getEstadoPago();
         // Asignamos los valores a los parámetros de la consulta el isdddss significa int string double double double string string
         $stmt->bind_param("isdddss", $usuario_id, $estado, $subtotal, $descuento, $total, $metodo_pago, $estado_pago);
         // Ejecutamos la consulta
@@ -122,7 +122,7 @@ class PedidosDAO
         // Creamos Array guardar datos
         $lineas = [];
         //utilizamos fetch object par aque sepa de que clase tiene que utilizar el constructor
-        while ($linea = $result->fetch_object("pedido_detalle")) {
+        while ($linea = $result->fetch_object("PedidoDetalle")) {
             $lineas[] = $linea;
         }
         //Cerramos conexiones
@@ -136,10 +136,10 @@ class PedidosDAO
         $con = DataBase::connect();
         $stmt = $con->prepare("INSERT INTO pedido_detalle (pedido_id, producto_id, nombre_producto, precio_unitario, cantidad, subtotal) VALUES (?, ?, ?, ?, ?, ?)");
         // Obtenemos los valores del objeto pedido_detalle
-        $pedido_id = $pedido_detalle->getPedido_id();
-        $producto_id = $pedido_detalle->getProducto_id();
-        $nombre_producto = $pedido_detalle->getNombre_producto();
-        $precio_unitario = $pedido_detalle->getPrecio_unitario();
+        $pedido_id = $pedido_detalle->getPedidoId();
+        $producto_id = $pedido_detalle->getProductoId();
+        $nombre_producto = $pedido_detalle->getNombreProducto();
+        $precio_unitario = $pedido_detalle->getPrecioUnitario();
         $cantidad = $pedido_detalle->getCantidad();
         $subtotal = $pedido_detalle->getSubtotal();
         // Asignamos los valores a los parámetros de la consulta el iisdid significa int int string double int double
@@ -181,7 +181,7 @@ class PedidosDAO
         // Creamos Array guardar datos
         $ingredientes = [];
         //utilizamos fetch object par aque sepa de que clase tiene que utilizar el constructor
-        while ($ingrediente = $result->fetch_object("pedido_detalle_ingrediente")) {
+        while ($ingrediente = $result->fetch_object("PedidoDetalleIngrediente")) {
             $ingredientes[] = $ingrediente;
         }
         //Cerramos conexiones
@@ -195,10 +195,10 @@ class PedidosDAO
         $con = DataBase::connect();
         $stmt = $con->prepare("INSERT INTO pedido_detalle_ingrediente (pedido_detalle_id, ingrediente_id, nombre_ingrediente, precio_extra, accion) VALUES (?, ?, ?, ?, ?)");
         // Obtenemos los valores del objeto pedido_detalle_ingrediente
-        $pedido_detalle_id = $pedido_detalle_ingrediente->getPedido_detalle_id();
-        $ingrediente_id = $pedido_detalle_ingrediente->getIngrediente_id();
-        $nombre_ingrediente = $pedido_detalle_ingrediente->getNombre_ingrediente();
-        $precio_extra = $pedido_detalle_ingrediente->getPrecio_extra();
+        $pedido_detalle_id = $pedido_detalle_ingrediente->getPedidoDetalleId();
+        $ingrediente_id = $pedido_detalle_ingrediente->getIngredienteId();
+        $nombre_ingrediente = $pedido_detalle_ingrediente->getNombreIngrediente();
+        $precio_extra = $pedido_detalle_ingrediente->getPrecioExtra();
         $accion = $pedido_detalle_ingrediente->getAccion();
         // Asignamos los valores a los parámetros de la consulta el iisds significa int int string double string
         $stmt->bind_param("iisds", $pedido_detalle_id, $ingrediente_id, $nombre_ingrediente, $precio_extra, $accion);

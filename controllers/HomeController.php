@@ -1,6 +1,6 @@
 <?php
-include_once(__DIR__ . "/productosController.php");
-class homeController
+include_once(__DIR__ . "/ProductosController.php");
+class HomeController
 {
     function index()
     {

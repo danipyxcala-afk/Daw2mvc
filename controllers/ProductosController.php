@@ -1,17 +1,17 @@
 <?php
 //daos
-include_once(__DIR__ . "/../dao/hamburguesasDAO.php");
-include_once(__DIR__ . "/../dao/complementosDAO.php");
-include_once(__DIR__ . "/../dao/bebidasDAO.php");
-include_once(__DIR__ . "/../dao/postresDAO.php");
+include_once(__DIR__ . "/../dao/HamburguesasDAO.php");
+include_once(__DIR__ . "/../dao/ComplementosDAO.php");
+include_once(__DIR__ . "/../dao/BebidasDAO.php");
+include_once(__DIR__ . "/../dao/PostresDAO.php");
 include_once(__DIR__ . "/../dao/CategoriasDAO.php");
-include_once(__DIR__ . "/../dao/ingredientesDAO.php");
+include_once(__DIR__ . "/../dao/IngredientesDAO.php");
 
 //modelos
-include_once(__DIR__ . "/../modelos/hamburguesas.php");
-include_once(__DIR__ . "/../modelos/complementos.php");
-include_once(__DIR__ . "/../modelos/bebidas.php");
-include_once(__DIR__ . "/../modelos/postres.php");
+include_once(__DIR__ . "/../modelos/Hamburguesas.php");
+include_once(__DIR__ . "/../modelos/Complementos.php");
+include_once(__DIR__ . "/../modelos/Bebidas.php");
+include_once(__DIR__ . "/../modelos/Postres.php");
 include_once(__DIR__ . "/../modelos/Categorias.php");
 
 
@@ -80,8 +80,8 @@ class ProductosController
         $ingredientesBase = $ingredientes['base'];
         $extras = $ingredientes['extras'];
 
-        $categoria = CategoriasDAO::getById($producto->getCategoria_id());
-        $colorCategoria = $this->getColorCategoria($producto->getCategoria_id());
+        $categoria = CategoriasDAO::getById($producto->getCategoriaId());
+        $colorCategoria = $this->getColorCategoria($producto->getCategoriaId());
 
         $view = "views/productos/detalle.php";
         include_once 'views/main.php';
@@ -108,7 +108,7 @@ class ProductosController
     // Separa los ingredientes en base (cantidad > 0) y extras (cantidad = 0)
     private function getIngredientesProducto($producto)
     {
-        $esBebida = (int) $producto->getCategoria_id() === self::CATEGORIA_BEBIDAS;
+        $esBebida = (int) $producto->getCategoriaId() === self::CATEGORIA_BEBIDAS;
         $resultado = ['base' => [], 'extras' => []];
 
         foreach (IngredientesDAO::getDetalleByProducto($producto->getId()) as $ingrediente) {

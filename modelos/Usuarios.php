@@ -57,7 +57,7 @@ class Usuarios
     /**
      * Get the value of fecha_registro
      */
-    public function getFecha_registro()
+    public function getFechaRegistro()
     {
         return $this->fecha_registro;
     }
@@ -67,7 +67,7 @@ class Usuarios
      *
      * @return  self
      */
-    public function setFecha_registro($fecha_registro)
+    public function setFechaRegistro($fecha_registro)
     {
         $this->fecha_registro = $fecha_registro;
 
@@ -97,7 +97,7 @@ class Usuarios
     /**
      * Get the value of fecha_nacimiento
      */
-    public function getFecha_nacimiento()
+    public function getFechaNacimiento()
     {
         return $this->fecha_nacimiento;
     }
@@ -107,7 +107,7 @@ class Usuarios
      *
      * @return  self
      */
-    public function setFecha_nacimiento($fecha_nacimiento)
+    public function setFechaNacimiento($fecha_nacimiento)
     {
         $this->fecha_nacimiento = $fecha_nacimiento;
 

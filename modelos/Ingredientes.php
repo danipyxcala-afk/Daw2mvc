@@ -69,7 +69,7 @@ class Ingredientes
     /**
      * Get the value of precio_extra
      */
-    public function getPrecio_extra()
+    public function getPrecioExtra()
     {
         return $this->precio_extra;
     }
@@ -79,7 +79,7 @@ class Ingredientes
      *
      * @return  self
      */
-    public function setPrecio_extra($precio_extra)
+    public function setPrecioExtra($precio_extra)
     {
         $this->precio_extra = $precio_extra;
 

@@ -10,7 +10,7 @@
                 <h1 class="acceso__titulo">Iniciar sesión</h1>
                 <p class="mb-4">Entra para hacer tu pedido</p>
 
-                <form class="formulariolog" action="<?= url ?>index.php?controller=user&action=login" method="POST">
+                <form class="formulario" action="<?= url ?>index.php?controller=user&action=login" method="POST">
                     <div class="mb-3">
                         <label class="form-label" for="email">Email</label>
                         <input placeholder="tu@email.com" type="email" class="form-control" id="email" name="email"

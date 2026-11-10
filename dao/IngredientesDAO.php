@@ -1,7 +1,7 @@
 <?php
-include_once(__DIR__ . "/../config/database.php");
-include_once(__DIR__ . "/../modelos/ingredientes.php");
-include_once(__DIR__ . "/../modelos/producto_ingrediente.php");
+include_once(__DIR__ . "/../config/DataBase.php");
+include_once(__DIR__ . "/../modelos/Ingredientes.php");
+include_once(__DIR__ . "/../modelos/ProductoIngrediente.php");
 class IngredientesDAO
 {
     public static function getAll()
@@ -19,7 +19,7 @@ class IngredientesDAO
         // Creamos Array guardar datos
         $ingredientes = [];
         //utilizamos fetch object par aque sepa de que clase tiene que utilizar el constructor
-        while ($ingrediente = $result->fetch_object("ingredientes")) {
+        while ($ingrediente = $result->fetch_object("Ingredientes")) {
             $ingredientes[] = $ingrediente;
         }
         //Cerramos conexiones
@@ -37,7 +37,7 @@ class IngredientesDAO
         $stmt->execute();
         $result = $stmt->get_result();
 
-        $ingrediente = $result->fetch_object("ingredientes");
+        $ingrediente = $result->fetch_object("Ingredientes");
         //Cerramos conexiones
         $stmt->close();
         $con->close();
@@ -52,7 +52,7 @@ class IngredientesDAO
         $stmt = $con->prepare("INSERT INTO ingredientes (nombre, precio_extra, activo) VALUES (?, ?, ?)");
         // Obtenemos los valores del objeto ingrediente
         $nombre = $ingrediente->getNombre();
-        $precio_extra = $ingrediente->getPrecio_extra();
+        $precio_extra = $ingrediente->getPrecioExtra();
         $activo = $ingrediente->getActivo();
         // Asignamos los valores a los parámetros de la consulta el sdi significa string double int
         $stmt->bind_param("sdi", $nombre, $precio_extra, $activo);
@@ -93,7 +93,7 @@ class IngredientesDAO
         // Creamos Array guardar datos
         $ingredientes = [];
         //utilizamos fetch object par aque sepa de que clase tiene que utilizar el constructor
-        while ($ingrediente = $result->fetch_object("producto_ingrediente")) {
+        while ($ingrediente = $result->fetch_object("ProductoIngrediente")) {
             $ingredientes[] = $ingrediente;
         }
         //Cerramos conexiones
@@ -133,8 +133,8 @@ class IngredientesDAO
         $con = DataBase::connect();
         $stmt = $con->prepare("INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES (?, ?, ?)");
         // Obtenemos los valores del objeto producto_ingrediente
-        $producto_id = $producto_ingrediente->getProducto_id();
-        $ingrediente_id = $producto_ingrediente->getIngrediente_id();
+        $producto_id = $producto_ingrediente->getProductoId();
+        $ingrediente_id = $producto_ingrediente->getIngredienteId();
         $cantidad = $producto_ingrediente->getCantidad();
         // Asignamos los valores a los parámetros de la consulta el iid significa int int double
         $stmt->bind_param("iid", $producto_id, $ingrediente_id, $cantidad);

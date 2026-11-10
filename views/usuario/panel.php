@@ -16,7 +16,7 @@ function precioPanel($valor)
 
 // "Cliente desde septiembre de 2026": PHP da el mes en inglés, así que usamos nuestra propia lista
 $meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-$fechaRegistro = strtotime($usuario->getFecha_registro());
+$fechaRegistro = strtotime($usuario->getFechaRegistro());
 ?>
 <div class="container panel">
     <nav class="producto__migas" aria-label="Migas de pan">
@@ -75,7 +75,7 @@ $fechaRegistro = strtotime($usuario->getFecha_registro());
                 <details class="pedido pedido--<?= textoPanel($estado) ?>">
                     <summary class="pedido__resumen">
                         <span class="pedido__numero">Pedido #<?= (int) $pedido->getId() ?></span>
-                        <span class="pedido__fecha"><?= date('d/m/Y', strtotime($pedido->getFecha_pedido())) ?></span>
+                        <span class="pedido__fecha"><?= date('d/m/Y', strtotime($pedido->getFechaPedido())) ?></span>
                         <span class="estado estado--<?= textoPanel($estado) ?>"><?= textoPanel(ucfirst($estado)) ?></span>
                         <span class="pedido__total"><?= precioPanel($pedido->getTotal()) ?></span>
                     </summary>
@@ -87,22 +87,22 @@ $fechaRegistro = strtotime($usuario->getFecha_registro());
                                 ?>
                                 <li class="pedido__linea">
                                     <div class="pedido__producto">
-                                        <span><?= (int) $linea->getCantidad() ?>x <?= textoPanel($linea->getNombre_producto()) ?></span>
+                                        <span><?= (int) $linea->getCantidad() ?>x <?= textoPanel($linea->getNombreProducto()) ?></span>
                                         <span><?= precioPanel($linea->getSubtotal()) ?></span>
                                     </div>
 
                                     <?php if (count($fila['mods']) > 0) { ?>
                                         <ul class="pedido__mods">
                                             <?php foreach ($fila['mods'] as $mod) {
-                                                $nombreIngrediente = textoPanel($mod->getNombre_ingrediente());
+                                                $nombreIngrediente = textoPanel($mod->getNombreIngrediente());
                                                 if ($mod->getAccion() === 'quitado') { ?>
                                                     <li class="pedido__mod--quitado">− Sin <?= $nombreIngrediente ?></li>
                                                 <?php } else { ?>
                                                     <!-- La clase va sin ñ (anadido) para evitar problemas en el CSS -->
                                                     <li class="pedido__mod--anadido">
                                                         + <?= $nombreIngrediente ?>
-                                                        <?php if ((float) $mod->getPrecio_extra() > 0) { ?>
-                                                            (<?= precioPanel($mod->getPrecio_extra()) ?>)
+                                                        <?php if ((float) $mod->getPrecioExtra() > 0) { ?>
+                                                            (<?= precioPanel($mod->getPrecioExtra()) ?>)
                                                         <?php } ?>
                                                     </li>
                                                 <?php }
@@ -126,7 +126,7 @@ $fechaRegistro = strtotime($usuario->getFecha_registro());
                             <dd class="pedido__totales-final"><?= precioPanel($pedido->getTotal()) ?></dd>
 
                             <dt>Pago</dt>
-                            <dd><?= textoPanel(ucfirst($pedido->getEstado_pago())) ?></dd>
+                            <dd><?= textoPanel(ucfirst($pedido->getEstadoPago())) ?></dd>
                         </dl>
                     </div>
                 </details>
@@ -152,7 +152,7 @@ $fechaRegistro = strtotime($usuario->getFecha_registro());
 
                     <dt class="datos__campo">Fecha de nacimiento</dt>
                     <dd class="datos__valor">
-                        <?= $usuario->getFecha_nacimiento() ? date('d/m/Y', strtotime($usuario->getFecha_nacimiento())) : '—' ?>
+                        <?= $usuario->getFechaNacimiento() ? date('d/m/Y', strtotime($usuario->getFechaNacimiento())) : '—' ?>
                     </dd>
                 </dl>
             </section>

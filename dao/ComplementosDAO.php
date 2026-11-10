@@ -1,14 +1,14 @@
 <?php
-include_once(__DIR__ . "/../config/database.php");
-include_once(__DIR__ . "/../modelos/postres.php");
-class PostresDAO
+include_once(__DIR__ . "/../config/DataBase.php");
+include_once(__DIR__ . "/../modelos/Complementos.php");
+class ComplementosDAO
 {
     public static function getAll()
     {
         //Conexion a BBDD + Consultas
         $con = DataBase::connect();
         //importante poner en mayus para que salga en rojo :3
-        $stmt = $con->prepare("SELECT * FROM productos WHERE categoria_id = 4");
+        $stmt = $con->prepare("SELECT * FROM productos WHERE categoria_id = 2");
         // Esto asignara a cada ? el valor que queramos
         // $stmt->bind_param("i", $id);
         //Ejecuta la query
@@ -16,27 +16,27 @@ class PostresDAO
         $result = $stmt->get_result();
 
         // Creamos Array guardar datos
-        $postres = [];
+        $complementos = [];
         //utilizamos fetch object par aque sepa de que clase tiene que utilizar el constructor
-        while ($postre = $result->fetch_object("postres")) {
-            $postres[] = $postre;
+        while ($complemento = $result->fetch_object("Complementos")) {
+            $complementos[] = $complemento;
         }
         //Cerramos conexiones
         $stmt->close();
         $con->close();
-        return $postres;
+        return $complementos;
     }
     public static function getById($id)
     {
         //Conexion a BBDD + Consulta
         $con = DataBase::connect();
-        $stmt = $con->prepare("SELECT * FROM productos WHERE id = ? AND categoria_id = 4");
+        $stmt = $con->prepare("SELECT * FROM productos WHERE id = ? AND categoria_id = 2");
         // Esto asignara a cada ? el valor que queramos
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        $producto = $result->fetch_object("postres");
+        $producto = $result->fetch_object("Complementos");
         //Cerramos conexiones
         $stmt->close();
         $con->close();
@@ -50,7 +50,7 @@ class PostresDAO
         $con = DataBase::connect();
         $stmt = $con->prepare("INSERT INTO productos (categoria_id, nombre, descripcion, precio, imagen, activo) VALUES (?, ?, ?, ?, ?, ?)");
         // Obtenemos los valores del objeto producto
-        $categoria_id = $producto->getCategoria_id();
+        $categoria_id = $producto->getCategoriaId();
         $nombre = $producto->getNombre();
         $descripcion = $producto->getDescripcion();
         $precio = $producto->getPrecio();
@@ -69,7 +69,7 @@ class PostresDAO
     public static function delete($id){
         //Conexion a BBDD + Consulta
         $con = DataBase::connect();
-        $stmt = $con->prepare("DELETE FROM productos WHERE id = ? AND categoria_id = 4");
+        $stmt = $con->prepare("DELETE FROM productos WHERE id = ? AND categoria_id = 2");
         // Asignamos el valor del parámetro de la consulta
         $stmt->bind_param("i", $id);
         $stmt->execute();

@@ -15,12 +15,12 @@
     <?php include_once __DIR__ . "/header.php"; ?>
 
     <main>
-        <!-- Notificaciones cuando se actualiza algo en carrito -->
+        <!-- Avisos de un solo uso (carrito, login, cerrar sesión...).
+             Flota encima de la página para no empujar el contenido; la X lo cierra (JS de Bootstrap) -->
         <?php if (isset($_SESSION['aviso'])) { ?>
-            <div class="container">
-                <div class="alert alert-info" role="status">
-                    <?= htmlspecialchars($_SESSION['aviso'], ENT_QUOTES, 'UTF-8') ?>
-                </div>
+            <div class="aviso alert alert-info alert-dismissible fade show" role="status">
+                <?= htmlspecialchars($_SESSION['aviso'], ENT_QUOTES, 'UTF-8') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
             </div>
             <?php
             // El aviso se muestra una sola vez

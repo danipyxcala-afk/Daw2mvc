@@ -1,6 +1,6 @@
-<?php include_once(__DIR__."/productos.php");
+<?php include_once(__DIR__."/Productos.php");
 
-class Hamburguesas extends productos
+class Postres extends Productos
 {
     public function __construct(
         $id = null,
@@ -13,7 +13,6 @@ class Hamburguesas extends productos
     ) {
         parent::__construct($id, $categoria_id, $nombre, $descripcion, $precio, $imagen, $activo);
     }
-
 
 }
 ?>

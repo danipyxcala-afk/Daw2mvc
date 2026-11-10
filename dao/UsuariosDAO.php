@@ -1,5 +1,5 @@
 <?php
-include_once(__DIR__ . "/../config/dataBase.php");
+include_once(__DIR__ . "/../config/DataBase.php");
 include_once(__DIR__ . "/../modelos/Usuarios.php");
 
 class UsuariosDAO
@@ -19,7 +19,7 @@ class UsuariosDAO
         // Creamos Array guardar datos
         $usuarios = [];
         //utilizamos fetch object par aque sepa de que clase tiene que utilizar el constructor
-        while ($usuario = $result->fetch_object("usuarios")) {
+        while ($usuario = $result->fetch_object("Usuarios")) {
             $usuarios[] = $usuario;
         }
         //Cerramos conexiones
@@ -37,7 +37,7 @@ class UsuariosDAO
         $stmt->execute();
         $result = $stmt->get_result();
 
-        $usuario = $result->fetch_object("usuarios");
+        $usuario = $result->fetch_object("Usuarios");
         //Cerramos conexiones
         $stmt->close();
         $con->close();
@@ -69,7 +69,7 @@ class UsuariosDAO
         $password = $usuario->getPassword();
         $telefono = $usuario->getTelefono();
         $direccion = $usuario->getDireccion();
-        $fecha_nacimiento = $usuario->getFecha_nacimiento();
+        $fecha_nacimiento = $usuario->getFechaNacimiento();
         $rol = $usuario->getRol();
         // Asignamos los valores a los parámetros de la consulta
         // "sssssds" indica los tipos de datos de los parámetros: s = string, d = double, i = integer

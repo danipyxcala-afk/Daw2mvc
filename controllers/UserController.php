@@ -1,10 +1,10 @@
 <?php
 include_once(__DIR__ . "/../modelos/Usuarios.php");
-include_once(__DIR__ . "/../dao/usuariosDAO.php");
-include_once(__DIR__ . "/../dao/pedidosDAO.php");
-include_once(__DIR__ . "/../dao/ofertasDAO.php");
+include_once(__DIR__ . "/../dao/UsuariosDAO.php");
+include_once(__DIR__ . "/../dao/PedidosDAO.php");
+include_once(__DIR__ . "/../dao/OfertasDAO.php");
 
-class userController
+class UserController
 {
 
     //pantalla inicial 
@@ -22,7 +22,7 @@ class userController
     //Muestra la pantalla de login
     public function plogin()
     {
-        $view = "views/PanelUsuario/login.php";
+        $view = "views/usuario/login.php";
         include_once 'views/main.php';
     }
 
@@ -55,7 +55,7 @@ class userController
     //muestra la pantalla de registro
     public function pregistro()
     {
-        $view = "views/PanelUsuario/registro.php";
+        $view = "views/usuario/registro.php";
         include_once 'views/main.php';
     }
 
@@ -120,7 +120,7 @@ class userController
             $codigos = array_filter($codigos, fn($c) => $c->getCodigo() !== 'BIENVENIDA15');
         }
 
-        $view = "views/PanelUsuario/user.php";
+        $view = "views/usuario/panel.php";
         include_once 'views/main.php';
     }
     public function logout()

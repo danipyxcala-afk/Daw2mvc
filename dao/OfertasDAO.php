@@ -1,7 +1,7 @@
 <?php
-include_once(__DIR__ . "/../config/database.php");
-include_once(__DIR__ . "/../modelos/ofertas.php");
-include_once(__DIR__ . "/../modelos/oferta_producto.php");
+include_once(__DIR__ . "/../config/DataBase.php");
+include_once(__DIR__ . "/../modelos/Ofertas.php");
+include_once(__DIR__ . "/../modelos/OfertaProducto.php");
 class OfertasDAO
 {
     public static function getAll()
@@ -19,7 +19,7 @@ class OfertasDAO
         // Creamos Array guardar datos
         $ofertas = [];
         //utilizamos fetch object par aque sepa de que clase tiene que utilizar el constructor
-        while ($oferta = $result->fetch_object("ofertas")) {
+        while ($oferta = $result->fetch_object("Ofertas")) {
             $ofertas[] = $oferta;
         }
         //Cerramos conexiones
@@ -37,7 +37,7 @@ class OfertasDAO
         $stmt->execute();
         $result = $stmt->get_result();
 
-        $oferta = $result->fetch_object("ofertas");
+        $oferta = $result->fetch_object("Ofertas");
         //Cerramos conexiones
         $stmt->close();
         $con->close();
@@ -56,8 +56,8 @@ class OfertasDAO
         $tipo = $oferta->getTipo();
         $valor = $oferta->getValor();
         $codigo = $oferta->getCodigo();
-        $fecha_inicio = $oferta->getFecha_inicio();
-        $fecha_fin = $oferta->getFecha_fin();
+        $fecha_inicio = $oferta->getFechaInicio();
+        $fecha_fin = $oferta->getFechaFin();
         $activa = $oferta->getActiva();
         // Asignamos los valores a los parámetros de la consulta el sssdsssi significa string string string double string string string int
         $stmt->bind_param("sssdsssi", $nombre, $descripcion, $tipo, $valor, $codigo, $fecha_inicio, $fecha_fin, $activa);
@@ -118,7 +118,7 @@ class OfertasDAO
         // Creamos Array guardar datos
         $productos = [];
         //utilizamos fetch object par aque sepa de que clase tiene que utilizar el constructor
-        while ($producto = $result->fetch_object("oferta_producto")) {
+        while ($producto = $result->fetch_object("OfertaProducto")) {
             $productos[] = $producto;
         }
         //Cerramos conexiones
@@ -132,8 +132,8 @@ class OfertasDAO
         $con = DataBase::connect();
         $stmt = $con->prepare("INSERT INTO oferta_producto (oferta_id, producto_id) VALUES (?, ?)");
         // Obtenemos los valores del objeto oferta_producto
-        $oferta_id = $oferta_producto->getOferta_id();
-        $producto_id = $oferta_producto->getProducto_id();
+        $oferta_id = $oferta_producto->getOfertaId();
+        $producto_id = $oferta_producto->getProductoId();
         // Asignamos los valores a los parámetros de la consulta el ii significa int int
         $stmt->bind_param("ii", $oferta_id, $producto_id);
         // Ejecutamos la consulta

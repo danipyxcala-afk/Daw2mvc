@@ -49,10 +49,10 @@
                             <article class="card-producto">
 
                                 <a href="<?= url ?>index.php?controller=productos&action=detalle&id=<?= (int) $producto->getId() ?>"
-                                    class="card-producto__media <?= isset($colorPorCategoria[$producto->getCategoria_id()]) ? 'categoria-card--' . $colorPorCategoria[$producto->getCategoria_id()] : '' ?>">
+                                    class="card-producto__media <?= isset($colorPorCategoria[$producto->getCategoriaId()]) ? 'categoria-card--' . $colorPorCategoria[$producto->getCategoriaId()] : '' ?>">
                                     <p class="card-producto__categoria">
                                         <?php foreach ($categorias as $cat) {
-                                            if ($cat->getID() == $producto->getCategoria_id()) { ?>
+                                            if ($cat->getID() == $producto->getCategoriaId()) { ?>
                                                 <?= htmlspecialchars($cat->getNombre(), ENT_QUOTES, 'UTF-8') ?>
                                             <?php }
                                         } ?>
@@ -80,7 +80,7 @@
                                             Editar
                                         </a>
 
-                                        <a href="#" class="btn-icono btn-icono--primario" aria-label="Añadir producto">
+                                        <a href="#" class="boton-icono boton-icono--primario" aria-label="Añadir producto">
                                             <img src="<?= url ?>assets/img/icons/azul/svg/mas-circulo.svg" alt="" width="32"
                                                 height="32">
                                         </a>

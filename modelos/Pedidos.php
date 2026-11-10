@@ -74,7 +74,7 @@ class Pedidos
     /**
      * Get the value of usuario_id
      */
-    public function getUsuario_id()
+    public function getUsuarioId()
     {
         return $this->usuario_id;
     }
@@ -84,7 +84,7 @@ class Pedidos
      *
      * @return  self
      */
-    public function setUsuario_id($usuario_id)
+    public function setUsuarioId($usuario_id)
     {
         $this->usuario_id = $usuario_id;
 
@@ -114,7 +114,7 @@ class Pedidos
     /**
      * Get the value of fecha_pedido
      */
-    public function getFecha_pedido()
+    public function getFechaPedido()
     {
         return $this->fecha_pedido;
     }
@@ -124,7 +124,7 @@ class Pedidos
      *
      * @return  self
      */
-    public function setFecha_pedido($fecha_pedido)
+    public function setFechaPedido($fecha_pedido)
     {
         $this->fecha_pedido = $fecha_pedido;
 
@@ -194,7 +194,7 @@ class Pedidos
     /**
      * Get the value of metodo_pago
      */
-    public function getMetodo_pago()
+    public function getMetodoPago()
     {
         return $this->metodo_pago;
     }
@@ -204,7 +204,7 @@ class Pedidos
      *
      * @return  self
      */
-    public function setMetodo_pago($metodo_pago)
+    public function setMetodoPago($metodo_pago)
     {
         $this->metodo_pago = $metodo_pago;
 
@@ -214,7 +214,7 @@ class Pedidos
     /**
      * Get the value of estado_pago
      */
-    public function getEstado_pago()
+    public function getEstadoPago()
     {
         return $this->estado_pago;
     }
@@ -224,7 +224,7 @@ class Pedidos
      *
      * @return  self
      */
-    public function setEstado_pago($estado_pago)
+    public function setEstadoPago($estado_pago)
     {
         $this->estado_pago = $estado_pago;
 

@@ -1,5 +1,5 @@
 <?php
-class Producto_ingrediente
+class ProductoIngrediente
 {
     protected $producto_id;
     protected $ingrediente_id;
@@ -24,7 +24,7 @@ class Producto_ingrediente
     /**
      * Get the value of producto_id
      */
-    public function getProducto_id()
+    public function getProductoId()
     {
         return $this->producto_id;
     }
@@ -34,7 +34,7 @@ class Producto_ingrediente
      *
      * @return  self
      */
-    public function setProducto_id($producto_id)
+    public function setProductoId($producto_id)
     {
         $this->producto_id = $producto_id;
 
@@ -44,7 +44,7 @@ class Producto_ingrediente
     /**
      * Get the value of ingrediente_id
      */
-    public function getIngrediente_id()
+    public function getIngredienteId()
     {
         return $this->ingrediente_id;
     }
@@ -54,7 +54,7 @@ class Producto_ingrediente
      *
      * @return  self
      */
-    public function setIngrediente_id($ingrediente_id)
+    public function setIngredienteId($ingrediente_id)
     {
         $this->ingrediente_id = $ingrediente_id;
 

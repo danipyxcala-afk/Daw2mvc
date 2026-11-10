@@ -30,7 +30,7 @@ header {
 }
 
 /* Imagen del logo: width auto mantiene su proporción */
-.logoheader {
+.logo {
     height: 50px;
     width: auto;
 }
@@ -83,7 +83,7 @@ header {
         border-radius: 28px;
     }
 
-    .logoheader {
+    .logo {
         height: 36px;
     }
 

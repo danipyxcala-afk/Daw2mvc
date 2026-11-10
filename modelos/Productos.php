@@ -64,7 +64,7 @@ abstract class Productos
     /**
      * Get the value of categoria_id
      */
-    public function getCategoria_id()
+    public function getCategoriaId()
     {
         return $this->categoria_id;
     }
@@ -74,7 +74,7 @@ abstract class Productos
      *
      * @return  self
      */
-    public function setCategoria_id($categoria_id)
+    public function setCategoriaId($categoria_id)
     {
         $this->categoria_id = $categoria_id;
 

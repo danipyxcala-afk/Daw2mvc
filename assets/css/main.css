@@ -24,6 +24,7 @@
 @import url("componentes/card-producto.css");
 @import url("componentes/tabla.css");
 @import url("componentes/formularios.css");
+@import url("componentes/aviso.css");
 
 /* Páginas: estilos propios de una página concreta */
 @import url("paginas/home.css");

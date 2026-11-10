@@ -21,7 +21,8 @@ if (!isset($_GET['controller'])) {
 }
 
 $controllerParam = $_GET['controller'];
-$nombre_controller = $controllerParam . "Controller";
+// ucfirst pone la primera letra en mayúscula: ?controller=user -> UserController (clase y archivo)
+$nombre_controller = ucfirst($controllerParam) . "Controller";
 $controllerFile = "controllers/" . $nombre_controller . ".php";
 
 if (!file_exists($controllerFile)) {

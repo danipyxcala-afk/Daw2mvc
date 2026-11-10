@@ -1,7 +1,7 @@
-<section class="EntradaHome">
+<section class="entrada-home">
     <div class="container">
-        <h1 class="textblanco">Para disfrutar,</h1>
-        <h1 class="textblanco">a tu manera</h1>
+        <h1 class="texto-blanco">Para disfrutar,</h1>
+        <h1 class="texto-blanco">a tu manera</h1>
         <a href="<?= url ?>index.php?controller=productos" class="boton boton--secundario">
             Ver nuestra carta
             <img src="<?= url ?>assets/img/icons/blanco/svg/flecha-diagonal.svg" alt="" width="20" height="20">
@@ -13,25 +13,25 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h3 class="textblanco">Fresco</h3>
+                <h3 class="texto-blanco">Fresco</h3>
             </div>
             <div class="col">
-                <h3 class="textblanco">Artesanal</h3>
+                <h3 class="texto-blanco">Artesanal</h3>
             </div>
             <div class="col">
-                <h3 class="textblanco">A tu gusto</h3>
+                <h3 class="texto-blanco">A tu gusto</h3>
             </div>
             <div class="col">
-                <h3 class="textblanco">Rapido</h3>
+                <h3 class="texto-blanco">Rapido</h3>
             </div>
             <div class="col">
-                <h3 class="textblanco">Con pasión</h3>
+                <h3 class="texto-blanco">Con pasión</h3>
             </div>
         </div>
     </div>
 </section>
 
-<div class="container defineSigmeat">
+<div class="container define">
     <section class="mt-5">
         <div class="container text-center">
             <h2>¿Que define a Sigmeat?</h2>
@@ -134,9 +134,9 @@
 <section class="futuro mt-5">
     <div class="futuro__lateral d-none d-md-block"></div>
     <div class="futuro__principal">
-        <h2 class="textblanco">Construyendo el futuro!</h2>
+        <h2 class="texto-blanco">Construyendo el futuro!</h2>
         <div>
-            <p class="textblanco">Enfocado para universidades</p>
+            <p class="texto-blanco">Enfocado para universidades</p>
             <a href="#" class="boton boton--secundario">
                 Conócenos
                 <img src="<?= url ?>assets/img/icons/blanco/svg/flecha-diagonal.svg" alt="" width="20" height="20">
