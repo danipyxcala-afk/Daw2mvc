@@ -19,9 +19,16 @@
                     <span class="encabezado__contador"><?= $productosEnCarrito ?></span>
                 <?php } ?>
             </a>
-            <a href="<?= url ?>index.php?controller=user" class="btn-icono" aria-label="Abrir menú">
+            <a href="<?= url ?>index.php?controller=user" class="btn-icono" aria-label="Mi cuenta">
                 <img src="<?= url ?>assets/img/icons/negro/svg/usuario.svg" alt="" width="24" height="24">
             </a>
+            <!-- Cerrar sesión: solo aparece si hay un usuario con la sesión iniciada -->
+            <?php if (isset($_SESSION['usuario'])) { ?>
+                <a href="<?= url ?>index.php?controller=user&action=logout" class="btn-icono"
+                    aria-label="Cerrar sesión" title="Cerrar sesión">
+                    <img src="<?= url ?>assets/img/icons/negro/svg/cerrar.svg" alt="" width="24" height="24">
+                </a>
+            <?php } ?>
         </div>
     </div>
 </header>

@@ -1,0 +1,305 @@
+/* PANEL DE USUARIO
+   La página "Mi cuenta": resumen, historial de pedidos, datos del usuario y códigos de descuento. */
+
+/* Separación con el pie de página, igual que en la página de producto */
+.panel {
+    margin-bottom: 64px;
+}
+
+/* CABECERA: el saludo de arriba */
+.panel__cabecera {
+    margin-bottom: 32px;
+}
+
+/* El título: más pequeño que un h1 normal (64px), igual que en la tarjeta de acceso */
+.panel__titulo {
+    margin-bottom: 4px;
+    font-size: 40px;
+}
+
+/* "Cliente desde...": azul medio para que destaque menos que el título.
+   No usamos --gris-texto porque sobre blanco se lee mal (poco contraste) */
+.panel__subtitulo {
+    margin-bottom: 0;
+    color: var(--azul-medio);
+}
+
+/* Título de cada sección (Mis pedidos, Mis datos, Tus códigos) */
+.panel__seccion {
+    margin-bottom: 16px;
+    font-size: 24px;
+}
+
+/* Tarjeta gris: misma apariencia que la de login y registro (.acceso) */
+.panel__tarjeta {
+    padding: 32px;
+    background-color: var(--gris-fondo);
+    border-radius: var(--radio-tarjeta);
+}
+
+/* Mensaje cuando el usuario todavía no tiene pedidos */
+.panel__vacio {
+    padding: 32px;
+    background-color: var(--gris-fondo);
+    border-radius: var(--radio-tarjeta);
+    text-align: center;
+}
+
+/* RESUMEN: las tres cifras de arriba (pedidos, gastado, último pedido) */
+.resumen__tarjeta {
+    height: 100%; /* las tres tarjetas miden lo mismo aunque el texto sea distinto */
+    padding: 24px;
+    background-color: var(--azul-suave);
+    border-radius: var(--radio-tarjeta);
+}
+
+/* La cifra grande */
+.resumen__numero {
+    display: block;
+    font-family: var(--fuente-negrita);
+    font-size: 32px;
+    line-height: 1.2;
+}
+
+/* El texto pequeño debajo de la cifra */
+.resumen__texto {
+    display: block;
+    color: var(--azul-medio);
+}
+
+/* MIS DATOS: lista de "campo: valor".
+   <dl> es la etiqueta HTML pensada para parejas de nombre y valor */
+.datos {
+    margin-bottom: 0;
+}
+
+/* Nombre del campo (Email, Teléfono...): pequeño y en negrita */
+.datos__campo {
+    font-family: var(--fuente-negrita);
+    font-size: 14px;
+}
+
+/* Valor del campo. overflow-wrap parte los emails largos para que no se salgan de la tarjeta */
+.datos__valor {
+    margin-bottom: 12px;
+    overflow-wrap: anywhere;
+}
+
+.datos__valor:last-child {
+    margin-bottom: 0;
+}
+
+/* CÓDIGOS DE DESCUENTO: cada uno parece un cupón recortable */
+.codigo {
+    padding: 16px;
+    border: 2px dashed var(--azul-claro); /* borde discontinuo, como un cupón */
+    border-radius: var(--radio-tarjeta);
+    background-color: var(--blanco);
+}
+
+/* Separación entre un cupón y el siguiente */
+.codigo + .codigo {
+    margin-top: 12px;
+}
+
+/* El código que hay que escribir al pagar */
+.codigo__texto {
+    display: block;
+    font-family: var(--fuente-negrita);
+    font-size: 20px;
+    letter-spacing: 1px; /* letras algo separadas para que se lea bien */
+    color: var(--azul-claro);
+}
+
+.codigo__desc {
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+/* HISTORIAL DE PEDIDOS
+   Cada pedido es un <details>: al pulsar el <summary> se abre y se ve el detalle sin cambiar de página */
+.pedido {
+    margin-bottom: 12px;
+    background-color: var(--gris-fondo);
+    border-radius: var(--radio-tarjeta);
+}
+
+/* La fila que siempre se ve: número, fecha, estado, total y flecha */
+.pedido__resumen {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    padding: 20px 24px;
+    list-style: none; /* quita el triángulo que pone el navegador */
+    cursor: pointer;
+}
+
+/* Safari pone su propio triángulo: también lo quitamos */
+.pedido__resumen::-webkit-details-marker {
+    display: none;
+}
+
+/* Contorno azul al llegar con el teclado (tecla Tab), igual que los botones */
+.pedido__resumen:focus-visible {
+    outline: 3px solid var(--azul-claro);
+    outline-offset: 3px;
+    border-radius: var(--radio-tarjeta);
+}
+
+/* Nuestra flecha: hacia abajo si está cerrado... */
+.pedido__resumen::after {
+    content: "";
+    width: 24px;
+    height: 24px;
+    background: url("../../img/icons/negro/svg/flecha-abajo.svg") center / contain no-repeat;
+}
+
+/* ...y hacia arriba si está abierto. [open] lo añade el navegador al abrir el <details> */
+.pedido[open] .pedido__resumen::after {
+    background-image: url("../../img/icons/negro/svg/flecha-arriba.svg");
+}
+
+.pedido__numero {
+    font-family: var(--fuente-negrita);
+    font-size: 18px;
+}
+
+.pedido__fecha {
+    color: var(--azul-medio);
+}
+
+/* El total: margin-left auto lo empuja a la derecha, junto a la flecha */
+.pedido__total {
+    margin-left: auto;
+    font-family: var(--fuente-negrita);
+    font-size: 18px;
+}
+
+/* Si el pedido se canceló, el total sale tachado porque no se cobró */
+.pedido--cancelado .pedido__total {
+    text-decoration: line-through;
+}
+
+/* Contenido que aparece al abrir: separado del resumen con una línea */
+.pedido__detalle {
+    margin: 0 24px;
+    padding: 16px 0 20px;
+    border-top: 1px solid var(--gris-texto);
+}
+
+/* Lista de productos del pedido, sin viñetas */
+.pedido__lineas {
+    margin: 0 0 16px;
+    padding: 0;
+    list-style: none;
+}
+
+.pedido__linea {
+    margin-bottom: 12px;
+}
+
+/* Nombre del producto a la izquierda y precio a la derecha */
+.pedido__producto {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+/* Ingredientes quitados o añadidos, debajo del producto */
+.pedido__mods {
+    margin: 4px 0 0;
+    padding-left: 16px;
+    list-style: none;
+    font-size: 14px;
+}
+
+/* Ingrediente quitado: tachado y en azul medio */
+.pedido__mod--quitado {
+    color: var(--azul-medio);
+    text-decoration: line-through;
+}
+
+/* Ingrediente añadido como extra: en azul claro */
+.pedido__mod--anadido {
+    color: var(--azul-claro);
+}
+
+/* Subtotal, descuento, total y pago: cada fila con el nombre a la izquierda y el valor a la derecha */
+.pedido__totales {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px 16px;
+    margin-bottom: 0;
+}
+
+.pedido__totales dd {
+    margin-bottom: 0;
+    text-align: right;
+}
+
+/* La fila del total, en negrita */
+.pedido__totales-final {
+    font-family: var(--fuente-negrita);
+}
+
+/* ESTADO DEL PEDIDO: píldora de color.
+   Cuanto más avanzado está el pedido, más oscuro es el azul */
+.estado {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: var(--radio-pildora);
+    font-family: var(--fuente-negrita);
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.estado--pendiente {
+    background-color: var(--blanco);
+    color: var(--azul-oscuro);
+}
+
+.estado--confirmado {
+    background-color: var(--azul-suave);
+    color: var(--azul-oscuro);
+}
+
+.estado--preparando {
+    background-color: var(--azul-medio);
+    color: var(--blanco);
+}
+
+.estado--enviado {
+    background-color: var(--azul-claro);
+    color: var(--blanco);
+}
+
+.estado--entregado {
+    background-color: var(--azul-oscuro);
+    color: var(--blanco);
+}
+
+.estado--cancelado {
+    background-color: var(--gris-texto);
+    color: var(--azul-oscuro);
+}
+
+/* En móvil: menos relleno y título más pequeño, como en acceso.css */
+@media (max-width: 576px) {
+    .panel__titulo {
+        font-size: 32px;
+    }
+
+    .panel__tarjeta,
+    .panel__vacio {
+        padding: 24px;
+    }
+
+    .pedido__resumen {
+        padding: 16px;
+    }
+
+    .pedido__detalle {
+        margin: 0 16px;
+    }
+}

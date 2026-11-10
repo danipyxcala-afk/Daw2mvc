@@ -81,6 +81,30 @@ class PedidosDAO
         $con->close();
     }
 
+        public static function getPedidosByUsuario($usuario_id)
+    {
+        //Conexion a BBDD + Consultas
+        $con = DataBase::connect();
+        //importante poner en mayus para que salga en rojo :3
+        $stmt = $con->prepare("SELECT * FROM pedidos WHERE usuario_id = ? order by fecha_pedido desc");
+        // Esto asignara a cada ? el valor que queramos
+        $stmt->bind_param("i", $usuario_id);
+        //Ejecuta la query
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Creamos Array guardar datos
+        $lineas = [];
+        //utilizamos fetch object par aque sepa de que clase tiene que utilizar el constructor
+        while ($linea = $result->fetch_object("Pedidos")) {
+            $lineas[] = $linea;
+        }
+        //Cerramos conexiones
+        $stmt->close();
+        $con->close();
+        return $lineas;
+    }
+
     //  Tabla pedido_detalle 
 
     public static function getDetalle($pedido_id)

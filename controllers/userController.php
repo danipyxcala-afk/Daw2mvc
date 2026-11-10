@@ -1,6 +1,8 @@
 <?php
 include_once(__DIR__ . "/../modelos/Usuarios.php");
 include_once(__DIR__ . "/../dao/usuariosDAO.php");
+include_once(__DIR__ . "/../dao/pedidosDAO.php");
+include_once(__DIR__ . "/../dao/ofertasDAO.php");
 
 class userController
 {
@@ -90,10 +92,46 @@ class userController
             header("Location: " . url . "index.php?controller=user&action=plogin");
             exit();
         }
+
+        $pedidos = PedidosDAO::getPedidosByUsuario($_SESSION['usuario']->getId());
+        // Array para almacenar los detalles de cada pedido y un resumen de los pedidos
+        $detalles = [];
+        $resumen = ['num' => count($pedidos), 'gastado' => 0, 'ultimo' => $pedidos ? $pedidos[0]->getEstado() : null];
+        // Calcular el total gastado y obtener los detalles de cada pedido
+        foreach ($pedidos as $pedido) {
+            if ($pedido->getEstado() !== 'cancelado') {
+                $resumen['gastado'] += (float) $pedido->getTotal();
+            }
+            // Obtener los detalles de cada pedido y sus modificaciones
+            foreach (PedidosDAO::getDetalle($pedido->getId()) as $linea) {
+                // Obtener las modificaciones de cada línea del pedido, excluyendo los ingredientes incluidos
+                $mods = array_filter(
+                    PedidosDAO::getIngredientesDetalle($linea->getId()),
+                    fn($i) => $i->getAccion() !== 'incluido'
+                );
+                // Guardar los detalles y modificaciones en un array asociativo para cada pedido
+                $detalles[$pedido->getId()][] = ['linea' => $linea, 'mods' => $mods];
+            }
+        }
+        // Obtener los códigos de descuento activos y filtrar el código de bienvenida si el usuario ya ha realizado pedidos
+        $codigos = OfertasDAO::getCodigosActivos();
+        if ($resumen['num'] > 0) {
+            // Filtrar el código de bienvenida si el usuario ya ha realizado pedidos
+            $codigos = array_filter($codigos, fn($c) => $c->getCodigo() !== 'BIENVENIDA15');
+        }
+
         $view = "views/PanelUsuario/user.php";
         include_once 'views/main.php';
     }
-
+    public function logout()
+    {
+        unset($_SESSION['usuario']);
+        session_regenerate_id(true);
+        $_SESSION['aviso'] = "Has cerrado sesión correctamente.";
+        header("Location: " . url . "index.php?controller=home");
+        exit();
+    }
 }
+
 
 ?>

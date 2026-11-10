@@ -69,7 +69,8 @@ class OfertasDAO
         $con->close();
 
     }
-    public static function delete($id){
+    public static function delete($id)
+    {
         //Conexion a BBDD + Consulta
         $con = DataBase::connect();
         $stmt = $con->prepare("DELETE FROM ofertas WHERE id = ?");
@@ -79,6 +80,25 @@ class OfertasDAO
         // Cerramos la conexión
         $stmt->close();
         $con->close();
+    }
+
+    public static function getCodigosActivos()
+    {
+        $con = DataBase::connect();
+        // Consulta para obtener los códigos de ofertas activas
+        $stmt = $con->prepare("SELECT * FROM ofertas WHERE tipo = 'codigo' AND activa = 1 AND fecha_inicio <= NOW() AND (fecha_fin IS NULL OR fecha_fin >= NOW())");
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $codigos = [];
+        while ($oferta = $result->fetch_object("Ofertas")) {
+            $codigos[] = $oferta;
+        }
+        $stmt->close();
+        $con->close();
+
+        return $codigos;
     }
 
     //  Tabla oferta_producto 
@@ -124,7 +144,8 @@ class OfertasDAO
         $con->close();
 
     }
-    public static function deleteProducto($oferta_id, $producto_id){
+    public static function deleteProducto($oferta_id, $producto_id)
+    {
         //Conexion a BBDD + Consulta
         $con = DataBase::connect();
         $stmt = $con->prepare("DELETE FROM oferta_producto WHERE oferta_id = ? AND producto_id = ?");
