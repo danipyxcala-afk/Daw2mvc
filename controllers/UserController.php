@@ -7,7 +7,7 @@ include_once(__DIR__ . "/../dao/OfertasDAO.php");
 class UserController
 {
 
-    //pantalla inicial 
+    //pantalla inicial
     public function index()
     {   // Si el usuario ya ha iniciado sesión, redirigir a la página de usuario
         if (isset($_SESSION['usuario'])) {
@@ -34,9 +34,9 @@ class UserController
             exit();
         }
 
-
         $email = $_POST['email'];
         $password = $_POST['password'];
+        // Obtener el usuario por correo electrónico
         $usuario = UsuariosDAO::getByEmail($email);
 
         if ($usuario && password_verify($password, $usuario->getPassword())) {
@@ -72,6 +72,7 @@ class UserController
             // Verificar si el usuario ya existe antes de registrarlo
             if (UsuariosDAO::getByEmail($email)) {
                 $_SESSION['aviso'] = "El usuario ya existe. Por favor, inicia sesión.";
+                // Redirigir a la pantalla de login
                 header("Location: " . url . "index.php?controller=user&action=plogin");
                 exit();
             }
@@ -84,7 +85,6 @@ class UserController
             exit();
         }
     }
-
     //pantalla de usuario y cargar registro de compras del usuario
     public function puser()
     {
@@ -125,6 +125,7 @@ class UserController
     }
     public function logout()
     {
+        // Cerrar sesión y redirigir al inicio
         unset($_SESSION['usuario']);
         session_regenerate_id(true);
         $_SESSION['aviso'] = "Has cerrado sesión correctamente.";

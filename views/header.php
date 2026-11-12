@@ -2,7 +2,7 @@
 
     <div class="encabezado">
         <a href="<?= url ?>index.php?controller=home" class="encabezado__logo">
-            <img src="<?= url ?>/assets/img/logo/logo-claro.png" alt="Sigmeat" class="logo">
+            <img src="<?= url ?>/assets/img/logo/logo-claro.svg" alt="Sigmeat" class="logo">
         </a>
         <nav class="encabezado__nav">
             <a href="<?= url ?>index.php?controller=home" class="encabezado__enlace">Inicio</a>

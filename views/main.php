@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sigmeat</title>
-    <link rel="icon" type="image/png" href="<?= url ?>/assets/img/logo/favicon-32.png">
+    <link rel="icon" type="image/svg+xml" href="<?= url ?>/assets/img/logo/favicon.svg">
+    <!-- Respaldo para navegadores sin favicon SVG (Safari antiguo) e iconos de iOS -->
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= url ?>/assets/img/logo/favicon-32.png">
+    <link rel="apple-touch-icon" href="<?= url ?>/assets/img/logo/apple-touch-icon.png">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= url ?>/assets/css/main.css">

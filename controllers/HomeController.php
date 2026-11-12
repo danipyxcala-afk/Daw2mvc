@@ -20,10 +20,10 @@ class HomeController
 
         // La tabla categorias no guarda imagen: indicamos cuál representa a cada una
         $imagenesCategorias = [
-            "Hamburguesas" => "img/productos/classic-burger.png",
-            "Complementos" => "img/productos/patatas-classicas.png",
-            "Bebidas" => "img/productos/batido-chocolate.png",
-            "Postres" => "img/productos/brownie-con-helado.png",
+            "Hamburguesas" => "img/productos/classic-burger.webp",
+            "Complementos" => "img/productos/patatas-classicas.webp",
+            "Bebidas" => "img/productos/batido-chocolate.webp",
+            "Postres" => "img/productos/brownie-con-helado.webp",
         ];
 
         $view = "views/inicio/home.php";

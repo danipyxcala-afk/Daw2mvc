@@ -7,7 +7,7 @@
        para oscurecerla y que el texto se lea mejor */
     background-image:
         linear-gradient(rgba(0, 0, 53, 0.25), rgba(0, 0, 53, 0.25)),
-        url("../../img/home/home1.png");
+        url("../../img/home/home1.webp");
     background-size: cover;
     /* la foto cubre toda la sección */
     background-position: center;
@@ -184,7 +184,7 @@
    flex: 0 0 16% significa: no crece, no se encoge y mide el 16% del ancho */
 .futuro__lateral {
     flex: 0 0 16%;
-    background-image: url("../../img/home/home3.png");
+    background-image: url("../../img/home/home3.webp");
     background-size: cover;
     background-position: center top;
 }
@@ -200,7 +200,7 @@
     /* Igual que en la portada: capa oscura encima de la foto */
     background-image:
         linear-gradient(rgba(0, 0, 53, 0.3), rgba(0, 0, 53, 0.3)),
-        url("../../img/home/home2.png");
+        url("../../img/home/home2.webp");
     background-size: cover;
     background-position: center;
     border-left: 32px solid var(--azul-oscuro);

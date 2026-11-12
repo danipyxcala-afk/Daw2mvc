@@ -9,7 +9,7 @@
 
         <div class="row g-4 footer__enlaces">
             <div class="col-12 col-md-3">
-                <img src="<?= url ?>/assets/img/logo/logo-claro.png" alt="Sigmeat" class="logo">
+                <img src="<?= url ?>/assets/img/logo/logo-claro.svg" alt="Sigmeat" class="logo">
             </div>
 
             <nav class="col-6 col-md-3" aria-label="Sigmeat">

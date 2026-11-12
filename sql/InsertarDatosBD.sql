@@ -112,7 +112,7 @@ INSERT INTO ingredientes (id, nombre, precio_extra, activo) VALUES
 
 -- 1. Classic Burger · 8.90 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (1, 1, 'Classic Burger', 'Carne de ternera de 180 g, lechuga, tomate, cebolla y nuestra salsa especial en pan.', 8.90, 'img/productos/classic-burger.png', TRUE);
+  (1, 1, 'Classic Burger', 'Carne de ternera de 180 g, lechuga, tomate, cebolla y nuestra salsa especial en pan.', 8.90, 'img/productos/classic-burger.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (1, 1, 1), -- Pan de hamburguesa (base)
   (1, 2, 1), -- Carne de ternera (base, extra +2.50 €)
@@ -128,7 +128,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 2. Cheese Bacon · 10.50 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (2, 1, 'Cheese Bacon', 'Carne de ternera de 180 g, doble queso cheddar y beicon crujiente.', 10.50, 'img/productos/cheese-bacon.png', TRUE);
+  (2, 1, 'Cheese Bacon', 'Carne de ternera de 180 g, doble queso cheddar y beicon crujiente.', 10.50, 'img/productos/cheese-bacon.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (2, 1, 1), -- Pan de hamburguesa (base)
   (2, 2, 1), -- Carne de ternera (base, extra +2.50 €)
@@ -142,7 +142,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 3. Veggie Burger · 9.50 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (3, 1, 'Veggie Burger', 'Hamburguesa vegetal con aguacate, tomate y lechuga.', 9.50, 'img/productos/veggie-burger.png', TRUE);
+  (3, 1, 'Veggie Burger', 'Hamburguesa vegetal con aguacate, tomate y lechuga.', 9.50, 'img/productos/veggie-burger.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (3, 1, 1), -- Pan de hamburguesa (base)
   (3, 18, 1), -- Hamburguesa vegetal (base, extra +2.50 €)
@@ -156,7 +156,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 4. BBQ Burger · 10.90 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (4, 1, 'BBQ Burger', 'Carne de ternera de 180 g, queso cheddar, beicon crujiente, cebolla crujiente y salsa BBQ.', 10.90, 'img/productos/bbq-burger.png', TRUE);
+  (4, 1, 'BBQ Burger', 'Carne de ternera de 180 g, queso cheddar, beicon crujiente, cebolla crujiente y salsa BBQ.', 10.90, 'img/productos/bbq-burger.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (4, 1, 1), -- Pan de hamburguesa (base)
   (4, 2, 1), -- Carne de ternera (base, extra +2.50 €)
@@ -171,7 +171,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 5. Crispy Chicken · 9.90 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (5, 1, 'Crispy Chicken', 'Pollo crujiente, lechuga, tomate y mayonesa en pan.', 9.90, 'img/productos/crispy-chicken.png', TRUE);
+  (5, 1, 'Crispy Chicken', 'Pollo crujiente, lechuga, tomate y mayonesa en pan.', 9.90, 'img/productos/crispy-chicken.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (5, 1, 1), -- Pan de hamburguesa (base)
   (5, 17, 1), -- Pollo crujiente (base, extra +2.00 €)
@@ -185,7 +185,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 6. Spicy Burger · 10.20 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (6, 1, 'Spicy Burger', 'Carne de ternera de 180 g, queso cheddar, jalapeños, salsa picante y lechuga.', 10.20, 'img/productos/spicy-burger.png', TRUE);
+  (6, 1, 'Spicy Burger', 'Carne de ternera de 180 g, queso cheddar, jalapeños, salsa picante y lechuga.', 10.20, 'img/productos/spicy-burger.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (6, 1, 1), -- Pan de hamburguesa (base)
   (6, 2, 1), -- Carne de ternera (base, extra +2.50 €)
@@ -200,7 +200,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 7. Double Burger · 12.50 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (7, 1, 'Double Burger', 'Doble carne de ternera de 180 g, doble queso cheddar, pepinillos, cebolla y salsa especial.', 12.50, 'img/productos/double-burger.png', TRUE);
+  (7, 1, 'Double Burger', 'Doble carne de ternera de 180 g, doble queso cheddar, pepinillos, cebolla y salsa especial.', 12.50, 'img/productos/double-burger.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (7, 1, 1), -- Pan de hamburguesa (base)
   (7, 2, 2), -- Carne de ternera (base, extra +2.50 €)
@@ -214,7 +214,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 8. Mushroom Burger · 10.40 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (8, 1, 'Mushroom Burger', 'Carne de ternera de 180 g, champiñones salteados, queso cheddar y salsa especial.', 10.40, 'img/productos/mushroom-burger.png', TRUE);
+  (8, 1, 'Mushroom Burger', 'Carne de ternera de 180 g, champiñones salteados, queso cheddar y salsa especial.', 10.40, 'img/productos/mushroom-burger.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (8, 1, 1), -- Pan de hamburguesa (base)
   (8, 2, 1), -- Carne de ternera (base, extra +2.50 €)
@@ -228,7 +228,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 9. Campus Burger · 12.90 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (9, 1, 'Campus Burger', 'La más completa: carne de ternera de 180 g, huevo a la plancha, beicon crujiente, queso cheddar, lechuga, tomate y salsa especial.', 12.90, 'img/productos/campus-burger.png', TRUE);
+  (9, 1, 'Campus Burger', 'La más completa: carne de ternera de 180 g, huevo a la plancha, beicon crujiente, queso cheddar, lechuga, tomate y salsa especial.', 12.90, 'img/productos/campus-burger.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (9, 1, 1), -- Pan de hamburguesa (base)
   (9, 2, 1), -- Carne de ternera (base, extra +2.50 €)
@@ -247,7 +247,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 10. Patatas Classicas · 3.50 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (10, 2, 'Patatas Classicas', 'Patatas fritas crujientes con sal.', 3.50, 'img/productos/patatas-classicas.png', TRUE);
+  (10, 2, 'Patatas Classicas', 'Patatas fritas crujientes con sal.', 3.50, 'img/productos/patatas-classicas.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (10, 24, 1), -- Patatas fritas (base)
   (10, 26, 1), -- Sal (base)
@@ -259,7 +259,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 11. Patatas Deluxe · 3.70 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (11, 2, 'Patatas Deluxe', 'Patatas gajo con piel, sal y especias.', 3.70, 'img/productos/patatas-deluxe.png', TRUE);
+  (11, 2, 'Patatas Deluxe', 'Patatas gajo con piel, sal y especias.', 3.70, 'img/productos/patatas-deluxe.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (11, 25, 1), -- Patatas gajo (base)
   (11, 26, 1), -- Sal (base)
@@ -272,7 +272,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 12. Patatas Bravas · 4.20 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (12, 2, 'Patatas Bravas', 'Patatas fritas con salsa brava y alioli.', 4.20, 'img/productos/patatas-bravas.png', TRUE);
+  (12, 2, 'Patatas Bravas', 'Patatas fritas con salsa brava y alioli.', 4.20, 'img/productos/patatas-bravas.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (12, 24, 1), -- Patatas fritas (base)
   (12, 28, 1), -- Salsa brava (base, extra +0.50 €)
@@ -283,7 +283,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 13. Aros de cebolla · 4.00 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (13, 2, 'Aros de cebolla', 'Aros de cebolla rebozados con salsa BBQ.', 4.00, 'img/productos/aros-de-cebolla.png', TRUE);
+  (13, 2, 'Aros de cebolla', 'Aros de cebolla rebozados con salsa BBQ.', 4.00, 'img/productos/aros-de-cebolla.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (13, 30, 1), -- Aros de cebolla rebozados (base)
   (13, 15, 1), -- Salsa BBQ (base, extra +0.50 €)
@@ -292,7 +292,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 14. Nuggets de pollo · 4.50 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (14, 2, 'Nuggets de pollo', '6 nuggets de pollo empanado con salsa BBQ.', 4.50, 'img/productos/nuggets-de-pollo.png', TRUE);
+  (14, 2, 'Nuggets de pollo', '6 nuggets de pollo empanado con salsa BBQ.', 4.50, 'img/productos/nuggets-de-pollo.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (14, 31, 1), -- Pollo empanado (base)
   (14, 15, 1), -- Salsa BBQ (base, extra +0.50 €)
@@ -301,7 +301,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 15. Ensalada césar · 8.50 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (15, 2, 'Ensalada césar', 'Pollo a la plancha, lechuga, parmesano, picatostes y salsa césar.', 8.50, 'img/productos/ensalada-cesar.png', TRUE);
+  (15, 2, 'Ensalada césar', 'Pollo a la plancha, lechuga, parmesano, picatostes y salsa césar.', 8.50, 'img/productos/ensalada-cesar.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (15, 20, 1), -- Pollo a la plancha (base, extra +2.00 €)
   (15, 3, 1), -- Lechuga (base)
@@ -316,7 +316,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 16. Agua · 2.00 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (16, 3, 'Agua', 'Agua mineral 50 cl.', 2.00, 'img/productos/agua.png', TRUE);
+  (16, 3, 'Agua', 'Agua mineral 50 cl.', 2.00, 'img/productos/agua.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (16, 35, 1), -- Agua mineral (base)
   (16, 33, 1), -- Hielo (base)
@@ -324,7 +324,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 17. Coca-cola · 3.00 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (17, 3, 'Coca-cola', 'Coca-cola 33 cl.', 3.00, 'img/productos/coca-cola.png', TRUE);
+  (17, 3, 'Coca-cola', 'Coca-cola 33 cl.', 3.00, 'img/productos/coca-cola.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (17, 36, 1), -- Coca-cola (base)
   (17, 33, 1), -- Hielo (base)
@@ -332,7 +332,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 18. Coca-cola Zero · 3.00 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (18, 3, 'Coca-cola Zero', 'Coca-cola Zero 33 cl.', 3.00, 'img/productos/coca-cola-zero.png', TRUE);
+  (18, 3, 'Coca-cola Zero', 'Coca-cola Zero 33 cl.', 3.00, 'img/productos/coca-cola-zero.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (18, 37, 1), -- Coca-cola Zero (base)
   (18, 33, 1), -- Hielo (base)
@@ -340,7 +340,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 19. Fanta Naranja · 3.00 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (19, 3, 'Fanta Naranja', 'Fanta de naranja 33 cl.', 3.00, 'img/productos/fanta-naranja.png', TRUE);
+  (19, 3, 'Fanta Naranja', 'Fanta de naranja 33 cl.', 3.00, 'img/productos/fanta-naranja.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (19, 38, 1), -- Fanta Naranja (base)
   (19, 33, 1), -- Hielo (base)
@@ -348,7 +348,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 20. Aquarius · 3.00 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (20, 3, 'Aquarius', 'Aquarius de limón 33 cl.', 3.00, 'img/productos/aquarius.png', TRUE);
+  (20, 3, 'Aquarius', 'Aquarius de limón 33 cl.', 3.00, 'img/productos/aquarius.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (20, 39, 1), -- Aquarius (base)
   (20, 33, 1), -- Hielo (base)
@@ -356,21 +356,21 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 21. Zumo de naranja · 3.00 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (21, 3, 'Zumo de naranja', 'Zumo de naranja 33 cl.', 3.00, 'img/productos/zumo-de-naranja.png', TRUE);
+  (21, 3, 'Zumo de naranja', 'Zumo de naranja 33 cl.', 3.00, 'img/productos/zumo-de-naranja.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (21, 40, 1), -- Zumo de naranja (base)
   (21, 33, 1); -- Hielo (base)
 
 -- 22. Cerveza · 3.00 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (22, 3, 'Cerveza', 'Cerveza 33 cl. Solo para mayores de 18 años.', 3.00, 'img/productos/cerveza.png', TRUE);
+  (22, 3, 'Cerveza', 'Cerveza 33 cl. Solo para mayores de 18 años.', 3.00, 'img/productos/cerveza.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (22, 41, 1), -- Cerveza (base)
   (22, 34, 0); -- Rodaja de limón (extra opcional, extra +0.20 €)
 
 -- 23. Batido chocolate · 2.00 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (23, 3, 'Batido chocolate', 'Batido de chocolate con leche, cacao y helado de vainilla.', 2.00, 'img/productos/batido-chocolate.png', TRUE);
+  (23, 3, 'Batido chocolate', 'Batido de chocolate con leche, cacao y helado de vainilla.', 2.00, 'img/productos/batido-chocolate.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (23, 43, 1), -- Leche (base)
   (23, 44, 1), -- Cacao (base)
@@ -380,7 +380,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 24. Té helado de limón · 3.00 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (24, 3, 'Té helado de limón', 'Té helado de limón 33 cl.', 3.00, 'img/productos/te-helado-limon.png', TRUE);
+  (24, 3, 'Té helado de limón', 'Té helado de limón 33 cl.', 3.00, 'img/productos/te-helado-limon.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (24, 42, 1), -- Té helado de limón (base)
   (24, 33, 1), -- Hielo (base)
@@ -390,7 +390,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 25. Brownie con helado · 6.00 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (25, 4, 'Brownie con helado', 'Brownie de chocolate caliente con helado de vainilla y sirope.', 6.00, 'img/productos/brownie-con-helado.png', TRUE);
+  (25, 4, 'Brownie con helado', 'Brownie de chocolate caliente con helado de vainilla y sirope.', 6.00, 'img/productos/brownie-con-helado.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (25, 48, 1), -- Brownie de chocolate (base)
   (25, 45, 1), -- Helado de vainilla (base, extra +1.00 €)
@@ -399,7 +399,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 26. Helado · 5.00 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (26, 4, 'Helado', 'Dos bolas de helado de vainilla con sirope de chocolate.', 5.00, 'img/productos/helado.png', TRUE);
+  (26, 4, 'Helado', 'Dos bolas de helado de vainilla con sirope de chocolate.', 5.00, 'img/productos/helado.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (26, 45, 2), -- Helado de vainilla (base, extra +1.00 €)
   (26, 47, 1), -- Sirope de chocolate (base, extra +0.50 €)
@@ -407,7 +407,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 27. Natilla · 4.00 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (27, 4, 'Natilla', 'Natillas caseras con galleta y canela.', 4.00, 'img/productos/natilla.png', TRUE);
+  (27, 4, 'Natilla', 'Natillas caseras con galleta y canela.', 4.00, 'img/productos/natilla.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (27, 49, 1), -- Natillas (base)
   (27, 50, 1), -- Galleta (base)
@@ -417,7 +417,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 28. Tarta de queso · 4.50 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (28, 4, 'Tarta de queso', 'Tarta de queso cremosa con mermelada de frutos rojos.', 4.50, 'img/productos/tarta-de-queso.png', TRUE);
+  (28, 4, 'Tarta de queso', 'Tarta de queso cremosa con mermelada de frutos rojos.', 4.50, 'img/productos/tarta-de-queso.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (28, 52, 1), -- Queso crema (base)
   (28, 53, 1), -- Base de galleta (base)
@@ -427,7 +427,7 @@ INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
 
 -- 29. Cookie con pepitas · 2.50 €
 INSERT INTO productos (id, categoria_id, nombre, descripcion, precio, imagen, activo) VALUES
-  (29, 4, 'Cookie con pepitas', 'Cookie recién hecha con pepitas de chocolate.', 2.50, 'img/productos/cookie-con-pepitas.png', TRUE);
+  (29, 4, 'Cookie con pepitas', 'Cookie recién hecha con pepitas de chocolate.', 2.50, 'img/productos/cookie-con-pepitas.webp', TRUE);
 INSERT INTO producto_ingrediente (producto_id, ingrediente_id, cantidad) VALUES
   (29, 55, 1), -- Masa de cookie (base)
   (29, 56, 1), -- Pepitas de chocolate (base)

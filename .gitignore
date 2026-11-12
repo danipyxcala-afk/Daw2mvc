@@ -1,2 +1,5 @@
 # Credenciales y variables de entorno
 .env
+
+# Configuracion local de VS Code
+.vscode/
