@@ -3,3 +3,10 @@
 
 # Configuracion local de VS Code
 .vscode/
+
+# Documentacion: de momento solo se suben la convencion de nombres y las tareas.
+# El resto de docs/ (diagramas, memoria y docs/local) no se sube por ahora.
+# Para subir diagramas o memoria mas adelante, anade: !docs/diagramas/ y !docs/memoria/
+docs/*
+!docs/CONVENCIONES.md
+!docs/TAREAS.md
