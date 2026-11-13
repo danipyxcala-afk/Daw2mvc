@@ -26,7 +26,8 @@
             </form>
         </div>
 
-        <div class="row g-4 my-4">
+        <!-- gx-5: más hueco entre columnas para que los botones no parezcan del producto de al lado -->
+        <div class="row gx-5 gy-4 my-4">
             <?php
             $colorPorCategoria = [];
             $posicion = 0;
@@ -72,18 +73,27 @@
 
                                     <div class="card-producto__pie">
                                         <p class="card-producto__precio">
-                                            <?= htmlspecialchars($producto->getprecio(), ENT_QUOTES, 'UTF-8') ?>€
+                                            <?= number_format((float) $producto->getPrecio(), 2, ',', '.') ?>€
                                         </p>
 
-                                        <a href="<?= url ?>index.php?controller=productos&action=detalle&id=<?= (int) $producto->getId() ?>"
-                                            class="boton boton--primario boton--sm" aria-label="Editar producto">
-                                            Editar
-                                        </a>
+                                        <!-- Dos botones con texto, uno debajo del otro (sin JavaScript) -->
+                                        <div class="card-producto__botones">
+                                            <a href="<?= url ?>index.php?controller=productos&action=detalle&id=<?= (int) $producto->getId() ?>"
+                                                class="boton boton--borde boton--sm">
+                                                Editar producto
+                                                <span class="boton__icono boton__icono--flecha" aria-hidden="true"></span>
+                                            </a>
 
-                                        <a href="#" class="boton-icono boton-icono--primario" aria-label="Añadir producto">
-                                            <img src="<?= url ?>assets/img/icons/azul/svg/mas-circulo.svg" alt="" width="32"
-                                                height="32">
-                                        </a>
+                                            <!-- Añade 1 unidad sin personalizar: lo recibe ProductosController::anadirCarrito() -->
+                                            <form method="POST" action="<?= url ?>index.php?controller=productos&action=anadirCarrito">
+                                                <input type="hidden" name="id" value="<?= (int) $producto->getId() ?>">
+                                                <input type="hidden" name="cantidad" value="1">
+                                                <button class="boton boton--primario boton--sm" type="submit">
+                                                    Añadir al carrito
+                                                    <span class="boton__icono boton__icono--carrito" aria-hidden="true"></span>
+                                                </button>
+                                            </form>
+                                        </div>
 
                                     </div>
 

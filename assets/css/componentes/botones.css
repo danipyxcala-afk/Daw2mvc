@@ -117,6 +117,20 @@
     pointer-events: none; /* ignora los clics */
 }
 
+/* BOTÓN CON BORDE: para acciones secundarias que van junto a un botón primario
+   (por ejemplo "Editar producto" al lado de "Añadir al carrito").
+   El borde se hace con box-shadow inset para que mida lo mismo que los demás botones */
+.boton--borde {
+    background-color: transparent;
+    color: var(--azul-claro);
+    box-shadow: inset 0 0 0 2px var(--azul-claro);
+}
+
+.boton--borde:hover {
+    background-color: var(--azul-claro);
+    color: var(--blanco);
+}
+
 /* BOTÓN FILTRO: las píldoras de la carta (Todo, Hamburguesas...).
    Son grises y la seleccionada se pone azul */
 .boton--filtro {
@@ -155,7 +169,7 @@
     width: 100%;
 }
 
-/* ICONOS DENTRO DEL BOTÓN (de momento no se usan en ninguna vista)
+/* ICONOS DENTRO DEL BOTÓN (se usan en los botones de la carta)
    Usan la imagen como una máscara, y así el icono toma el color del texto del botón.
    La imagen se indica en la variable --icono */
 .boton__icono {
@@ -171,6 +185,20 @@
 .boton--sm .boton__icono {
     width: 20px;
     height: 20px;
+}
+
+/* Iconos que se eligen con una clase (los de la carta) */
+.boton__icono--carrito {
+    --icono: url("../../img/icons/negro/svg/carrito.svg");
+}
+
+.boton__icono--flecha {
+    --icono: url("../../img/icons/negro/svg/flecha-diagonal.svg");
+}
+
+/* Al pasar el ratón, la flecha pasa a apuntar a la derecha (como en los botones secundarios) */
+.boton:hover .boton__icono--flecha {
+    --icono: url("../../img/icons/negro/svg/flecha-derecha.svg");
 }
 
 /* Secundario: flecha diagonal en estado normal */

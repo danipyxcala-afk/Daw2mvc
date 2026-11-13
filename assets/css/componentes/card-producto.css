@@ -22,6 +22,13 @@
     padding: 16px;
     border-radius: var(--radio-tarjeta);
     background-color: var(--azul-oscuro);
+    transition: transform .15s ease; /* hace suave el movimiento del hover */
+}
+
+/* Al pasar el ratón, la caja sube un poco (igual que las categorías del home).
+   Solo la caja, que es el enlace al detalle: así los botones no se mueven */
+.card-producto__media:hover {
+    transform: translateY(-4px);
 }
 
 /* Nombre de la categoría, arriba de la caja */
@@ -75,4 +82,41 @@
     margin: 0;
     font-family: var(--fuente-negrita);
     font-size: 20px;
+}
+
+/* Botones "Editar producto" y "Añadir al carrito": uno debajo del otro, a la derecha */
+.card-producto__botones {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* los dos botones miden lo mismo de ancho */
+    gap: 8px;
+}
+
+/* El formulario de "Añadir al carrito" no debe añadir márgenes y su botón ocupa todo el ancho */
+.card-producto__botones form {
+    margin: 0;
+}
+
+.card-producto__botones .boton {
+    width: 100%;
+}
+
+/* En móvil: el precio arriba y los botones debajo, de lado a lado (nota de TAREAS) */
+@media (max-width: 576px) {
+    .card-producto__pie {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .card-producto__botones .boton {
+        min-height: 48px; /* más fáciles de pulsar con el dedo */
+    }
+}
+
+/* Si el usuario tiene pedido en su sistema reducir animaciones, quitamos la transición */
+@media (prefers-reduced-motion: reduce) {
+    .card-producto__media {
+        transition: none;
+    }
 }
