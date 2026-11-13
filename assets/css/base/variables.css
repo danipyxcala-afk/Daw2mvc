@@ -21,8 +21,8 @@
     --gris-desactivado-texto: #E4E4E4;
 
     /* Fuentes: si Satoshi no carga, se usa otra sin adornos (sans-serif) */
-    --fuente-texto:   'Satoshi Light', sans-serif;
-    --fuente-negrita: 'Satoshi Bold', sans-serif;
+    --fuente-texto:   'Satoshi-Light', sans-serif;
+    --fuente-negrita: 'Satoshi-Bold', sans-serif;
 
     /* Bordes redondeados: cuanto mayor el número, más redondo */
     --radio-tarjeta: 20px;
