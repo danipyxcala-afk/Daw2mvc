@@ -12,7 +12,7 @@
 
         <div class="encabezado__acciones">
             <?php $productosEnCarrito = array_sum(array_column($_SESSION['carrito'] ?? [], 'cantidad')); ?>
-            <a href="#" class="boton-icono encabezado__carrito"
+            <a href="<?= url ?>index.php?controller=carrito" class="boton-icono encabezado__carrito"
                 aria-label="Ver carrito, <?= $productosEnCarrito ?> productos">
                 <img src="<?= url ?>assets/img/icons/negro/svg/carrito.svg" alt="" width="24" height="24">
                 <?php if ($productosEnCarrito > 0) { ?>
