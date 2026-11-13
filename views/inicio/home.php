@@ -41,8 +41,10 @@
         <div class="container">
             <div class="row align-items-center g-5">
                 <div class="col-md-6">
-                    <img src="<?= url . "assets/" . $productoAleatorio->getImagen() ?>"
-                        alt="<?= $productoAleatorio->getNombre() ?>">
+                    <!-- define__img hace que la foto nunca sea más ancha que su columna -->
+                    <img class="define__img" src="<?= url . "assets/" . $productoAleatorio->getImagen() ?>"
+                        alt="<?= htmlspecialchars($productoAleatorio->getNombre(), ENT_QUOTES, 'UTF-8') ?>"
+                        width="610" height="409">
                 </div>
                 <div class="col-md-6">
                     <ul class="define__lista">

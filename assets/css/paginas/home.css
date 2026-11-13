@@ -33,6 +33,16 @@
 
 /* ¿QUÉ DEFINE A SIGMEAT? */
 
+/* Imagen del producto aleatorio: nunca más ancha que su columna.
+   Sin esto, las fotos (610px) se salían de la columna y tapaban la lista en pantallas medianas */
+.define__img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto; /* mantiene la proporción al encogerse */
+    margin: 0 auto;
+}
+
 /* Lista de ventajas: una debajo de otra y sin los puntos de la lista */
 .define__lista {
     display: flex;
