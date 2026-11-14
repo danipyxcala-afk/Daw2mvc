@@ -1,7 +1,7 @@
 <body>
     <div class="container">
         <nav class="producto__migas">
-            <a href="<?= url ?>index.php?controller=home">Inicio</a> / 
+            <a href="<?= url ?>index.php?controller=home">Inicio</a> /
             <a href="<?= url ?>index.php?controller=productos">Carta</a>
         </nav>
 
@@ -40,13 +40,21 @@
             // var_dump($listadoProductos);
             // echo "</pre>";
             foreach ($listadoProductos as $out) {
-
+                ?>
+                <h2>
+                    <?php foreach ($categorias as $cat) {
+                        if ($cat->getID() == $out[0]->getCategoriaId()) { ?>
+                            <?= htmlspecialchars($cat->getNombre(), ENT_QUOTES, 'UTF-8') ?>
+                        <?php }
+                    } ?>
+                </h2>
+                <?php
                 foreach ($out as $producto) {
                     //var_dump($listadoProductos);
                     if ($producto->getActivo()) {
                         ?>
 
-                        <div class="col-12 col-md-6 col-lg-4">
+                        <div class="col-12 col-md-6 col-lg-4 mt-5">
                             <article class="card-producto">
 
                                 <a href="<?= url ?>index.php?controller=productos&action=detalle&id=<?= (int) $producto->getId() ?>"
@@ -85,7 +93,8 @@
                                             </a>
 
                                             <!-- Añade 1 unidad sin personalizar: lo recibe ProductosController::anadirCarrito() -->
-                                            <form method="POST" action="<?= url ?>index.php?controller=productos&action=anadirCarrito">
+                                            <form method="POST"
+                                                action="<?= url ?>index.php?controller=productos&action=anadirCarrito">
                                                 <input type="hidden" name="id" value="<?= (int) $producto->getId() ?>">
                                                 <input type="hidden" name="cantidad" value="1">
                                                 <button class="boton boton--primario boton--sm" type="submit">
