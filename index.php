@@ -1,5 +1,7 @@
 <?php
 include_once("config/parameters.php");
+include_once("helpers/debug.php");
+
 include_once("modelos/Usuarios.php");
 // La sesión guarda el carrito y los avisos entre una página y otra
 session_start();
