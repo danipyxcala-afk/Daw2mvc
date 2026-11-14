@@ -63,10 +63,12 @@ class PedidosDAO
         $stmt->bind_param("isdddss", $usuario_id, $estado, $subtotal, $descuento, $total, $metodo_pago, $estado_pago);
         // Ejecutamos la consulta
         $stmt->execute();
-
+        $pedido_id = $con->insert_id;
         // Cerramos la conexión
         $stmt->close();
         $con->close();
+
+        return $pedido_id;
 
     }
     public static function delete($id){
@@ -105,7 +107,7 @@ class PedidosDAO
         return $lineas;
     }
 
-    //  Tabla pedido_detalle 
+    //  Tabla pedido_detalle
 
     public static function getDetalle($pedido_id)
     {
@@ -146,10 +148,12 @@ class PedidosDAO
         $stmt->bind_param("iisdid", $pedido_id, $producto_id, $nombre_producto, $precio_unitario, $cantidad, $subtotal);
         // Ejecutamos la consulta
         $stmt->execute();
-
+        $id = $con->insert_id;
         // Cerramos la conexión
         $stmt->close();
         $con->close();
+
+        return $id;
 
     }
     public static function deleteDetalle($id){
@@ -164,7 +168,7 @@ class PedidosDAO
         $con->close();
     }
 
-    //  Tabla pedido_detalle_ingrediente 
+    //  Tabla pedido_detalle_ingrediente
 
     public static function getIngredientesDetalle($pedido_detalle_id)
     {
