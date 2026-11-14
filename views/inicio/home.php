@@ -43,7 +43,7 @@
                 <div class="col-md-6">
                     <!-- define__img hace que la foto nunca sea más ancha que su columna -->
                     <img class="define__img" src="<?= url . "assets/" . $productoAleatorio->getImagen() ?>"
-                        alt="<?= htmlspecialchars($productoAleatorio->getNombre(), ENT_QUOTES, 'UTF-8') ?>"
+                        alt="<?= texto($productoAleatorio->getNombre()) ?>"
                         width="610" height="409">
                 </div>
                 <div class="col-md-6">
@@ -121,7 +121,7 @@
                 <div class="col-6 col-lg-3">
                     <a href="<?= url ?>index.php?controller=productos&action=carta&pildora=<?= urlencode($nombre) ?>"
                         class="categoria-card categoria-card--<?= $color ?>">
-                        <h3 class="categoria-card__nombre"><?= htmlspecialchars($nombre, ENT_QUOTES, 'UTF-8') ?></h3>
+                        <h3 class="categoria-card__nombre"><?= texto($nombre) ?></h3>
                         <?php if (isset($imagenesCategorias[$nombre])) { ?>
                             <img class="categoria-card__img" src="<?= url . "assets/" . $imagenesCategorias[$nombre] ?>" alt=""
                                 width="610" height="409" loading="lazy">

@@ -1,5 +1,5 @@
 <?php
-$nombreProducto = htmlspecialchars($producto->getNombre(), ENT_QUOTES, 'UTF-8');
+$nombreProducto = texto($producto->getNombre());
 $nombreCategoria = $categoria ? $categoria->getNombre() : '';
 $precio = (float) $producto->getPrecio();
 ?>
@@ -8,7 +8,7 @@ $precio = (float) $producto->getPrecio();
         <a href="<?= url ?>index.php?controller=home">Inicio</a> /
         <a href="<?= url ?>index.php?controller=productos">Carta</a> /
         <a href="<?= url ?>index.php?controller=productos&action=carta&pildora=<?= urlencode($nombreCategoria) ?>">
-            <?= htmlspecialchars($nombreCategoria, ENT_QUOTES, 'UTF-8') ?>
+            <?= texto($nombreCategoria) ?>
         </a> /
         <b><?= $nombreProducto ?></b>
     </nav>
@@ -23,8 +23,8 @@ $precio = (float) $producto->getPrecio();
 
         <div class="col-md-7">
             <h1 class="producto__nombre"><?= $nombreProducto ?></h1>
-            <p class="producto__precio"><?= number_format($precio, 2, ',', '.') ?>€</p>
-            <p><?= htmlspecialchars($producto->getDescripcion(), ENT_QUOTES, 'UTF-8') ?></p>
+            <p class="producto__precio"><?= precio($precio) ?></p>
+            <p><?= texto($producto->getDescripcion()) ?></p>
 
             <!-- data-precio guarda el precio para que el JavaScript calcule el total -->
             <form id="form-producto" method="POST" data-precio="<?= $precio ?>"
@@ -36,7 +36,7 @@ $precio = (float) $producto->getPrecio();
                         <legend class="producto__subtitulo">Ingredientes base</legend>
                         <div class="producto__ingredientes">
                             <?php foreach ($ingredientesBase as $ingrediente) {
-                                $nombre = htmlspecialchars($ingrediente['nombre'], ENT_QUOTES, 'UTF-8');
+                                $nombre = texto($ingrediente['nombre']);
                                 $unidades = (int) $ingrediente['cantidad'];
                                 ?>
                                 <!-- Marcar la casilla significa quitar el ingrediente -->
@@ -60,8 +60,8 @@ $precio = (float) $producto->getPrecio();
                             <label class="extra">
                                 <input class="extra__check" type="checkbox" name="extras[]"
                                     value="<?= (int) $extra['id'] ?>" data-precio="<?= (float) $extra['precio_extra'] ?>">
-                                <span class="extra__nombre"><?= htmlspecialchars($extra['nombre'], ENT_QUOTES, 'UTF-8') ?></span>
-                                <span class="extra__precio">+<?= number_format((float) $extra['precio_extra'], 2, ',', '.') ?>€</span>
+                                <span class="extra__nombre"><?= texto($extra['nombre']) ?></span>
+                                <span class="extra__precio">+<?= precio((float) $extra['precio_extra']) ?></span>
                             </label>
                         <?php } ?>
                     </fieldset>
@@ -69,7 +69,7 @@ $precio = (float) $producto->getPrecio();
 
                 <div class="producto__total">
                     <span>Total</span>
-                    <output id="producto-total"><?= number_format($precio, 2, ',', '.') ?>€</output>
+                    <output id="producto-total"><?= precio($precio) ?></output>
                 </div>
 
                 <div class="producto__comprar">

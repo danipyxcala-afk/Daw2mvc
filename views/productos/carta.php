@@ -18,7 +18,7 @@
 
                     <a href="<?= url ?>index.php?controller=productos&action=carta&pildora=<?= $categoria->getNombre() ?>"
                         class="boton boton--filtro <?= ($_GET['pildora']) == $categoria->getNombre() ? 'is-activo' : '' ?>">
-                        <?= htmlspecialchars($categoria->getNombre(), ENT_QUOTES, 'UTF-8') ?>
+                        <?= texto($categoria->getNombre()) ?>
                     </a>
                 <?php }
                 ?>
@@ -26,7 +26,6 @@
             </form>
         </div>
 
-        <!-- gx-5: más hueco entre columnas para que los botones no parezcan del producto de al lado -->
         <div class="row gx-5 gy-4 my-4">
             <?php
             $colorPorCategoria = [];
@@ -44,7 +43,7 @@
                 <h2>
                     <?php foreach ($categorias as $cat) {
                         if ($cat->getID() == $out[0]->getCategoriaId()) { ?>
-                            <?= htmlspecialchars($cat->getNombre(), ENT_QUOTES, 'UTF-8') ?>
+                            <?= texto($cat->getNombre()) ?>
                         <?php }
                     } ?>
                 </h2>
@@ -62,29 +61,27 @@
                                     <p class="card-producto__categoria">
                                         <?php foreach ($categorias as $cat) {
                                             if ($cat->getID() == $producto->getCategoriaId()) { ?>
-                                                <?= htmlspecialchars($cat->getNombre(), ENT_QUOTES, 'UTF-8') ?>
+                                                <?= texto($cat->getNombre()) ?>
                                             <?php }
                                         } ?>
                                     </p>
                                     <img class="card-producto__img" src="<?= url . "assets/" . $producto->getImagen() ?>"
-                                        alt="<?= htmlspecialchars($producto->getNombre(), ENT_QUOTES, 'UTF-8') ?>" width="400"
+                                        alt="<?= texto($producto->getNombre()) ?>" width="400"
                                         height="400" loading="lazy">
                                 </a>
 
                                 <div class="card-producto__info">
                                     <h2 class="card-producto__nombre">
-                                        <?= htmlspecialchars($producto->getNombre(), ENT_QUOTES, 'UTF-8') ?>
+                                        <?= texto($producto->getNombre()) ?>
                                     </h2>
                                     <p class="card-producto__desc">
-                                        <?= htmlspecialchars($producto->getDescripcion(), ENT_QUOTES, 'UTF-8') ?>
+                                        <?= texto($producto->getDescripcion()) ?>
                                     </p>
 
                                     <div class="card-producto__pie">
                                         <p class="card-producto__precio">
-                                            <?= number_format((float) $producto->getPrecio(), 2, ',', '.') ?>€
+                                            <?= precio((float) $producto->getPrecio()) ?>
                                         </p>
-
-                                        <!-- Dos botones con texto, uno debajo del otro (sin JavaScript) -->
                                         <div class="card-producto__botones">
                                             <a href="<?= url ?>index.php?controller=productos&action=detalle&id=<?= (int) $producto->getId() ?>"
                                                 class="boton boton--borde boton--sm">
@@ -92,7 +89,7 @@
                                                 <span class="boton__icono boton__icono--flecha" aria-hidden="true"></span>
                                             </a>
 
-                                            <!-- Añade 1 unidad sin personalizar: lo recibe ProductosController::anadirCarrito() -->
+                                            <!-- Añade 1 unidad sin personalizar -->
                                             <form method="POST"
                                                 action="<?= url ?>index.php?controller=productos&action=anadirCarrito">
                                                 <input type="hidden" name="id" value="<?= (int) $producto->getId() ?>">

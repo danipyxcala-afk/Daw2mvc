@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sigmeat</title>
     <link rel="icon" type="image/svg+xml" href="<?= url ?>/assets/img/logo/favicon.svg">
-    <!-- Respaldo para navegadores sin favicon SVG (Safari antiguo) e iconos de iOS -->
     <link rel="icon" type="image/png" sizes="32x32" href="<?= url ?>/assets/img/logo/favicon-32.png">
     <link rel="apple-touch-icon" href="<?= url ?>/assets/img/logo/apple-touch-icon.png">
 
@@ -18,11 +17,10 @@
     <?php include_once __DIR__ . "/header.php"; ?>
 
     <main>
-        <!-- Avisos de un solo uso (carrito, login, cerrar sesión...).
-             Flota encima de la página para no empujar el contenido; la X lo cierra (JS de Bootstrap) -->
+        <!-- Avisos de un solo uso -->
         <?php if (isset($_SESSION['aviso'])) { ?>
             <div class="aviso alert alert-info alert-dismissible fade show" role="status">
-                <?= htmlspecialchars($_SESSION['aviso'], ENT_QUOTES, 'UTF-8') ?>
+                <?= texto($_SESSION['aviso']) ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
             </div>
             <?php
