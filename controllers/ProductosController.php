@@ -18,6 +18,7 @@ include_once(__DIR__ . "/../modelos/Categorias.php");
 class ProductosController
 {
     private const CATEGORIA_BEBIDAS = 3;
+    private const CANTIDAD_MINIMA = 1;
     private const CANTIDAD_MAXIMA = 99;
 
     public function index()
@@ -71,7 +72,6 @@ class ProductosController
         include_once 'views/main.php';
     }
 
-    // Pantalla de un producto, donde el cliente lo personaliza
     public function detalle()
     {
         $producto = $this->getProductoActivo($_GET['id'] ?? 0);
@@ -86,8 +86,79 @@ class ProductosController
         $view = "views/productos/detalle.php";
         include_once 'views/main.php';
     }
-    public function anadirCarrito(){
-        //TODO logica
+
+    public function anadirCarrito()
+    {
+
+        $id = (int) $_POST['id'];
+        echo "id: $id <br>";
+        // Limitar la cantidad entre CANTIDAD_MINIMA y CANTIDAD_MAXIMA
+        $cantidad = max(self::CANTIDAD_MINIMA, (int) $_POST['cantidad']);
+        echo "cantidad: $cantidad <br>";
+        // productos en la hoja de detalle que se añaden (extras)
+        $extras = $_POST['extras'] ?? [];
+        // productos en la hoja de detalle que se quitan (ingredientes base que se quitan)
+        $quitados = $_POST['quitados'] ?? [];
+        $sumaExtras = 0;
+        $extrasElegidos = [];
+        $quitadosElegidos = [];
+        $producto = $this->getProductoActivo($id);
+
+        $ingredientesProducto = $this->getIngredientesProducto($producto);
+
+        if (!empty($extras)) {
+
+            // Sumar el precio de los extras seleccionados
+            foreach ($ingredientesProducto['extras'] as $extra) {
+                if (in_array($extra['id'], $extras)) {
+                    $sumaExtras += (float) $extra['precio_extra'];
+                    $extrasElegidos[] = $extra;
+                }
+            }
+            echo "Suma extras: $sumaExtras <br>";
+        } else {
+
+        }
+        if (!empty($quitados)) {
+
+            foreach ($ingredientesProducto['base'] as $base) {
+                if (in_array($base['id'], $quitados)) {
+                    $quitadosElegidos[] = $base;
+                }
+            }
+        }
+        // Calcular el precio total del producto con extras y cantidad
+        $precioUnitario = (float) $producto->getPrecio() + $sumaExtras;
+        echo $precioUnitario;
+
+        if (!isset($_SESSION['carrito'])) {
+            $_SESSION['carrito'] = [];
+        }
+        // Crear una clave única para el producto con extras y quitados
+        $idsExtras = array_column($extrasElegidos, 'id');
+        $idsQuitados = array_column($quitadosElegidos, 'id');
+        sort($idsExtras);
+        sort($idsQuitados);
+        $clave = $id . '-e' . implode(',', $idsExtras) . '-q' . implode(',', $idsQuitados);
+        // Si ya existe la misma combinación de producto + extras + quitados, sumar la cantidad
+        if (isset($_SESSION['carrito'][$clave])) {
+            $_SESSION['carrito'][$clave]['cantidad'] += $cantidad;
+        } else {
+            $_SESSION['carrito'][$clave] = [
+                'id' => $id,
+                'nombre' => $producto->getNombre(),
+                'imagen' => $producto->getImagen(),
+                'precio_unitario' => $precioUnitario,
+                'cantidad' => $cantidad,
+                'extras' => $extrasElegidos,
+                'quitados' => $quitadosElegidos,
+            ];
+        }
+
+        $_SESSION['aviso'] = "Producto añadido al carrito";
+        header("Location: " . url . "index.php?controller=productos&action=carta");
+        exit;
+
     }
 
     // Busca el producto en cada categoría. Si no existe o no está activo, muestra el error 404
@@ -137,11 +208,6 @@ class ProductosController
         return null;
     }
 
-    private function redirigir($ruta)
-    {
-        header("Location: " . url . $ruta);
-        exit;
-    }
 
     public function getCategoriasActivas()
     {
@@ -171,3 +237,4 @@ class ProductosController
 }
 
 ?>
+
