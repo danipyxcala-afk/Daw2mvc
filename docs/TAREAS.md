@@ -2,25 +2,32 @@
 
 > Volver al [README](../README.md).
 
-Comparación entre el enunciado `PROYECTO 1 RESTAURANTE (APP WEB) (1).docx` y el estado del proyecto a 14/11/2026.
+Comparación entre el enunciado `PROYECTO 1 RESTAURANTE (APP WEB) (1).docx` y el estado del proyecto a 14/11/2026 (revisado el código, la base de datos y el historial de git).
 
 **Leyenda:** `[x]` hecho · `[~]` a medias · `[ ]` sin hacer · `[?]` revisar a mano (no se puede comprobar desde el código)
 
-**Resumen:** está hecha la tienda (home, carta, detalle), el login y registro, el panel de usuario y el carrito (paso 1) con código promocional. Faltan la lógica de los pasos 2 y 3 de la compra (las vistas ya están), guardar el pedido, las ofertas, el panel de administración, el despliegue y la memoria.
+**Fechas:** entrega en Git el **martes 29/11/2026** (lo que se cambie después no se evalúa). Presentaciones entre el 29/11 y el 21/12.
+
+**Resumen:** la tienda está completa de principio a fin: home, carta, detalle con personalización, carrito con código promocional, registro con validación en el servidor, login, «Mi cuenta» y **compra guardada en la base de datos** con su pantalla de confirmación. Faltan las **ofertas**, **modificar los datos del usuario**, el **panel de administración con la API**, el **despliegue**, **trabajar con ramas** y la **memoria**.
 
 ---
 
 ## Corregir ya
-- [x] **Mayúsculas en los `include`.** Todos los archivos, includes y `fetch_object` usan ahora el nombre exacto de la clase (ver «Convención de nombres»).
-- [x] **Contraseña del admin en `sql/InsertarDatosBD.sql`:** ya está guardada con hash bcrypt (`Admin1234!`).
+
+- [x] **Mayúsculas en los `include`.** Todos los archivos, includes y `fetch_object` usan el nombre exacto de la clase (ver «Convención de nombres»).
+- [x] **Contraseña del admin en `sql/InsertarDatosBD.sql`:** guardada con hash bcrypt (`Admin1234!`).
 - [x] **Impuestos:** los precios de la BBDD ya incluyen un IVA del 10 %. El carrito lo enseña como información (subtotal sin IVA + IVA).
+- [ ] **Redirección de `ProductosController::anadirCarrito`** cuando no llega por POST: le falta `index.php?` en la URL y da un 404.
+- [?] **JavaScript en el detalle del producto** (`assets/js/app.js`, recuperado el 14/11): el enunciado pide que la parte del usuario se haga **solo con PHP, HTML y CSS**. Confirmar con la profesora si se permite; si no, quitarlo y hacer el total con un botón «Actualizar total» (`formaction`) y la cantidad sin los botones −/+.
+- [ ] **Empezar a trabajar con ramas** (ver «GitHub»): se evalúa y ahora todo está en `main`.
 
 ---
 
 ## Web: usuario
 
+### Figma pendiente
 
-### Figma Pendiente
+Notas de revisión del diseño (las hechas están en «Notas de `main.php` ya hechas»):
 
 Home
 Titulo modificar foto de fondo para bajar la opacidad Oscurecer
@@ -42,38 +49,49 @@ Añadir la leyenda nombre / cantidad / precio
 en mvl hacer los botones mas grandes que llegen mas de lado a lado
 
 ### Registro y sesión
+
 - [x] Formularios de login y registro (`views/usuario/login.php` y `registro.php`), conectados a `UserController`.
 - [x] `session_start()` activo en `index.php`.
 - [x] Registrar usuarios guardando la contraseña con `password_hash`.
-- [x] Iniciar sesión con `password_verify` y `UsuariosDAO::getByEmail`.
+- [x] **Validar el registro en el servidor:** nombre (obligatorio, máx. 100), email (formato, máx. 150), contraseña (mín. 8), teléfono y fecha de nacimiento opcionales (formato y que no sea futura). Con errores no se guarda nada y se avisa de todos a la vez.
+- [x] Iniciar sesión con `password_verify`, `UsuariosDAO::getByEmail` y `session_regenerate_id`.
 - [x] Cerrar sesión (`UserController::logout`).
 - [x] Cabecera según la sesión: botón de salir solo con la sesión iniciada.
+- [ ] Volver a «Datos y pago» después de iniciar sesión si se venía del carrito (ahora el login siempre lleva a «Mi cuenta»).
+- [ ] Login: leer `$_POST['email']` y `$_POST['password']` con `??` para que no salgan avisos.
 
-### Panel de usuario
-- [~] Ver los datos personales: hecho. Falta modificarlos; hace falta `UsuariosDAO::update` y actualizar también `$_SESSION['usuario']` (sin la contraseña).
+### Panel de usuario («Mi cuenta»)
+
+- [x] Ver los datos personales.
+- [ ] **Modificar los datos personales** (lo pide el enunciado): hace falta `UsuariosDAO::update`, un formulario y actualizar `$_SESSION['usuario']` (sin la contraseña).
 - [x] Ver los pedidos realizados, con el detalle desplegable, el resumen y los códigos de descuento (`views/usuario/panel.php`).
-- [ ] Ver los datos del último pedido al volver a entrar.
+- [~] **Ver los datos del último pedido al volver a entrar:** la lista sale ordenada del más reciente al más antiguo y el resumen enseña el estado del último. Falta destacar los datos del último pedido (un bloque «Tu último pedido»).
 
 ### Productos
+
 - [x] Carta con todos los productos, filtrada por categoría y usando la BBDD.
 - [x] Detalle del producto con ingredientes base y extras.
 - [x] Quitar y añadir ingredientes.
-- [x] El servidor calcula el precio con los extras y no se fía del navegador. Sin JavaScript en la tienda: el total del detalle no cambia en vivo, el precio final se ve en el carrito.
+- [x] El servidor calcula el precio con los extras y no se fía del navegador.
+- [~] Total del detalle actualizado al marcar extras o cambiar la cantidad: ahora lo hace `app.js` (ver «Corregir ya» sobre el JavaScript).
 - [x] Contador de productos en la cabecera.
 - [x] Sección «Elige tu categoría» de la home conectada a la BBDD, solo con categorías activas.
 - [x] Colores por categoría en home, carta y detalle.
 - [x] Píldoras de filtro solo con categorías activas.
 - [x] Enlace a la personalización desde «Editar» y desde la caja de color de la carta.
 - [x] Error 404 si el producto no existe o está inactivo.
-- [x] En bebidas solo se puede quitar el hielo, y siempre queda al menos un ingrediente base.
+- [~] En bebidas solo se puede quitar el hielo, y siempre queda al menos un ingrediente base: lo controla el formulario (`disabled` y JavaScript), pero **el servidor no lo comprueba** en `anadirCarrito`.
 - [x] Avisos de un solo uso tras añadir al carrito.
 - [x] Botón «Añadir al carrito» de la carta: añade 1 unidad sin personalizar.
+- [x] `anadirCarrito` solo acepta POST y limita la cantidad entre 1 y 99.
+- [ ] `carta()`: leer `$_GET['pildora']` con `??` (sale un aviso si la URL no lo lleva).
 - [ ] Decidir si se ocultan los productos de categorías inactivas: ahora siguen saliendo en la carta.
 
 ### Carrito
+
 - [x] Guardado en sesión, con línea separada por cada personalización.
 - [x] Página del carrito (`views/carrito/carrito.php`), enlazada desde el icono de la cabecera.
-- [x] Cambiar la cantidad con los botones − y + (entre 1 y 99).
+- [x] Cambiar la cantidad con los botones − y + (entre 1 y 99), sin JavaScript.
 - [ ] Modificar la personalización de un producto ya añadido.
 - [x] Eliminar un producto con aviso (papelera con `<details>`, sin JavaScript).
 - [x] Leyenda producto / cantidad / precio.
@@ -82,64 +100,86 @@ en mvl hacer los botones mas grandes que llegen mas de lado a lado
 - [ ] Botón «Aplicar» junto al campo del código (ahora se envía con Enter).
 
 ### Finalizar la compra
+
 - [x] Vista del paso 2 «Datos y pago» (`views/carrito/pago.php`): datos del usuario, método de pago simulado y resumen.
 - [x] Vista del paso 3 «Confirmación» (`views/carrito/confirmacion.php`).
-- [ ] Lógica de `datosPago()`: carrito vacío → volver al carrito; sin sesión → login.
-- [ ] Volver a «Datos y pago» después de iniciar sesión (ahora el login siempre lleva al panel).
-- [ ] Lógica de `confirmar()` y acción por GET que enseña la confirmación (para no duplicar el pedido al recargar).
-- [ ] Guardar en `pedidos`, `pedido_detalle` y `pedido_detalle_ingrediente`.
-- [ ] `PedidosDAO::insert` e `insertDetalle` deben devolver el id creado; ahora no lo hacen y hace falta para enlazar las tablas.
-- [ ] Guardar todo con una transacción, para no dejar pedidos a medias.
-- [ ] Recalcular los precios en el servidor al confirmar y vaciar el carrito y el código.
+- [x] `datosPago()`: sin sesión → login; carrito vacío → carta. Los métodos de pago salen de `CarritoController::getMetodosPago()`.
+- [x] `confirmar()`: solo POST, comprueba sesión, carrito y método de pago, y recalcula los precios en el servidor.
+- [x] Guardar en `pedidos`, `pedido_detalle` y `pedido_detalle_ingrediente` (`insert` e `insertDetalle` devuelven el id creado).
+- [x] Vaciar el carrito y el código promocional tras confirmar.
+- [x] Confirmación por GET (`pedidoConfirmado`) después de redirigir (patrón PRG): recargar no duplica el pedido. Comprueba que el pedido existe y es del usuario.
 - [x] Decidir qué se guarda en `pedidos.subtotal` y `total`: `subtotal` = suma de los productos con IVA; `total` = lo que paga el cliente (con envío y descuento).
+- [ ] Opcional: guardar todo con una transacción, para no dejar pedidos a medias si falla algo.
 - [ ] Opcional: guardar el envío del pedido. `total` lo incluye, pero la tabla `pedidos` no tiene columna `envio`, así que en «Mi cuenta» subtotal − descuento no cuadra con el total cuando hay 5 € de envío. Opciones: añadir la columna `envio` (BD, modelo, DAO y diagramas) o enseñar la diferencia como «Envío» en la vista.
 
 ### Ofertas
+
 - [x] Tablas, datos de ejemplo, modelo y `OfertasDAO`.
 - [x] Códigos promocionales: se listan en el panel de usuario y se aplican en el carrito.
 - [ ] Controlador y página de ofertas.
 - [ ] **Diseño individual para cada oferta**, como pide el enunciado.
 - [ ] Añadir una oferta al carrito.
+- [ ] **Oferta por comprar una cantidad determinada de productos** (la cita la introducción del enunciado).
 - [~] Aplicar cada tipo: `codigo` hecho; faltan `combo`, `2x1` y `descuento`.
 - [~] Comprobar fechas de validez y `activa`: hecho para los códigos (`getCodigosActivos`).
 
 ### Código
+
 - [x] Estructura MVC con `index.php` como punto de entrada.
 - [x] Clases y clases estáticas: DAO estáticos, `Productos` abstracta y sus clases hijas.
 - [x] Modelos de todas las tablas y DAO con consultas preparadas.
 - [x] Página de error común con `showError()`.
-- [x] Salida de textos protegida con `htmlspecialchars` en las vistas de producto.
-- [x] CSS separado por archivos, comentado y sin reglas obsoletas.
-- [~] **Polimorfismo:** las hijas de `Productos` solo heredan y no cambian ningún método. Añadir uno con comportamiento distinto en cada hija.
-- [~] Comentarios: el CSS y lo último están comentados; falta repasar el resto.
-- [X] Limpiar `views/productos/carta.php`: lleva un `<!DOCTYPE>` completo dentro de `main.php`.
-- [ ] Revisar el `<form>` de filtros de la carta: su `action` no se usa porque las píldoras son enlaces.
+- [x] Funciones de formato comunes en `helpers/formato.php` (`precio`, `texto`, `dato`, `fecha`, `mesAnio`), usadas en todas las vistas; todo el texto se escapa.
 - [x] Funciones de depuración en `helpers/debug.php` (cargadas desde `index.php`).
-- [ ] Quitar los `echo` de prueba que quedan en `ProductosController::anadirCarrito` y los comentarios de depuración.
-- [ ] Opcional: pasar a `helpers/` las funciones de formato que se repiten en las vistas (`precioCarrito`, `textoPanel`…).
+- [x] Las vistas solo pintan: los datos (usuario, métodos de pago, totales) los prepara el controlador.
+- [x] CSS separado por archivos, comentado y sin reglas obsoletas.
+- [x] Quitados los `echo` de prueba de `anadirCarrito`.
+- [x] Limpiar `views/productos/carta.php`: llevaba un `<!DOCTYPE>` completo dentro de `main.php`.
+- [~] **Polimorfismo:** las hijas de `Productos` solo heredan y no cambian ningún método. Añadir uno con comportamiento distinto en cada hija.
+- [~] Comentarios: el CSS y lo último están comentados; falta repasar DAO y controladores antiguos.
+- [ ] Quitar el `?>` final de los archivos que solo tienen PHP (`UserController`, los DAO, `config/parameters.php`): un salto de línea detrás puede romper las redirecciones en el servidor.
+- [ ] `config/parameters.php`: las líneas `$_SESSION[...] = null` no hacen nada (se ejecutan antes de `session_start()`).
+- [ ] Revisar el `<form>` de filtros de la carta: su `action` no se usa porque las píldoras son enlaces.
+
+### Seguridad
+
+- [x] Consultas preparadas en todos los DAO (inyección SQL).
+- [x] Contraseñas con `password_hash` / `password_verify` y `session_regenerate_id` al iniciar sesión.
+- [x] Salida escapada con `texto()` / `dato()` (XSS).
+- [x] Precios y totales recalculados siempre en el servidor.
+- [x] Validación en el servidor del registro y de la compra.
+- [x] La confirmación solo enseña pedidos del propio usuario.
+- [ ] `.htaccess` que bloquee `.env`, `.git/`, `sql/`, `config/` y los `.md`.
+- [ ] Token CSRF en los formularios.
+- [ ] `config/DataBase.php`: no mostrar el error de MySQL con `die()` y leer la conexión de variables de entorno (para el servidor).
 
 ---
 
 ## Panel de administración
-**No hay nada hecho:** ni API, ni `fetch`, ni panel. La carpeta `OneDrive\DAW2\PanelAdminPagina` solo tiene dos archivos muy pequeños, sin revisar, que no parecen ser este panel.
+
+**No hay nada hecho:** ni API, ni `fetch`, ni panel. Ya existen la columna `rol`, `Usuarios::getRol()` y un usuario administrador en los datos de ejemplo.
 
 ### API en PHP
-- [ ] Carpeta o controlador de API que responda en JSON con sus códigos HTTP.
-- [ ] Login de administrador, comprobando `rol = admin`.
-- [ ] Proteger los endpoints: que solo responda a un administrador.
+
+- [ ] Controlador de API que responda en JSON con sus códigos HTTP.
+- [ ] Login de administrador mediante un endpoint, comprobando `rol = admin`.
+- [ ] Proteger los endpoints: que solo respondan a un administrador.
 - [ ] Endpoints de productos: listar y modificar.
 - [ ] Endpoints de pedidos: listar, modificar, añadir o quitar productos y cambiar el precio final.
-- [ ] Endpoints de usuarios: listar e historial de pedidos.
+- [ ] Endpoints de usuarios: listar e historial de pedidos (se puede reutilizar `PedidosDAO::getPedidosByUsuario`).
 - [ ] Añadir los `update` que faltan: ningún DAO tiene ese método.
 
 ### Funciones del panel
+
 - [ ] Listar, modificar y ordenar productos y pedidos sin recargar.
 - [ ] Añadir o eliminar productos de un pedido y modificar el precio final.
 - [ ] Filtrar productos y pedidos por nombre, ID, precio, etc.
 - [ ] Listar usuarios y ver el historial de cada uno.
+- [ ] Cambiar entre las vistas del panel sin recargar.
 - [ ] Revisar la accesibilidad: el diseño no puntúa, pero esto sí.
 
 ### Requisitos técnicos en JavaScript
+
 - [ ] DOM: crear y modificar elementos de forma dinámica.
 - [ ] Eventos: clics, envíos de formularios y escritura.
 - [ ] `map`, `filter`, `reduce` o similares.
@@ -153,17 +193,21 @@ en mvl hacer los botones mas grandes que llegen mas de lado a lado
 ---
 
 ## Diseño
+
+- [?] Moodboard (color, forma, tipografía y composición).
 - [?] Prototipo de escritorio a 1080 px en Figma.
 - [x] Home con cabecera, banner, más de 3 secciones y pie.
-- [~] Home responsive: hay reglas para móvil, pero falta probarla a **430x932**.
+- [~] Home responsive: hay reglas para móvil, pero falta probarla a **430x932** y sacar capturas.
 - [x] Página de carta.
 - [x] Página de detalle del producto.
 - [~] Páginas del proceso de compra con precio e impuestos: hechas en la web (carrito, datos y pago, confirmación); faltan en el prototipo.
 - [x] HTML, CSS y Bootstrap.
 - [x] Tipografía Satoshi: nombres igualados entre `variables.css` y `satoshi.css` y rutas corregidas.
+- [x] Imágenes optimizadas: productos y home en WebP, logos e iconos en SVG.
 - [?] Imágenes y principios de semejanza, continuidad, simetría, proximidad y contraste, en prototipo y web final. Justificarlos en la memoria.
 
 ### Notas de `main.php` ya hechas
+
 - [x] Un solo botón en la portada.
 - [x] Botón de «Elige tu categoría» alineado a la derecha.
 - [x] Personalizar desde dos sitios: botón y marco.
@@ -172,15 +216,19 @@ en mvl hacer los botones mas grandes que llegen mas de lado a lado
 - [x] Total y cantidad invertidos en el producto.
 - [x] Migas de pan en el carrito (y en datos y pago).
 - [x] Separación entre productos de la carta y botones con icono.
+- [x] Papelera que elimina el producto completo con aviso.
+- [x] Leyenda producto / cantidad / precio en el carrito.
 
 ### Notas de `main.php` aún pendientes
+
 - [ ] Dejar marcado en el menú el apartado actual.
 - [ ] Botones más anchos en móvil.
-- [ ] Enlaces del pie, «Pedir ya» y «Conócenos»: ahora no llevan a ningún sitio.
+- [ ] Enlaces del pie y botón «Conócenos» de la home: llevan a `#`.
 
 ---
 
 ## Base de datos
+
 - [x] MySQL en Docker: `mysql-db` activo en el puerto 3308.
 - [x] Scripts de creación y datos en `sql/`.
 - [x] Diagrama entidad-relación (`docs/diagramas/`, aún sin subir).
@@ -189,35 +237,39 @@ en mvl hacer los botones mas grandes que llegen mas de lado a lado
 ---
 
 ## Servicios web
-- [x] Entorno local con XAMPP.
-- [ ] **Depurador PHP:** no hay Xdebug en XAMPP. Instalarlo y configurarlo en el IDE.
+
+- [x] Entorno local con XAMPP (PHP 8.2) y Ubuntu en WSL (Apache, PHP 8.5), con la base de datos compartida en Docker.
+- [x] La `url` de `config/parameters.php` se calcula sola (sirve en XAMPP, WSL y servidor).
+- [ ] **Depurador PHP:** Xdebug no está instalado. Instalarlo y configurarlo en el IDE.
 - [ ] Documentar los plugins del IDE.
 - [ ] Elegir y configurar un servidor web. Debe poder ejecutar la BBDD, así que un VPS con Docker encaja bien.
 - [ ] Subir la web por FTP.
 - [ ] Dominio público.
-- [x] La `url` de `config/parameters.php` se calcula sola (sirve en XAMPP, WSL y servidor).
 - [ ] Cambiar la contraseña `root` de la BBDD en el servidor real.
 
 ---
 
 ## GitHub
-- [x] Repositorio `danipyxcala-afk/Daw2mvc` con 30 commits.
-- [ ] **Trabajar en ramas:** los 30 commits están en `main`, sin ramas ni fusiones. **Esto se evalúa**, así que conviene empezar ya, por ejemplo con `feature/pago`.
+
+- [x] Repositorio `danipyxcala-afk/Daw2mvc` con 38 commits.
+- [ ] **Trabajar en ramas:** los 38 commits están en `main`, sin ramas ni fusiones. **Esto se evalúa**, así que cada tarea nueva debería ir en su rama (por ejemplo `feature/ofertas`, `feature/panel-admin`, `fix/anadir-carrito`).
 - [ ] Fusionar en `main` todo lo que se suba.
-- [x] Commit de los cambios de `login.php`.
-- [ ] Decidir si se sube el enunciado.
 - [x] Añadir `.gitignore`.
 - [x] Dar acceso al repositorio a todos los profesores.
 - [ ] Añadir el enlace del repositorio donde pide el enunciado.
-- [ ] Subir la memoria y la base de datos.
+- [ ] **Subir la memoria y los diagramas:** el enunciado pide todo en el repositorio. Añadir `!docs/diagramas/` y `!docs/memoria/` al `.gitignore`.
 - [x] `README.md` nuevo y `READMEProfe.md` quitado.
+- [ ] Decidir si se sube el enunciado (`.docx`, ahora sin seguimiento).
 - [ ] Decidir si se entrega `PREGUNTAS.md`.
 
 ---
 
 ## Memoria
+
 Hay un esqueleto en `docs/memoria/memoria.md` (aún sin subir). Conviene escribirla durante el desarrollo.
+
 - [~] Título, índice, bibliografía o webgrafía y anexos (esqueleto).
+- [~] Introducción: 1.1 «Qué es Sigmeat» redactado; objetivos y tecnologías con datos.
 - [ ] Un apartado por cada bloque del enunciado: web, panel, diseño, BBDD, servicios web y GitHub.
 - [~] Diagrama de clases y cómo interactúan (diagrama hecho en `docs/diagramas/`, falta explicarlo).
 - [~] Diagramas entidad-relación y relacional (hechos, falta meterlos en la memoria).
@@ -226,17 +278,21 @@ Hay un esqueleto en `docs/memoria/memoria.md` (aún sin subir). Conviene escribi
 - [ ] Revisión de ortografía y vocabulario.
 
 ### Presentación
+
 - [ ] Preparar la presentación (entre el 29/11 y el 21/12, según la cuadrícula).
 
 ---
 
 ## Orden recomendado
+
 Las fechas son orientativas y cuentan con entregar el 29/11 (revisado el 14/11):
 
 1. ~~Hasta el 8/11: aclarar dudas y «Corregir ya».~~ Hecho.
 2. ~~Hasta el 12/11: login, registro, cierre de sesión y datos de usuario.~~ Hecho (falta modificar datos).
-3. **Hasta el 17/11:** empezar a usar ramas, lógica de datos y pago y confirmación, guardar el pedido y último pedido.
-4. **Hasta el 19/11:** ofertas.
-5. **Hasta el 25/11:** API y panel de administración, el bloque más grande.
-6. **Hasta el 27/11:** despliegue, prototipo de compra y repaso de móvil.
-7. **Hasta el 29/11:** cerrar memoria, fusionar todo en `main` y prueba completa.
+3. ~~Hasta el 17/11: lógica de datos y pago y confirmación, guardar el pedido.~~ Hecho el 14/11.
+4. **Hasta el 16/11:** «Corregir ya» (redirección, decisión sobre el JavaScript) y **empezar a usar ramas**.
+5. **Hasta el 18/11:** modificar los datos del usuario y bloque «Tu último pedido».
+6. **Hasta el 20/11:** ofertas (página, diseño individual, añadir al carrito, oferta por cantidad).
+7. **Hasta el 26/11:** API y panel de administración, el bloque más grande.
+8. **Hasta el 28/11:** Xdebug, despliegue (servidor, FTP, dominio), prototipo de compra y repaso de móvil.
+9. **Hasta el 29/11:** cerrar la memoria, subir memoria y diagramas, fusionar todo en `main` y prueba completa.
