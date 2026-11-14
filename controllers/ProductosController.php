@@ -45,14 +45,11 @@ class ProductosController
         $coloresCategorias = $this->getColoresCat();
 
         $listadoProductos = null;
-        // echo "$seleccionadas El texto a la izquieda // ";
         switch ($seleccionadas) {
             case 'Hamburguesas':
-                // echo "textorandom1";
                 $listadoProductos["hamburguesas"] = HamburguesasDAO::getAll();
                 break;
             case 'Complementos':
-                // echo "textorandom2";
                 $listadoProductos["complementos"] = ComplementosDAO::getAll();
                 break;
             case 'Bebidas':
@@ -91,10 +88,8 @@ class ProductosController
     {
 
         $id = (int) $_POST['id'];
-        echo "id: $id <br>";
         // Limitar la cantidad entre CANTIDAD_MINIMA y CANTIDAD_MAXIMA
         $cantidad = max(self::CANTIDAD_MINIMA, (int) $_POST['cantidad']);
-        echo "cantidad: $cantidad <br>";
         // productos en la hoja de detalle que se añaden (extras)
         $extras = $_POST['extras'] ?? [];
         // productos en la hoja de detalle que se quitan (ingredientes base que se quitan)
@@ -115,7 +110,6 @@ class ProductosController
                     $extrasElegidos[] = $extra;
                 }
             }
-            echo "Suma extras: $sumaExtras <br>";
         } else {
 
         }
@@ -129,7 +123,6 @@ class ProductosController
         }
         // Calcular el precio total del producto con extras y cantidad
         $precioUnitario = (float) $producto->getPrecio() + $sumaExtras;
-        echo $precioUnitario;
 
         if (!isset($_SESSION['carrito'])) {
             $_SESSION['carrito'] = [];
