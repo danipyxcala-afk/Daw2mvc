@@ -16,7 +16,7 @@
                 <form class="formulario" action="<?= url ?>?controller=user&action=registro" method="POST">
                     <div class="mb-3">
                         <label class="form-label" for="nombre">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" maxlength="100"
+                        <input type="text" class="form-control" id="nombre" name="nombre"  maxlength="100"
                             autocomplete="name" required>
                     </div>
                     <div class="mb-3">
@@ -27,7 +27,7 @@
                     <div class="mb-3">
                         <label class="form-label" for="password">Contraseña</label>
                         <input type="password" class="form-control" id="password" name="password"
-                            autocomplete="new-password" required>
+                            autocomplete="new-password" minlength="8" required>
                     </div>
                     <!-- align-items-end alinea los dos campos aunque una etiqueta ocupe dos líneas -->
                     <div class="row align-items-end">

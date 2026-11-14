@@ -61,29 +61,60 @@ class UserController
 
     public function registro()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nombre = $_POST['nombre'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $passwordCodificada = password_hash($password, PASSWORD_DEFAULT); // Codificar la contraseña antes de enviarla al DAO
-            $telefono = trim($_POST['telefono']) ?: null;
-            $direccion = trim($_POST['direccion']) ?: null;
-            $fecha_nacimiento = $_POST['fecha_nacimiento'] ?: null;
-            // Verificar si el usuario ya existe antes de registrarlo
-            if (UsuariosDAO::getByEmail($email)) {
-                $_SESSION['aviso'] = "El usuario ya existe. Por favor, inicia sesión.";
-                // Redirigir a la pantalla de login
-                header("Location: " . url . "index.php?controller=user&action=plogin");
-                exit();
-            }
-            $usuario = new Usuarios(null, $nombre, $email, $passwordCodificada, $telefono, $direccion, $fecha_nacimiento);
-            // Llamar al método insert del DAO para guardar el usuario en la base de datos
-            UsuariosDAO::insert($usuario);
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->pregistro();
+            exit();
+        }
+        $errores = [];
 
-            // Después de registrar al usuario, redirigir a la pantalla de login
+        $nombre = trim($_POST['nombre'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $password = $_POST['password'] ?? '';
+        $telefono = trim($_POST['telefono'] ?? '') ?: null;
+        $direccion = trim($_POST['direccion'] ?? '') ?: null;
+        $fecha_nacimiento = trim($_POST['fecha_nacimiento'] ?? '') ?: null;
+
+        //verificador de que los campos obligatorios este filled
+        if ($nombre === '' || mb_strlen($nombre) > 100) {
+            $errores[] = "El nombre es obligatorio y debe tener como máximo 100 caracteres.";
+        }
+        if (strlen($password) < 8) {
+            $errores[] = "La contraseña debe tener al menos 8 caracteres.";
+        }
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email) > 150) {
+            $errores[] = "El email no es válido.";
+        }
+        if ($telefono !== null && !preg_match('/^[0-9 +]{6,20}$/', $telefono)) {
+            $errores[] = "El teléfono no es válido.";
+        }
+        if ($fecha_nacimiento !== null && $fecha_nacimiento > date('Y-m-d')) {
+            $errores[] = "La fecha de nacimiento no puede ser posterior al día de hoy.";
+        }
+
+        if (count($errores) > 0) {
+            $_SESSION['aviso'] = implode(' ', $errores);
+            $this->pregistro();
+            exit();
+        }
+
+        // Verificar si el usuario ya existe antes de registrarlo
+        if (UsuariosDAO::getByEmail($email)) {
+            $_SESSION['aviso'] = "El usuario ya existe. Por favor, inicia sesión.";
+            // Redirigir a la pantalla de login
             header("Location: " . url . "index.php?controller=user&action=plogin");
             exit();
         }
+        // Codificar la contraseña antes de enviarla al DAO
+        $passwordCodificada = password_hash($password, PASSWORD_DEFAULT);
+        $usuario = new Usuarios(null, $nombre, $email, $passwordCodificada, $telefono, $direccion, $fecha_nacimiento);
+        // Llamar al método insert del DAO para guardar el usuario en la base de datos
+        UsuariosDAO::insert($usuario);
+
+        $_SESSION['aviso'] = "Cuenta creada. Ya puedes iniciar sesion.";
+        // Después de registrar al usuario, redirigir a la pantalla de login
+        header("Location: " . url . "index.php?controller=user&action=plogin");
+        exit();
+
     }
     //pantalla de usuario y cargar registro de compras del usuario
     public function puser()
@@ -133,6 +164,3 @@ class UserController
         exit();
     }
 }
-
-
-?>
