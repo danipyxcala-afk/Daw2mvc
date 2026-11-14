@@ -1,3 +1,4 @@
+
 <div class="container carrito">
     <nav class="producto__migas" aria-label="Migas de pan">
         <a href="<?= url ?>index.php?controller=home">Inicio</a> /
@@ -69,7 +70,8 @@
             <!-- DATOS DEL PEDIDO Y TOTALES -->
             <div class="col-lg-4">
                 <aside class="carrito__resumen" aria-labelledby="confirmacion-resumen-titulo">
-                    <h2 class="carrito__subtitulo" id="confirmacion-resumen-titulo">Pedido #<?= (int) $pedido->getId() ?></h2>
+                    <h2 class="carrito__subtitulo" id="confirmacion-resumen-titulo">Pedido #<?= (int) $pedido->getId() ?>
+                    </h2>
 
                     <dl class="carrito__totales">
                         <div class="carrito__fila">

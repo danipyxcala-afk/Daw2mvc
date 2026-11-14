@@ -115,6 +115,8 @@ class CarritoController
         $metodosPago = $this->getMetodosPago();
         $total = $totales['total'];
 
+        $usuario = $_SESSION['usuario'] ?? null;
+
         $view = "views/carrito/pago.php";
         include_once 'views/main.php';
 
@@ -195,6 +197,7 @@ class CarritoController
             $detalles[] = ['linea' => $linea, 'mods' => $mods];
         }
 
+        $usuario = $_SESSION['usuario'] ?? null;
         $view = "views/carrito/confirmacion.php";
         include_once 'views/main.php';
     }

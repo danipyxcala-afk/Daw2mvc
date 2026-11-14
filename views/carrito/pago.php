@@ -1,3 +1,4 @@
+
 <div class="container carrito">
     <nav class="producto__migas" aria-label="Migas de pan">
         <a href="<?= url ?>index.php?controller=home">Inicio</a> /
@@ -119,7 +120,7 @@
                     </div>
                 </dl>
 
-                <!-- CONFIRMAR: está fuera del <form>, pero form="form-pago" hace que lo envíe -->
+                <!-- CONFIRMAR -->
                 <button class="boton boton--secundario boton--bloque carrito__continuar" type="submit" form="form-pago">
                     Confirmar pedido
                     <img src="<?= url ?>assets/img/icons/blanco/svg/check.svg" alt="" width="20" height="20">
