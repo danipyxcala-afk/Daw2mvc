@@ -87,9 +87,14 @@ class ProductosController
     public function anadirCarrito()
     {
 
-        $id = (int) $_POST['id'];
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: " . url . "controller=productos&action=carta");
+            exit();
+        }
+
+        $id = (int) ($_POST['id'] ?? 0);
         // Limitar la cantidad entre CANTIDAD_MINIMA y CANTIDAD_MAXIMA
-        $cantidad = max(self::CANTIDAD_MINIMA, (int) $_POST['cantidad']);
+        $cantidad = max(self::CANTIDAD_MINIMA, min(self::CANTIDAD_MAXIMA, (int) ($_POST['cantidad'] ?? 1)));
         // productos en la hoja de detalle que se añaden (extras)
         $extras = $_POST['extras'] ?? [];
         // productos en la hoja de detalle que se quitan (ingredientes base que se quitan)
@@ -110,8 +115,6 @@ class ProductosController
                     $extrasElegidos[] = $extra;
                 }
             }
-        } else {
-
         }
         if (!empty($quitados)) {
 
@@ -228,6 +231,3 @@ class ProductosController
         return $listadoProductos;
     }
 }
-
-?>
-
