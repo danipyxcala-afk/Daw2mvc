@@ -1,100 +1,37 @@
 /* CABECERA
-   La barra de arriba con el logo, el menú y los iconos. */
+   La barra de arriba con el logo, el menú y los iconos (views/header.php).
+   Colocar las cosas y el responsive lo hace Bootstrap en el HTML,
+   aquí solo queda lo que es nuestro: el color, el blur y los tamaños que Bootstrap no tiene */
 
-/* La barra: coloca logo, menú e iconos en fila y separados entre sí */
+/* sticky-top de Bootstrap la pega arriba del todo, yo la quiero un poco separada del borde */
+header.sticky-top {
+    top: 1rem;
+}
+
+/* Gris semitransparente y blur: difumina lo que pasa por detrás al hacer scroll */
 .encabezado {
-    display: flex;
-    flex-wrap: wrap; /* si no caben, pasan a la línea de abajo */
-    align-items: center; /* centrados en vertical */
-    justify-content: space-between; /* reparte el espacio libre entre ellos */
-    gap: 16px;
-    padding: 10px 32px;
-    background-color: rgba(169, 169, 169, 0.5); /* gris semitransparente */
-    border-radius: var(--radio-grande);
-    backdrop-filter: blur(10px); /* difumina lo que pasa por detrás de la barra */
+    background-color: rgba(169, 169, 169, .5);
+    backdrop-filter: blur(10px);
 }
 
-/* La cabecera se queda pegada arriba al hacer scroll */
-header {
-    position: sticky;
-    top: 1rem !important; /* distancia con el borde superior de la pantalla */
-    z-index: 10; /* hace que quede por encima del resto del contenido */
-    margin-bottom: 50px;
-}
-
-/* Zona del logo. flex: 1 hace que ocupe el mismo ancho que la zona de los iconos,
-   y así el menú queda centrado */
-.encabezado__logo {
-    flex: 1;
-    display: flex;
-}
-
-/* Imagen del logo: width auto mantiene su proporción */
+/* El logo más pequeño en el móvil. Con clamp no hace falta @media (se usa también en el footer) */
 .logo {
-    height: 50px;
-    width: auto;
+    height: clamp(36px, 2.5vw + 26px, 50px);
 }
 
-/* Menú principal: los enlaces en fila */
-.encabezado__nav {
-    display: flex;
-    gap: 40px;
+/* Muñeco + nombre + flecha: la misma altura que los botones de icono */
+.encabezado__usuario {
+    height: 44px;
+    transition: background-color .15s ease;
 }
 
-/* Cada enlace del menú */
-.encabezado__enlace {
-    font-family: var(--fuente-negrita);
-    font-size: 20px;
+/* Gris al pasar el ratón o con el menú abierto */
+.encabezado__usuario:hover,
+details[open] > .encabezado__usuario {
+    background-color: var(--gris-fondo);
 }
 
-/* Zona de los iconos (carrito y usuario), pegados a la derecha */
-.encabezado__acciones {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-}
-
-/* Icono del carrito. position: relative sirve de referencia para colocar el contador */
-.encabezado__carrito {
-    position: relative;
-}
-
-/* Círculo con el número de productos, encima de la esquina del icono */
-.encabezado__contador {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 4px;
-    border-radius: var(--radio-pildora);
-    background-color: var(--azul-claro);
-    color: var(--blanco);
-    font-size: 12px;
-    line-height: 18px;
-    text-align: center;
-}
-
-/* En móvil: logo e iconos arriba y el menú en una segunda fila */
-@media (max-width: 576px) {
-    .encabezado {
-        padding: 8px 16px;
-        border-radius: 28px;
-    }
-
-    .logo {
-        height: 36px;
-    }
-
-    .encabezado__nav {
-        order: 3; /* lo coloca el último */
-        width: 100%; /* al ocupar todo el ancho, baja a su propia fila */
-        justify-content: center;
-        gap: 32px;
-    }
-
-    .encabezado__enlace {
-        font-size: 18px;
-    }
+/* Si el nombre es muy largo se corta con "..." (text-truncate en el HTML) */
+.encabezado__nombre {
+    max-width: 120px;
 }
