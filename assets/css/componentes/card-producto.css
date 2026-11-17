@@ -1,122 +1,43 @@
-/* TARJETA DE PRODUCTO
-   Cada producto de la carta. Arriba la caja de color y debajo la información.
-   Los colores de la caja vienen de .categoria-card--oscuro, --medio, etc. (en home.css).
-   Si un producto no tiene ninguna de esas clases, se queda con el azul oscuro de aquí. */
+/* TARJETAS DE COLOR
+   Las cajas de color con la foto: categorías del home, tarjetas de la carta y foto del detalle.
+   La colocación va con Bootstrap en el HTML, aquí solo los colores, la proporción y el hover */
 
-/* La tarjeta entera: coloca sus partes una debajo de otra.
-   height: 100% hace que todas las tarjetas de una fila midan lo mismo */
-.card-producto {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
+/* Colores de cada categoría. El nombre del color lo pone PHP (getColoresCat()),
+   por eso no aparecen escritos tal cual en las vistas: class="categoria-card--<?= $color ?>" */
+.categoria-card--oscuro { background-color: var(--azul-oscuro); }
+.categoria-card--medio  { background-color: var(--azul-medio); }
+.categoria-card--claro  { background-color: var(--azul-claro); }
+.categoria-card--gris   { background-color: var(--gris-texto); }
 
-/* Caja de color con el nombre de la categoría y la imagen */
-.card-producto__media {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    aspect-ratio: 6 / 5; /* mantiene siempre la misma proporción de ancho y alto */
-    padding: 16px;
-    border-radius: var(--radio-tarjeta);
+/* Si un producto no tiene color de categoría se queda en azul oscuro */
+.card-producto__media,
+.producto__media {
     background-color: var(--azul-oscuro);
-    transition: transform .15s ease; /* hace suave el movimiento del hover */
 }
 
-/* Al pasar el ratón, la caja sube un poco (igual que las categorías del home).
-   Solo la caja, que es el enlace al detalle: así los botones no se mueven */
+/* Bootstrap no tiene clases para la proporción que queremos, así que va aquí */
+.categoria-card      { aspect-ratio: 1 / 1; }
+.producto__media     { aspect-ratio: 1 / 1; }
+.card-producto__media { aspect-ratio: 6 / 5; }
+
+/* Al pasar el ratón la caja sube un poco. En la carta solo la caja (que es el enlace al detalle),
+   así los botones de debajo no se mueven */
+.categoria-card,
+.card-producto__media {
+    transition: transform .15s ease;
+}
+
+.categoria-card:hover,
 .card-producto__media:hover {
     transform: translateY(-4px);
 }
 
-/* Nombre de la categoría, arriba de la caja */
-.card-producto__categoria {
-    margin: 0;
-    font-family: var(--fuente-negrita);
-    color: var(--blanco);
-    text-align: center;
-}
-
-/* Imagen del producto: ocupa el espacio que deja la categoría */
+/* La foto ocupa el hueco que deja el nombre. min-height: 0 deja que se encoja y no se salga de la caja */
+.categoria-card__img,
 .card-producto__img {
-    flex: 1 1 auto; /* puede crecer o encogerse para adaptarse al hueco */
-    min-height: 0; /* permite que se encoja y no se salga de la caja */
-    width: 100%;
+    min-height: 0;
+}
+
+.card-producto__img {
     height: 70%;
-    object-fit: contain; /* se ve entera y nunca se deforma */
-}
-
-/* Zona de texto debajo de la caja de color */
-.card-producto__info {
-    flex: 1; /* ocupa todo el alto libre, así el precio queda alineado entre tarjetas */
-    display: flex;
-    flex-direction: column;
-    padding-top: 12px;
-}
-
-/* Nombre del producto */
-.card-producto__nombre {
-    margin: 0 0 4px;
-    font-size: 22px;
-}
-
-/* Descripción del producto */
-.card-producto__desc {
-    margin: 0 0 12px;
-    font-size: 14px;
-}
-
-/* Parte de abajo: precio a la izquierda y botones a la derecha.
-   margin-top: auto la empuja al final de la zona de texto */
-.card-producto__pie {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
-}
-
-/* Precio del producto */
-.card-producto__precio {
-    margin: 0;
-    font-family: var(--fuente-negrita);
-    font-size: 20px;
-}
-
-/* Botones "Editar producto" y "Añadir al carrito": uno debajo del otro, a la derecha */
-.card-producto__botones {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch; /* los dos botones miden lo mismo de ancho */
-    gap: 8px;
-}
-
-/* El formulario de "Añadir al carrito" no debe añadir márgenes y su botón ocupa todo el ancho */
-.card-producto__botones form {
-    margin: 0;
-}
-
-.card-producto__botones .boton {
-    width: 100%;
-}
-
-/* En móvil: el precio arriba y los botones debajo, de lado a lado (nota de TAREAS) */
-@media (max-width: 576px) {
-    .card-producto__pie {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 12px;
-    }
-
-    .card-producto__botones .boton {
-        min-height: 48px; /* más fáciles de pulsar con el dedo */
-    }
-}
-
-/* Si el usuario tiene pedido en su sistema reducir animaciones, quitamos la transición */
-@media (prefers-reduced-motion: reduce) {
-    .card-producto__media {
-        transition: none;
-    }
 }

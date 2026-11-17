@@ -1,23 +1,24 @@
-
-<div class="container carrito">
-    <nav class="producto__migas" aria-label="Migas de pan">
-        <a href="<?= url ?>index.php?controller=home">Inicio</a> /
-        <a href="<?= url ?>index.php?controller=carrito">Carrito</a> /
-        <b>Datos y pago</b>
+<div class="container mb-5">
+    <nav>
+        <ol class="breadcrumb small mb-4">
+            <li class="breadcrumb-item"><a href="<?= url ?>index.php?controller=home">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="<?= url ?>index.php?controller=carrito">Carrito</a></li>
+            <li class="breadcrumb-item active fw-bold">Datos y pago</li>
+        </ol>
     </nav>
 
-    <h1 class="carrito__titulo">Datos y pago</h1>
+    <h1 class="mb-4">Datos y pago</h1>
 
-    <!-- PASOS DEL PEDIDO-->
-    <ol class="pasos" aria-label="Pasos del pedido">
+    <!-- PASOS DEL PEDIDO. En el móvil solo se ve el texto del paso en el que estamos (d-none d-sm-inline) -->
+    <ol class="list-unstyled d-flex justify-content-center align-items-center gap-2 gap-md-3 mb-5 small">
         <li class="pasos__paso">
-            <span class="pasos__numero">1</span> Carrito
+            <span class="pasos__numero">1</span> <span class="d-none d-sm-inline">Carrito</span>
         </li>
-        <li class="pasos__paso is-activo" aria-current="step">
+        <li class="pasos__paso is-activo">
             <span class="pasos__numero">2</span> Datos y pago
         </li>
         <li class="pasos__paso">
-            <span class="pasos__numero">3</span> Confirmación
+            <span class="pasos__numero">3</span> <span class="d-none d-sm-inline">Confirmación</span>
         </li>
     </ol>
 
@@ -26,21 +27,22 @@
             <form id="form-pago" method="POST" action="<?= url ?>index.php?controller=carrito&action=confirmar">
 
                 <!-- DATOS DE ENTREGA -->
-                <section class="panel__tarjeta mb-4" aria-labelledby="pago-datos-titulo">
-                    <h2 class="panel__seccion" id="pago-datos-titulo">Datos de entrega</h2>
+                <section class="bg-light rounded-4 p-4 mb-4">
+                    <h2 class="fs-4 mb-3">Datos de entrega</h2>
                     <?php if ($usuario) { ?>
-                        <dl class="datos">
-                            <dt class="datos__campo">Nombre</dt>
-                            <dd class="datos__valor"><?= dato($usuario->getNombre()) ?></dd>
+                        <!-- text-break parte los emails largos para que no se salgan de la tarjeta -->
+                        <dl class="mb-0">
+                            <dt class="small">Nombre</dt>
+                            <dd class="mb-3 text-break"><?= dato($usuario->getNombre()) ?></dd>
 
-                            <dt class="datos__campo">Email</dt>
-                            <dd class="datos__valor"><?= dato($usuario->getEmail()) ?></dd>
+                            <dt class="small">Email</dt>
+                            <dd class="mb-3 text-break"><?= dato($usuario->getEmail()) ?></dd>
 
-                            <dt class="datos__campo">Teléfono</dt>
-                            <dd class="datos__valor"><?= dato($usuario->getTelefono()) ?></dd>
+                            <dt class="small">Teléfono</dt>
+                            <dd class="mb-3 text-break"><?= dato($usuario->getTelefono()) ?></dd>
 
-                            <dt class="datos__campo">Dirección</dt>
-                            <dd class="datos__valor"><?= dato($usuario->getDireccion()) ?></dd>
+                            <dt class="small">Dirección</dt>
+                            <dd class="mb-0 text-break"><?= dato($usuario->getDireccion()) ?></dd>
                         </dl>
                         <p class="mt-3 mb-0">
                             <a href="<?= url ?>index.php?controller=user&action=puser">Ver mis datos en Mi cuenta</a>
@@ -49,8 +51,8 @@
                 </section>
 
                 <!-- MÉTODO DE PAGO -->
-                <fieldset class="panel__tarjeta mb-4">
-                    <legend class="panel__seccion">Método de pago</legend>
+                <fieldset class="bg-light rounded-4 p-4 mb-4">
+                    <legend class="fs-4 mb-3">Método de pago</legend>
                     <?php $primero = true;
                     foreach ($metodosPago as $valor => $texto) { ?>
                         <div class="form-check mb-2">
@@ -67,27 +69,27 @@
 
         <!-- RESUMEN -->
         <div class="col-lg-4">
-            <aside class="carrito__resumen" aria-labelledby="pago-resumen-titulo">
-                <h2 class="carrito__subtitulo" id="pago-resumen-titulo">Tu pedido</h2>
+            <aside class="bg-light rounded-4 p-4">
+                <h2 class="fs-2 mb-4">Tu pedido</h2>
 
-                <ul class="pedido__lineas">
+                <ul class="list-unstyled mb-3">
                     <?php foreach ($lineas as $linea) {
                         $cantidad = (int) $linea['cantidad'];
                         $quitados = $linea['quitados'] ?? [];
                         $extras = $linea['extras'] ?? [];
                         ?>
-                        <li class="pedido__linea">
-                            <div class="pedido__producto">
+                        <li class="mb-3">
+                            <div class="d-flex justify-content-between gap-3">
                                 <span><?= $cantidad ?>x <?= dato($linea['nombre']) ?></span>
                                 <span><?= precio((float) $linea['precio_unitario'] * $cantidad) ?></span>
                             </div>
                             <?php if (count($quitados) + count($extras) > 0) { ?>
-                                <ul class="pedido__mods">
+                                <ul class="list-unstyled mt-1 mb-0 ps-3 small">
                                     <?php foreach ($quitados as $quitado) { ?>
-                                        <li class="pedido__mod--quitado">Sin <?= dato($quitado['nombre']) ?></li>
+                                        <li class="text-secondary text-decoration-line-through">Sin <?= dato($quitado['nombre']) ?></li>
                                     <?php } ?>
                                     <?php foreach ($extras as $extra) { ?>
-                                        <li class="pedido__mod--anadido">+ <?= dato($extra['nombre']) ?></li>
+                                        <li class="text-primary">+ <?= dato($extra['nombre']) ?></li>
                                     <?php } ?>
                                 </ul>
                             <?php } ?>
@@ -95,7 +97,7 @@
                     <?php } ?>
                 </ul>
 
-                <dl class="carrito__totales">
+                <dl class="mb-4">
                     <div class="carrito__fila">
                         <dt>Subtotal</dt>
                         <dd><?= precio($subtotal) ?></dd>
@@ -121,7 +123,7 @@
                 </dl>
 
                 <!-- CONFIRMAR -->
-                <button class="boton boton--secundario boton--bloque carrito__continuar" type="submit" form="form-pago">
+                <button class="boton boton--secundario boton--sm w-100" type="submit" form="form-pago">
                     Confirmar pedido
                     <img src="<?= url ?>assets/img/icons/blanco/svg/check.svg" alt="" width="20" height="20">
                 </button>
