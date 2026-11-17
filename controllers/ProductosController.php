@@ -88,7 +88,7 @@ class ProductosController
     {
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: " . url . "controller=productos&action=carta");
+            header("Location: " . url . "index.php?controller=productos&action=carta");
             exit();
         }
 
