@@ -1,16 +1,9 @@
 /* AVISO
-   Mensaje de un solo uso (producto añadido, sesión cerrada...).
-   Se usa junto a las clases de Bootstrap: class="aviso alert alert-info alert-dismissible" */
-
-/* position: fixed lo saca del flujo de la página: flota encima y no empuja el contenido.
-   Así no deja un hueco en el home, donde la portada se mete por detrás de la cabecera */
+   Mensaje de un solo uso (producto añadido, sesión cerrada...) que sale en main.php.
+   Es un alert de Bootstrap con position-fixed: flota encima y no empuja el contenido,
+   así no deja un hueco en el home, donde la portada se mete por detrás de la cabecera */
 .aviso {
-    position: fixed;
     top: 110px; /* justo debajo de la cabecera */
-    left: 50%;
-    transform: translateX(-50%); /* junto con left: 50%, lo centra en horizontal */
-    z-index: 20; /* por encima de la cabecera, que tiene z-index 10 */
-    width: min(560px, calc(100% - 32px)); /* en móvil deja 16px de margen a cada lado */
-    margin: 0;
-    border-radius: var(--radio-tarjeta);
+    z-index: 1030; /* por encima de la cabecera (sticky-top de Bootstrap tiene 1020) */
+    width: min(560px, calc(100% - 32px)); /* en el móvil deja 16px a cada lado */
 }

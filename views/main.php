@@ -19,9 +19,9 @@
     <main>
         <!-- Avisos de un solo uso -->
         <?php if (isset($_SESSION['aviso'])) { ?>
-            <div class="aviso alert alert-info alert-dismissible fade show" role="status">
+            <div class="aviso alert alert-info alert-dismissible fade show position-fixed start-50 translate-middle-x m-0 rounded-4" role="status">
                 <?= texto($_SESSION['aviso']) ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
             <?php
             // El aviso se muestra una sola vez

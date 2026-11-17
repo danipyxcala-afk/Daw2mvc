@@ -1,67 +1,26 @@
-/* FORMULARIOS Y DETALLE
-   El formulario de Sigmeat se usa en las pantallas de iniciar sesión y de registro.
-   El ancho lo marca quien lo contiene, y cada campo se separa del siguiente con la clase mb-3 de Bootstrap. */
+/* FORMULARIOS
+   Los campos son los form-control de Bootstrap. Aquí solo les pongo nuestra forma y nuestro azul */
 
-/* El formulario: coloca los campos uno debajo de otro */
-.formulario {
-    display: flex;
-    flex-direction: column;
-}
-
-/* El texto de cada etiqueta, encima de su campo */
-.formulario label {
-    font-family: var(--fuente-negrita);
-}
-
-/* Los campos donde se escribe o se elige una opción */
-.formulario input,
-.formulario select {
-    min-height: 50px; /* la misma altura que los botones */
+/* Login y registro: campos en forma de píldora, con borde azul oscuro
+   y la misma altura que los botones (50px) */
+.formulario .form-control {
+    min-height: 50px;
     padding: 8px 24px;
-    font: inherit; /* usa la misma letra que el resto de la página */
-    font-family: var(--fuente-texto);
-    border: 1px solid var(--azul-oscuro);
-    border-radius: var(--radio-pildora);
-}
-
-/* Bootstrap añade un brillo azul al enfocar un campo: lo quitamos y dejamos solo nuestro contorno */
-.formulario .form-control:focus {
     border-color: var(--azul-oscuro);
-    box-shadow: none;
+    border-radius: var(--bs-border-radius-pill);
 }
 
-/* :focus-visible marca el campo activo cuando navegamos con el teclado */
-.formulario input:focus-visible,
-.formulario select:focus-visible {
-    outline: 2px solid var(--azul-claro);
-    outline-offset: 2px;
+/* Al hacer clic en un campo, Bootstrap pone un brillo azul suyo: lo cambio por el nuestro.
+   outline: 0 quita además el contorno del teclado de base.css, que con el brillo ya no hace falta */
+.form-control:focus,
+.form-check-input:focus {
+    border-color: var(--azul-claro);
+    box-shadow: 0 0 0 .25rem rgba(85, 100, 234, .25);
+    outline: 0;
 }
 
-/* El botón del formulario, un poco separado del último campo */
-.formulario .boton {
-    margin-top: 8px;
-}
-
-/* Detalle: lista de datos de un producto, en dos columnas (nombre y valor).
-   max-content ajusta la primera al texto y 1fr da a la segunda el resto del espacio */
-.detalle {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    gap: 8px 24px;
-    max-width: 480px;
-}
-
-/* dt es el nombre del dato: va en negrita */
-.detalle dt {
-    font-family: var(--fuente-negrita);
-}
-
-/* dd es el valor del dato: le quitamos el margen que trae por defecto */
-.detalle dd {
-    margin: 0;
-}
-
-/* Enlace "Volver al listado", subrayado para que se vea que se puede pulsar */
-.enlace-volver {
-    text-decoration: underline;
+/* Los radio del método de pago, marcados en azul claro */
+.form-check-input:checked {
+    background-color: var(--azul-claro);
+    border-color: var(--azul-claro);
 }

@@ -1,54 +1,25 @@
 /* BOTONES
-   Todos los botones usan la clase .boton más una variante. Ejemplo:
-   class="boton boton--primario"
+   Todos los botones llevan la clase .boton más una variante. Ejemplo: class="boton boton--primario"
+   Son nuestros (no los .btn de Bootstrap) porque tienen la forma y los colores del diseño de Figma */
 
-   Estados que se repiten en este archivo:
-   - :hover          -> el ratón está encima
-   - :focus-visible  -> está seleccionado con el teclado
-   - :disabled       -> está desactivado y no se puede pulsar
-   - .is-activo y [aria-pressed], [aria-current] -> es la opción seleccionada ahora */
-
-/* box-sizing hace que el padding cuente dentro del tamaño del botón.
-   Así un enlace <a> y un <button> miden lo mismo */
-.boton,
-.boton-nav {
-    box-sizing: border-box;
-}
-
-/* Estilo que comparten todos los botones: forma, tamaño y letra */
+/* Lo que comparten todos: forma de píldora, tamaño y letra */
 .boton {
-    display: inline-flex; /* centra el texto y el icono en una fila */
+    display: inline-flex; /* el texto y el icono en una fila y centrados */
     align-items: center;
     justify-content: center;
-    gap: 10px; /* separación entre el texto y el icono */
+    gap: 10px;
     min-height: 50px;
     padding: 10px 32px;
     border: 0;
-    border-radius: var(--radio-pildora);
-    font-family: var(--fuente-negrita);
+    border-radius: var(--bs-border-radius-pill);
     font-size: 20px;
+    font-weight: 700;
     line-height: 1;
-    text-decoration: none;
     white-space: nowrap; /* el texto no se parte en dos líneas */
-    cursor: pointer; /* aparece la manita al pasar el ratón */
-    transition: background-color .15s ease, color .15s ease; /* cambio de color suave */
+    transition: background-color .15s ease, color .15s ease;
 }
 
-/* Todo lo que hay dentro del botón (texto, icono) usa su mismo color y fuente */
-.boton *,
-.boton-nav * {
-    color: inherit;
-    font-family: inherit;
-}
-
-/* Contorno azul al llegar al botón con el teclado (tecla Tab) */
-.boton:focus-visible,
-.boton-nav:focus-visible {
-    outline: 3px solid var(--azul-claro);
-    outline-offset: 3px;
-}
-
-/* BOTÓN PRIMARIO: azul claro, para las acciones principales */
+/* PRIMARIO: azul claro, para las acciones principales */
 .boton--primario {
     background-color: var(--azul-claro);
     color: var(--blanco);
@@ -59,14 +30,7 @@
     color: var(--blanco);
 }
 
-.boton--primario.is-activo,
-.boton--primario[aria-pressed="true"],
-.boton--primario[aria-current="page"] {
-    background-color: var(--azul-medio);
-    color: var(--blanco);
-}
-
-/* BOTÓN SECUNDARIO: azul oscuro, normalmente con una flecha */
+/* SECUNDARIO: azul oscuro, normalmente con la flecha */
 .boton--secundario {
     background-color: var(--azul-oscuro);
     color: var(--blanco);
@@ -77,49 +41,17 @@
     color: var(--blanco);
 }
 
-.boton--secundario.is-activo,
-.boton--secundario[aria-pressed="true"],
-.boton--secundario[aria-current="page"] {
-    background-color: var(--azul-medio);
-    color: var(--blanco);
+/* La flecha del secundario gira al pasar el ratón: de diagonal a apuntar a la derecha */
+.boton--secundario img {
+    transition: transform .2s ease;
 }
 
-/* BOTÓN SECUNDARIO INVERTIDO: igual que el secundario, pero con los colores
-   al revés. Se usa junto a .boton--secundario */
-.boton--secundario.boton--invertido {
-    background-color: var(--azul-claro);
-    color: var(--blanco);
+.boton--secundario:hover img {
+    transform: rotate(45deg);
 }
 
-.boton--secundario.boton--invertido:hover {
-    background-color: var(--azul-oscuro);
-    color: var(--blanco);
-}
-
-.boton--secundario.boton--invertido.is-activo,
-.boton--secundario.boton--invertido[aria-pressed="true"],
-.boton--secundario.boton--invertido[aria-current="page"] {
-    background-color: var(--azul-medio);
-}
-
-.boton--secundario.boton--invertido:disabled,
-.boton--secundario.boton--invertido[aria-disabled="true"] {
-    background-color: var(--gris-texto);
-    color: var(--gris-desactivado-texto);
-}
-
-/* BOTÓN DESACTIVADO: gris y sin reaccionar al ratón */
-.boton:disabled,
-.boton[aria-disabled="true"] {
-    background-color: var(--gris-texto);
-    color: var(--gris-desactivado-texto);
-    cursor: not-allowed; /* aparece el icono de prohibido */
-    pointer-events: none; /* ignora los clics */
-}
-
-/* BOTÓN CON BORDE: para acciones secundarias que van junto a un botón primario
-   (por ejemplo "Editar producto" al lado de "Añadir al carrito").
-   El borde se hace con box-shadow inset para que mida lo mismo que los demás botones */
+/* CON BORDE: para la acción que va al lado de una primaria ("Editar producto").
+   El borde va con box-shadow inset para que mida lo mismo que los demás botones */
 .boton--borde {
     background-color: transparent;
     color: var(--azul-claro);
@@ -131,13 +63,12 @@
     color: var(--blanco);
 }
 
-/* BOTÓN FILTRO: las píldoras de la carta (Todo, Hamburguesas...).
-   Son grises y la seleccionada se pone azul */
+/* FILTRO: las píldoras de la carta (Todo, Hamburguesas...). La elegida se pone azul */
 .boton--filtro {
     min-height: 40px;
     padding: 8px 28px;
-    font-family: var(--fuente-texto);
     font-size: 16px;
+    font-weight: 400;
     background-color: var(--gris-fondo);
     color: var(--azul-oscuro);
 }
@@ -147,47 +78,37 @@
     color: var(--azul-oscuro);
 }
 
-.boton--filtro.is-activo,
-.boton--filtro[aria-pressed="true"],
-.boton--filtro[aria-current="page"] {
+.boton--filtro.is-activo {
     background-color: var(--azul-claro);
     color: var(--blanco);
 }
 
-/* TAMAÑOS */
+/* DESACTIVADO: gris y no hace caso a los clics */
+.boton:disabled {
+    background-color: var(--gris-texto);
+    color: var(--gris-desactivado-texto);
+    pointer-events: none;
+}
 
-/* Botón pequeño */
+/* PEQUEÑO */
 .boton--sm {
     min-height: 40px;
     padding: 8px 24px;
     font-size: 16px;
 }
 
-/* Botón que ocupa todo el ancho (de momento no se usa en ninguna vista) */
-.boton--bloque {
-    display: flex;
-    width: 100%;
-}
-
-/* ICONOS DENTRO DEL BOTÓN (se usan en los botones de la carta)
-   Usan la imagen como una máscara, y así el icono toma el color del texto del botón.
-   La imagen se indica en la variable --icono */
+/* ICONOS DENTRO DEL BOTÓN (los de la carta)
+   La imagen se usa como máscara y así el icono coge el color del texto del botón (currentColor).
+   La imagen va en la variable --icono */
 .boton__icono {
-    flex-shrink: 0; /* el icono no se encoge */
-    width: 24px;
-    height: 24px;
-    background-color: currentColor; /* currentColor es el color del texto */
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    background-color: currentColor;
     -webkit-mask: var(--icono) center / contain no-repeat;
             mask: var(--icono) center / contain no-repeat;
 }
 
-/* En el botón pequeño, el icono también es más pequeño */
-.boton--sm .boton__icono {
-    width: 20px;
-    height: 20px;
-}
-
-/* Iconos que se eligen con una clase (los de la carta) */
 .boton__icono--carrito {
     --icono: url("../../img/icons/negro/svg/carrito.svg");
 }
@@ -196,82 +117,12 @@
     --icono: url("../../img/icons/negro/svg/flecha-diagonal.svg");
 }
 
-/* Al pasar el ratón, la flecha pasa a apuntar a la derecha (como en los botones secundarios) */
+/* Al pasar el ratón la flecha pasa a apuntar a la derecha, como en el secundario */
 .boton:hover .boton__icono--flecha {
     --icono: url("../../img/icons/negro/svg/flecha-derecha.svg");
 }
 
-/* Secundario: flecha diagonal en estado normal */
-.boton--secundario .boton__icono {
-    --icono: url("../../img/icons/negro/svg/flecha-diagonal.svg");
-}
-
-/* Secundario: flecha recta en todos los demás estados */
-.boton--secundario:hover .boton__icono,
-.boton--secundario.is-activo .boton__icono,
-.boton--secundario[aria-pressed="true"] .boton__icono,
-.boton--secundario[aria-current="page"] .boton__icono,
-.boton--secundario:disabled .boton__icono,
-.boton--secundario[aria-disabled="true"] .boton__icono {
-    --icono: url("../../img/icons/negro/svg/flecha-derecha.svg");
-}
-
-/* BOTÓN DE NAVEGACIÓN: texto con una flecha, sin fondo
-   (de momento no se usa en ninguna vista) */
-.boton-nav {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 44px;
-    padding: 6px 4px;
-    border: 0;
-    background: none;
-    color: var(--azul-oscuro);
-    font-family: var(--fuente-negrita);
-    font-size: 20px;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/* Flecha hacia abajo en estado normal */
-.boton-nav .boton__icono {
-    --icono: url("../../img/icons/negro/svg/flecha-abajo.svg");
-}
-
-/* Flecha hacia arriba en los demás estados */
-.boton-nav:hover .boton__icono,
-.boton-nav.is-activo .boton__icono,
-.boton-nav[aria-expanded="true"] .boton__icono,
-.boton-nav[aria-current="page"] .boton__icono,
-.boton-nav:disabled .boton__icono,
-.boton-nav[aria-disabled="true"] .boton__icono {
-    --icono: url("../../img/icons/negro/svg/flecha-arriba.svg");
-}
-
-.boton-nav:hover {
-    color: var(--azul-oscuro);
-}
-
-.boton-nav.is-activo,
-.boton-nav[aria-current="page"] {
-    color: var(--azul-medio);
-}
-
-.boton-nav:disabled,
-.boton-nav[aria-disabled="true"] {
-    color: var(--gris-texto);
-    cursor: not-allowed;
-    pointer-events: none;
-}
-
-/* Si el usuario tiene pedido en su sistema reducir animaciones, quitamos la transición */
-@media (prefers-reduced-motion: reduce) {
-    .boton {
-        transition: none;
-    }
-}
-
-/* BOTÓN DE ICONO: botón redondo que solo lleva un icono (carrito, usuario, "+" de la carta) */
+/* BOTÓN DE ICONO: redondo y solo con un icono (carrito, hamburguesa, papelera) */
 .boton-icono {
     display: inline-flex;
     align-items: center;
@@ -280,34 +131,13 @@
     height: 44px;
     padding: 0;
     border: 0;
-    border-radius: 50%; /* 50% lo convierte en un círculo */
+    border-radius: 50%;
     background: none;
-    text-decoration: none;
-    cursor: pointer;
     transition: background-color .15s ease;
 }
 
-.boton-icono:hover {
+/* Gris al pasar el ratón o mientras su <details> está abierto (hamburguesa y papelera) */
+.boton-icono:hover,
+details[open] > .boton-icono {
     background-color: var(--gris-fondo);
-}
-
-.boton-icono:focus-visible {
-    outline: 2px solid var(--azul-claro);
-    outline-offset: 2px;
-}
-
-/* El "+" azul de la carta: sin fondo gris en hover, solo se vuelve algo transparente */
-.boton-icono--primario:hover {
-    background-color: transparent;
-    opacity: .8;
-}
-
-/* Flecha del botón secundario: al pasar el ratón gira 45 grados,
-   y pasa de apuntar en diagonal a apuntar a la derecha */
-.boton--secundario img {
-    transition: transform .2s ease;
-}
-
-.boton--secundario:hover img {
-    transform: rotate(45deg);
 }

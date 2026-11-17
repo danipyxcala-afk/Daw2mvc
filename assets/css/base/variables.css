@@ -1,31 +1,44 @@
 /* VARIABLES
-   Guardamos aquí los colores, fuentes y bordes de la web.
-   Si queremos cambiar un color, lo cambiamos aquí y se actualiza en todas partes.
+   Aquí guardo los colores de Sigmeat. Si cambio uno aquí, cambia en toda la web.
+   Para usarlas: color: var(--azul-claro);
 
-   Para usarlas: color: var(--azul-claro); */
+   Abajo también cambio las variables de Bootstrap, así sus clases (bg-primary, text-primary,
+   rounded-4...) salen con nuestros colores y no con el azul de Bootstrap */
 
-/* :root es la raíz de la página, así las variables se pueden usar en cualquier sitio */
 :root {
-    /* Colores principales de la marca */
+    /* colores de la marca */
     --azul-oscuro: #000035;
     --azul-medio:  #262651;
     --azul-claro:  #5564EA;
 
-    /* Colores de fondo */
+    /* fondos */
     --blanco:      #FFFFFF;
     --gris-fondo:  #F0F0F0;
     --azul-suave:  #E2E3F5;
 
-    /* Colores de texto y de elementos desactivados */
+    /* texto gris y botones desactivados */
     --gris-texto:  #A9A9A9;
     --gris-desactivado-texto: #E4E4E4;
 
-    /* Fuentes: si Satoshi no carga, se usa otra sin adornos (sans-serif) */
-    --fuente-texto:   'Satoshi-Light', sans-serif;
-    --fuente-negrita: 'Satoshi-Bold', sans-serif;
+    /* BOOTSTRAP CON NUESTROS COLORES
+       Bootstrap guarda los colores en rgb separados por comas, por eso van así */
+    --bs-primary-rgb: 85, 100, 234;     /* azul claro  -> bg-primary, text-primary, border-primary */
+    --bs-secondary-rgb: 38, 38, 81;     /* azul medio  -> text-secondary */
+    --bs-dark-rgb: 0, 0, 53;            /* azul oscuro -> bg-dark, border-dark */
+    --bs-light-rgb: 240, 240, 240;      /* gris fondo  -> bg-light */
+    --bs-primary-bg-subtle: #E2E3F5;    /* azul suave  -> bg-primary-subtle */
+    --bs-tertiary-color: #A9A9A9;       /* gris texto  -> text-body-tertiary */
+    --bs-border-color: #A9A9A9;         /* las rayas de border, border-top... en gris */
 
-    /* Bordes redondeados: cuanto mayor el número, más redondo */
-    --radio-tarjeta: 20px;
-    --radio-grande:  50px;
-    --radio-pildora: 999px; /* tan grande que los lados quedan totalmente redondos */
+    /* el texto y los enlaces en azul oscuro y con la letra Satoshi (en base.css) */
+    --bs-body-font-family: 'Satoshi', sans-serif;
+    --bs-body-color: #000035;
+    --bs-body-color-rgb: 0, 0, 53;
+    --bs-link-color-rgb: 0, 0, 53;
+    --bs-link-hover-color-rgb: 85, 100, 234;
+
+    /* bordes redondeados */
+    --bs-border-radius-lg: 12px;        /* rounded-3 -> desplegables */
+    --bs-border-radius-xl: 20px;        /* rounded-4 -> tarjetas */
+    --bs-border-radius-xxl: 50px;       /* rounded-5 -> caja del footer */
 }

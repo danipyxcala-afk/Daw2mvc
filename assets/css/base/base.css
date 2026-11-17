@@ -1,56 +1,75 @@
 /* ESTILOS GENERALES
-   Se aplican a toda la web sin tener que poner ninguna clase. */
+   Lo que vale para toda la web. El color y la letra del body ya los pone Bootstrap
+   con las variables de variables.css, aquí solo dejo lo que Bootstrap no hace */
 
-/* Fuente, color de texto y fondo por defecto de todas las páginas */
-body {
-    font-family: var(--fuente-texto);
-    color: var(--azul-oscuro);
-    background-color: var(--blanco);
+/* Satoshi como una sola familia: la Light es la letra normal (400) y la Bold la negrita (700).
+   Así fw-bold, <b> y los <dt> de Bootstrap salen con la Bold de verdad
+   y no tengo que poner font-family en cada clase */
+@font-face {
+    font-family: 'Satoshi';
+    src: url('../../fonts/satoshi/Satoshi-Light.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
 }
 
-/* Todos los títulos comparten fuente, grosor y color */
+@font-face {
+    font-family: 'Satoshi';
+    src: url('../../fonts/satoshi/Satoshi-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+
+/* Bootstrap pone los títulos a 500 y con Satoshi saldrían finos */
 h1,
 h2,
 h3,
 h4 {
-    font-family: var(--fuente-negrita);
-    font-weight: bold;
-    color: var(--azul-oscuro);
+    font-weight: 700;
 }
 
-/* Cada título tiene su tamaño: h1 es el más grande */
-h1 { font-size: 64px; }
-h2 { font-size: 40px; }
-h3 { font-size: 30px; }
-h4 { font-size: 22px; }
+/* Tamaño de los títulos. clamp(mínimo, crece con la pantalla, máximo):
+   en el móvil salen con el mínimo y en el ordenador con el máximo, sin @media
+   (es lo mismo que hace Bootstrap con sus títulos, pero con nuestros tamaños) */
+h1 { font-size: clamp(40px, 5.6vw + 19px, 64px); }
+h2 { font-size: clamp(30px, 2.4vw + 21px, 40px); }
+h3 { font-size: clamp(24px, 1.4vw + 19px, 30px); }
+h4 { font-size: clamp(20px, .5vw + 18px, 22px); }
 
-/* Tamaño de texto normal.
-   Para poner un párrafo en negrita usamos la clase fw-bold de Bootstrap */
-p {
-    font-size: 16px;
-}
-
-/* Enlaces: sin esto, Bootstrap los pone azules y subrayados */
+/* Bootstrap subraya los enlaces, nosotros no */
 a {
-    color: var(--azul-oscuro);
     text-decoration: none;
 }
 
-/* :hover significa "cuando el ratón está encima" */
-a:hover {
-    color: var(--azul-claro);
+/* Quito el triángulo que pone el navegador en los <summary> (menús, papelera y pedidos) */
+summary {
+    list-style: none;
 }
 
-/* Clase de ayuda para poner texto blanco sobre fondos oscuros o fotos */
-.texto-blanco {
-    color: var(--blanco);
+summary::-webkit-details-marker {
+    display: none;
 }
 
-/* @media aplica estas reglas solo si se cumple la condición.
-   Aquí: en pantallas de 576px o menos (móvil) los títulos son más pequeños */
-@media (max-width: 576px) {
-    h1 { font-size: 40px; }
-    h2 { font-size: 30px; }
-    h3 { font-size: 24px; }
-    h4 { font-size: 20px; }
+/* Contorno azul cuando te mueves con el teclado (tecla Tab), igual en toda la web */
+:focus-visible {
+    outline: 3px solid var(--azul-claro);
+    outline-offset: 3px;
+}
+
+/* Migas de pan (breadcrumb de Bootstrap): la "/" y la página actual en azul oscuro y no en gris */
+.breadcrumb {
+    --bs-breadcrumb-divider-color: inherit;
+    --bs-breadcrumb-item-active-color: inherit;
+}
+
+/* Cajita blanca que flota (menú del usuario y aviso de la papelera).
+   La posición, la sombra y el redondeo van con clases de Bootstrap en el HTML */
+.desplegable {
+    width: 220px;
+}
+
+/* Si el usuario tiene activado en su sistema reducir animaciones, las quito todas */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
 }

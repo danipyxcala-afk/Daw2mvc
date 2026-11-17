@@ -1,34 +1,36 @@
 /* ARCHIVO PRINCIPAL
-   Es el único CSS que se enlaza en main.php. Desde aquí se cargan todos los demás
-   con @import, así cada parte de la web tiene su propio archivo y es fácil de encontrar.
+   Es el único CSS que se enlaza en main.php (después de Bootstrap). Desde aquí cargo los demás
+   con @import, así cada parte de la web tiene su archivo y es fácil de encontrar.
    El orden importa: si dos reglas valen lo mismo, gana la que se carga más tarde.
 
-   Cómo se leen los nombres de las clases:
-   - bloque             -> un componente entero. Ejemplo: .card-producto
-   - bloque__parte      -> una pieza de ese componente. Ejemplo: .card-producto__img
-   - bloque--variante   -> una versión distinta del componente. Ejemplo: .boton--primario */
+   Cómo lo reparto:
+   - Bootstrap (en el HTML) -> colocar: rejilla, espacios, flex, posición y responsive
+   - estos CSS              -> lo que es de Sigmeat: colores, formas, hover, iconos y fotos de fondo
+
+   Nombres de las clases (BEM):
+   - bloque             -> un componente entero. Ejemplo: .boton
+   - bloque__parte      -> una pieza de ese componente. Ejemplo: .boton__icono
+   - bloque--variante   -> una versión distinta. Ejemplo: .boton--primario */
 
 /* Fuentes: las letras Satoshi */
 @import url("satoshi.css");
 
-/* Base: variables y estilos generales de toda la web */
+/* Base: variables (también las de Bootstrap) y estilos de toda la web */
 @import url("base/variables.css");
 @import url("base/base.css");
 
-/* Layout: las partes que se repiten en todas las páginas */
+/* Layout: lo que se repite en todas las páginas (el footer ya es todo Bootstrap) */
 @import url("layout/header.css");
-@import url("layout/footer.css");
 
-/* Componentes: piezas que se pueden reutilizar en varias páginas */
+/* Componentes: piezas que se usan en varias páginas */
 @import url("componentes/botones.css");
 @import url("componentes/card-producto.css");
 @import url("componentes/tabla.css");
 @import url("componentes/formularios.css");
 @import url("componentes/aviso.css");
 
-/* Páginas: estilos propios de una página concreta */
+/* Páginas: lo propio de una página (login y registro ya son todo Bootstrap) */
 @import url("paginas/home.css");
 @import url("paginas/producto.css");
-@import url("paginas/acceso.css");
 @import url("paginas/panel.css");
 @import url("paginas/carrito.css");

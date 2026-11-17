@@ -25,7 +25,7 @@
 
 /* Las celdas de cabecera se distinguen con negrita y fondo gris */
 .tabla th {
-    font-family: var(--fuente-negrita);
+    font-weight: 700; /* Bootstrap le quita la negrita a los th */
     background-color: var(--gris-fondo);
 }
 
