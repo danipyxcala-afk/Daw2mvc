@@ -22,13 +22,13 @@
 
     /* BOOTSTRAP CON NUESTROS COLORES
        Bootstrap guarda los colores en rgb separados por comas, por eso van así */
-    --bs-primary-rgb: 85, 100, 234;     /* azul claro  -> bg-primary, text-primary, border-primary */
-    --bs-secondary-rgb: 38, 38, 81;     /* azul medio  -> text-secondary */
-    --bs-dark-rgb: 0, 0, 53;            /* azul oscuro -> bg-dark, border-dark */
-    --bs-light-rgb: 240, 240, 240;      /* gris fondo  -> bg-light */
-    --bs-primary-bg-subtle: #E2E3F5;    /* azul suave  -> bg-primary-subtle */
-    --bs-tertiary-color: #A9A9A9;       /* gris texto  -> text-body-tertiary */
-    --bs-border-color: #A9A9A9;         /* las rayas de border, border-top... en gris */
+    --bs-primary-rgb: 85, 100, 234;/* azul claro  -> bg-primary, text-primary, border-primary */
+    --bs-secondary-rgb: 38, 38, 81;/* azul medio  -> text-secondary */
+    --bs-dark-rgb: 0, 0, 53; /* azul oscuro -> bg-dark, border-dark */
+    --bs-light-rgb: 240, 240, 240;/* gris fondo  -> bg-light */
+    --bs-primary-bg-subtle: #E2E3F5;/* azul suave  -> bg-primary-subtle */
+    --bs-tertiary-color: #A9A9A9;/* gris texto  -> text-body-tertiary */
+    --bs-border-color: #A9A9A9;/* las rayas de border, border-top... en gris */
 
     /* el texto y los enlaces en azul oscuro y con la letra Satoshi (en base.css) */
     --bs-body-font-family: 'Satoshi', sans-serif;

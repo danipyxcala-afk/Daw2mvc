@@ -48,5 +48,8 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
 if (!is_callable([$controller, $action])) {
     showError(404, "No existe la action \"" . $action . "\" en " . $nombre_controller);
 }
+if($_GET["controller"] === "api"){
+    header("Content-Type: application/json; charset=utf-8");
+}
 
 $controller->$action();

@@ -8,7 +8,7 @@ class Usuarios
     protected $telefono;
     protected $direccion;
     protected $fecha_nacimiento;
-    protected $rol;
+    protected $rol = 'usuario';
     protected $fecha_registro;
 
     public function __construct(
@@ -46,8 +46,6 @@ class Usuarios
         }
         if ($rol !== null) {
             $this->rol = $rol;
-        }else{
-            $this->rol = 'usuario'; // Valor por defecto para el rol
         }
         if ($fecha_registro !== null) {
             $this->fecha_registro = $fecha_registro;
@@ -236,4 +234,3 @@ class Usuarios
 
 
 }
-?>

@@ -37,6 +37,7 @@ class ProductosController
         $view = "views/productos/carta.php";
         include_once 'views/main.php';
     }
+
     public function carta()
     {
         $seleccionadas = $_GET['pildora'];
