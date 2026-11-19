@@ -78,11 +78,33 @@ class PedidosDAO
         // Asignamos el valor del parámetro de la consulta
         $stmt->bind_param("i", $id);
         $stmt->execute();
+        // Filas borradas (0 = no existía)
+        $filas = $stmt->affected_rows;
         // Cerramos la conexión
         $stmt->close();
         $con->close();
+
+        return $filas;
     }
 
+    // Un pedido no se modifica entero (es un historial): solo cambia su estado y el del pago
+    public static function updateEstado($id, $estado, $estado_pago)
+    {
+        //Conexion a BBDD + Consulta
+        $con = DataBase::connect();
+        $stmt = $con->prepare("UPDATE pedidos SET estado = ?, estado_pago = ? WHERE id = ?");
+        // ssi significa string string int
+        $stmt->bind_param("ssi", $estado, $estado_pago, $id);
+        $stmt->execute();
+        // Filas cambiadas (ojo: da 0 si se guardan los mismos datos que ya tenía)
+        $filas = $stmt->affected_rows;
+
+        // Cerramos la conexión
+        $stmt->close();
+        $con->close();
+
+        return $filas;
+    }
         public static function getPedidosByUsuario($usuario_id)
     {
         //Conexion a BBDD + Consultas
@@ -163,9 +185,13 @@ class PedidosDAO
         // Asignamos el valor del parámetro de la consulta
         $stmt->bind_param("i", $id);
         $stmt->execute();
+        // Filas borradas (0 = no existía)
+        $filas = $stmt->affected_rows;
         // Cerramos la conexión
         $stmt->close();
         $con->close();
+
+        return $filas;
     }
 
     //  Tabla pedido_detalle_ingrediente
@@ -221,10 +247,54 @@ class PedidosDAO
         // Asignamos el valor del parámetro de la consulta
         $stmt->bind_param("i", $id);
         $stmt->execute();
+        // Filas borradas (0 = no existía)
+        $filas = $stmt->affected_rows;
         // Cerramos la conexión
         $stmt->close();
         $con->close();
+
+        return $filas;
     }
 
+
+    //  Métodos para la API (devuelven arrays para json_encode)
+    //  json_encode no ve los atributos protected de los objetos (saldría {}), por eso fetch_assoc
+
+    public static function getAllJson()
+    {
+        //Conexion a BBDD + Consultas
+        $con = DataBase::connect();
+        $stmt = $con->prepare("SELECT * FROM pedidos");
+        //Ejecuta la query
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Creamos Array guardar datos (cada fila es un array asociativo)
+        $pedidos = [];
+        while ($pedido = $result->fetch_assoc()) {
+            $pedidos[] = $pedido;
+        }
+        //Cerramos conexiones
+        $stmt->close();
+        $con->close();
+        return $pedidos;
+    }
+
+    public static function getByIdJson($id)
+    {
+        //Conexion a BBDD + Consulta
+        $con = DataBase::connect();
+        $stmt = $con->prepare("SELECT * FROM pedidos WHERE id = ?");
+        // Esto asignara a cada ? el valor que queramos
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $pedido = $result->fetch_assoc();
+        //Cerramos conexiones
+        $stmt->close();
+        $con->close();
+
+        return $pedido ?: null;
+    }
 }
-?>

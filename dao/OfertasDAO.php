@@ -63,11 +63,14 @@ class OfertasDAO
         $stmt->bind_param("sssdsssi", $nombre, $descripcion, $tipo, $valor, $codigo, $fecha_inicio, $fecha_fin, $activa);
         // Ejecutamos la consulta
         $stmt->execute();
+        // Guardamos el id nuevo ANTES de cerrar la conexión (la API lo devuelve)
+        $id = $con->insert_id;
 
         // Cerramos la conexión
         $stmt->close();
         $con->close();
 
+        return $id;
     }
     public static function delete($id)
     {
@@ -77,11 +80,42 @@ class OfertasDAO
         // Asignamos el valor del parámetro de la consulta
         $stmt->bind_param("i", $id);
         $stmt->execute();
+        // Filas borradas (0 = no existía)
+        $filas = $stmt->affected_rows;
         // Cerramos la conexión
         $stmt->close();
         $con->close();
+
+        return $filas;
     }
 
+    public static function update($oferta)
+    {
+        //Conexion a BBDD + Consulta
+        $con = DataBase::connect();
+        $stmt = $con->prepare("UPDATE ofertas SET nombre = ?, descripcion = ?, tipo = ?, valor = ?, codigo = ?, fecha_inicio = ?, fecha_fin = ?, activa = ? WHERE id = ?");
+        // Obtenemos los valores del objeto oferta
+        $nombre = $oferta->getNombre();
+        $descripcion = $oferta->getDescripcion();
+        $tipo = $oferta->getTipo();
+        $valor = $oferta->getValor();
+        $codigo = $oferta->getCodigo();
+        $fecha_inicio = $oferta->getFechaInicio();
+        $fecha_fin = $oferta->getFechaFin();
+        $activa = $oferta->getActiva();
+        $id = $oferta->getId();
+        // sssdsssii = los 8 del insert + el id del WHERE al final
+        $stmt->bind_param("sssdsssii", $nombre, $descripcion, $tipo, $valor, $codigo, $fecha_inicio, $fecha_fin, $activa, $id);
+        $stmt->execute();
+        // Filas cambiadas (ojo: da 0 si se guardan los mismos datos que ya tenía)
+        $filas = $stmt->affected_rows;
+
+        // Cerramos la conexión
+        $stmt->close();
+        $con->close();
+
+        return $filas;
+    }
     public static function getCodigosActivos()
     {
         $con = DataBase::connect();
@@ -152,10 +186,54 @@ class OfertasDAO
         // Asignamos el valor del parámetro de la consulta
         $stmt->bind_param("ii", $oferta_id, $producto_id);
         $stmt->execute();
+        // Filas borradas (0 = no existía)
+        $filas = $stmt->affected_rows;
         // Cerramos la conexión
         $stmt->close();
         $con->close();
+
+        return $filas;
     }
 
+
+    //  Métodos para la API (devuelven arrays para json_encode)
+    //  json_encode no ve los atributos protected de los objetos (saldría {}), por eso fetch_assoc
+
+    public static function getAllJson()
+    {
+        //Conexion a BBDD + Consultas
+        $con = DataBase::connect();
+        $stmt = $con->prepare("SELECT * FROM ofertas");
+        //Ejecuta la query
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Creamos Array guardar datos (cada fila es un array asociativo)
+        $ofertas = [];
+        while ($oferta = $result->fetch_assoc()) {
+            $ofertas[] = $oferta;
+        }
+        //Cerramos conexiones
+        $stmt->close();
+        $con->close();
+        return $ofertas;
+    }
+
+    public static function getByIdJson($id)
+    {
+        //Conexion a BBDD + Consulta
+        $con = DataBase::connect();
+        $stmt = $con->prepare("SELECT * FROM ofertas WHERE id = ?");
+        // Esto asignara a cada ? el valor que queramos
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $oferta = $result->fetch_assoc();
+        //Cerramos conexiones
+        $stmt->close();
+        $con->close();
+
+        return $oferta ?: null;
+    }
 }
-?>

@@ -58,11 +58,14 @@ class IngredientesDAO
         $stmt->bind_param("sdi", $nombre, $precio_extra, $activo);
         // Ejecutamos la consulta
         $stmt->execute();
+        // Guardamos el id nuevo ANTES de cerrar la conexión (la API lo devuelve)
+        $id = $con->insert_id;
 
         // Cerramos la conexión
         $stmt->close();
         $con->close();
 
+        return $id;
     }
     public static function delete($id){
         //Conexion a BBDD + Consulta
@@ -71,11 +74,37 @@ class IngredientesDAO
         // Asignamos el valor del parámetro de la consulta
         $stmt->bind_param("i", $id);
         $stmt->execute();
+        // Filas borradas (0 = no existía)
+        $filas = $stmt->affected_rows;
         // Cerramos la conexión
         $stmt->close();
         $con->close();
+
+        return $filas;
     }
 
+    public static function update($ingrediente)
+    {
+        //Conexion a BBDD + Consulta
+        $con = DataBase::connect();
+        $stmt = $con->prepare("UPDATE ingredientes SET nombre = ?, precio_extra = ?, activo = ? WHERE id = ?");
+        // Obtenemos los valores del objeto ingrediente
+        $nombre = $ingrediente->getNombre();
+        $precio_extra = $ingrediente->getPrecioExtra();
+        $activo = $ingrediente->getActivo();
+        $id = $ingrediente->getId();
+        // sdii significa string double int int (el último es el id del WHERE)
+        $stmt->bind_param("sdii", $nombre, $precio_extra, $activo, $id);
+        $stmt->execute();
+        // Filas cambiadas (ojo: da 0 si se guardan los mismos datos que ya tenía)
+        $filas = $stmt->affected_rows;
+
+        // Cerramos la conexión
+        $stmt->close();
+        $con->close();
+
+        return $filas;
+    }
     //  Tabla producto_ingrediente 
 
     public static function getByProducto($producto_id)
@@ -153,10 +182,73 @@ class IngredientesDAO
         // Asignamos el valor del parámetro de la consulta
         $stmt->bind_param("ii", $producto_id, $ingrediente_id);
         $stmt->execute();
+        // Filas borradas (0 = no existía)
+        $filas = $stmt->affected_rows;
         // Cerramos la conexión
         $stmt->close();
         $con->close();
+
+        return $filas;
     }
 
+    public static function updateProducto($producto_ingrediente)
+    {
+        //Conexion a BBDD + Consulta
+        $con = DataBase::connect();
+        $stmt = $con->prepare("UPDATE producto_ingrediente SET cantidad = ? WHERE producto_id = ? AND ingrediente_id = ?");
+        // Obtenemos los valores del objeto producto_ingrediente
+        $cantidad = $producto_ingrediente->getCantidad();
+        $producto_id = $producto_ingrediente->getProductoId();
+        $ingrediente_id = $producto_ingrediente->getIngredienteId();
+        // dii significa double int int
+        $stmt->bind_param("dii", $cantidad, $producto_id, $ingrediente_id);
+        $stmt->execute();
+        $filas = $stmt->affected_rows;
+
+        // Cerramos la conexión
+        $stmt->close();
+        $con->close();
+
+        return $filas;
+    }
+    //  Métodos para la API (devuelven arrays para json_encode)
+    //  json_encode no ve los atributos protected de los objetos (saldría {}), por eso fetch_assoc
+
+    public static function getAllJson()
+    {
+        //Conexion a BBDD + Consultas
+        $con = DataBase::connect();
+        $stmt = $con->prepare("SELECT * FROM ingredientes");
+        //Ejecuta la query
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Creamos Array guardar datos (cada fila es un array asociativo)
+        $ingredientes = [];
+        while ($ingrediente = $result->fetch_assoc()) {
+            $ingredientes[] = $ingrediente;
+        }
+        //Cerramos conexiones
+        $stmt->close();
+        $con->close();
+        return $ingredientes;
+    }
+
+    public static function getByIdJson($id)
+    {
+        //Conexion a BBDD + Consulta
+        $con = DataBase::connect();
+        $stmt = $con->prepare("SELECT * FROM ingredientes WHERE id = ?");
+        // Esto asignara a cada ? el valor que queramos
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $ingrediente = $result->fetch_assoc();
+        //Cerramos conexiones
+        $stmt->close();
+        $con->close();
+
+        return $ingrediente ?: null;
+    }
 }
-?>
