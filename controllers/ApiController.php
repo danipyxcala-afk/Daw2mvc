@@ -9,9 +9,8 @@ class ApiController
 {
     public function index()
     {
-
-        $view = "views/admin/panel.php";
-        include_once 'views/main.php';
+        http_response_code(404);
+        echo json_encode(["error" => "Indica una acción."]);
     }
     public function productos()
     {
@@ -21,7 +20,7 @@ class ApiController
             case 'GET':
                 //El get mira si tiene la id en el link
                 //controller=api&action=productos&id=1
-                if ($_GET['id'] !== null) {
+                if (isset($_GET['id'])) {
                     echo json_encode(ProductosDAO::getByIdJson($_GET['id']));
                 } else {
                     //controller=api&action=productos
@@ -36,6 +35,7 @@ class ApiController
                 # code...
                 break;
             default:
+                $this->noMetodo();
 
                 break;
         }
@@ -48,7 +48,7 @@ class ApiController
             case 'GET':
                 //El get mira si tiene la id en el link
                 //controller=api&action=usuarios&id=1
-                if ($_GET['id'] !== null) {
+                if (isset($_GET['id'])) {
                     echo json_encode(UsuariosDAO::getByIdJson($_GET['id']));
                 } else {
                     //controller=api&action=usuarios
@@ -63,6 +63,7 @@ class ApiController
                 # code...
                 break;
             default:
+                $this->noMetodo();
 
                 break;
         }
@@ -75,7 +76,7 @@ class ApiController
             case 'GET':
                 //El get mira si tiene la id en el link
                 //controller=api&action=usuarios&id=1
-                if ($_GET['id'] !== null) {
+                if (isset($_GET['id'])) {
                     echo json_encode(PedidosDAO::getByIdJson($_GET['id']));
                 } else {
                     //controller=api&action=usuarios
@@ -90,6 +91,7 @@ class ApiController
                 # code...
                 break;
             default:
+                $this->noMetodo();
 
                 break;
         }
@@ -102,7 +104,7 @@ class ApiController
             case 'GET':
                 //El get mira si tiene la id en el link
                 //controller=api&action=usuarios&id=1
-                if ($_GET['id'] !== null) {
+                if (isset($_GET['id'])) {
                     echo json_encode(CategoriasDAO::getByIdJson($_GET['id']));
                 } else {
                     //controller=api&action=usuarios
@@ -117,17 +119,23 @@ class ApiController
                 # code...
                 break;
             default:
-
+                $this->noMetodo();
                 break;
         }
     }
-    public function checkUser()
+    private function checkUser()
     {
         if (!isset($_SESSION['usuario']) || $_SESSION['usuario']->getRol() != 'admin') {
-            $_SESSION['aviso'] = "Este usuario no tiene acceso al panel de administracion/api";
-            header("Location: " . url . "index.php?controller=home");
+            http_response_code(403);
+            echo json_encode(["error" => "No tienes acceso a la API"]);
             exit();
 
         }
+    }
+    private function noMetodo()
+    {
+        http_response_code(405);
+        echo json_encode(["error" => "Método no permitido"]);
+
     }
 }

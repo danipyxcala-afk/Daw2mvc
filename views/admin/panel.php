@@ -1,5 +1,5 @@
 <div class="container">
-    <nav class="navbar mb-5">
+    <nav id="menu-admin" class="navbar mb-5">
         <!-- Importante poner # para no recargar pag -->
         <a href="#" data-view="menu">Menu</a>
         <a href="#" data-view="pedidos">Pedidos</a>
@@ -9,7 +9,7 @@
 
     </nav>
     <section data-view="menu">
-        <h1>hola Admin!</h1>
+        <h1>Hola <?= dato($_SESSION['usuario']->getNombre()) ?></h1>
         <p>Aqui tienes disponibles los paneles de pedidos para gestionarlos</p>
     </section>
 
@@ -32,6 +32,11 @@
 
             </tbody>
         </table>
+    </section>
+    <section data-view="detalle" hidden>
+        <h2>Detalle</h2>
+        <div id="detalle-contenido"></div>
+        <button type="button" class="btn btn-outline-secondary" id="detalle-volver">Volver</button>
     </section>
 
     <section data-view="usuarios" hidden>
