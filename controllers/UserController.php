@@ -76,19 +76,19 @@ class UserController
 
         //verificador de que los campos obligatorios este filled
         if ($nombre === '' || mb_strlen($nombre) > 100) {
-            $errores[] = "El nombre es obligatorio y debe tener como máximo 100 caracteres.";
+            $errores[] = "El nombre es obligatorio y debe tener como máximo 100 caracteres";
         }
         if (strlen($password) < 8) {
-            $errores[] = "La contraseña debe tener al menos 8 caracteres.";
+            $errores[] = "La contraseña debe tener al menos 8 caracteres";
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email) > 150) {
-            $errores[] = "El email no es válido.";
+            $errores[] = "El email no es válido";
         }
         if ($telefono !== null && !preg_match('/^[0-9 +]{6,20}$/', $telefono)) {
-            $errores[] = "El teléfono no es válido.";
+            $errores[] = "El teléfono no es válido";
         }
         if ($fecha_nacimiento !== null && $fecha_nacimiento > date('Y-m-d')) {
-            $errores[] = "La fecha de nacimiento no puede ser posterior al día de hoy.";
+            $errores[] = "La fecha de nacimiento no puede ser posterior al día de hoy";
         }
 
         if (count($errores) > 0) {
@@ -99,7 +99,7 @@ class UserController
 
         // Verificar si el usuario ya existe antes de registrarlo
         if (UsuariosDAO::getByEmail($email)) {
-            $_SESSION['aviso'] = "El usuario ya existe. Por favor, inicia sesión.";
+            $_SESSION['aviso'] = "El usuario ya existe. Por favor, inicia sesión";
             // Redirigir a la pantalla de login
             header("Location: " . url . "index.php?controller=user&action=plogin");
             exit();
@@ -161,6 +161,63 @@ class UserController
         session_regenerate_id(true);
         $_SESSION['aviso'] = "Has cerrado sesión correctamente.";
         header("Location: " . url . "index.php?controller=home");
+        exit();
+    }
+    public function actualizarDatos()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: " . url . "index.php?controller=user&action=puser");
+            exit();
+        }
+        if (!isset($_SESSION['usuario'])) {
+            header("Location: " . url . "index.php?controller=user&action=plogin");
+            exit();
+        }
+
+        $telefono = trim($_POST['telefono'] ?? '') ?: null;
+        $email = trim($_POST['email'] ?? '') ?: null;
+        $fechaNacimiento = trim($_POST['fechaNacimiento'] ?? '') ?: null;
+        $direccion = trim($_POST['direccion'] ?? '') ?: null;
+
+        $errores = [];
+        //verificador de que los campos obligatorios este filled
+        $password = $_POST['password'] ?? '';
+        if ($password !== '' && strlen($password) < 8) {
+            $errores[] = "La contraseña debe tener al menos 8 caracteres";
+        }
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email) > 150) {
+            $errores[] = "El email no es válido";
+        }
+        $otro = UsuariosDAO::getByEmail($email);
+        if ($otro && $otro->getId() != $_SESSION['usuario']->getId()) {
+            $errores[] = "Ese email ya lo usa otra cuenta";
+        }
+        if ($telefono !== null && !preg_match('/^[0-9 +]{6,20}$/', $telefono)) {
+            $errores[] = "El teléfono no es válido";
+        }
+        if ($fechaNacimiento !== null && $fechaNacimiento > date('Y-m-d')) {
+            $errores[] = "La fecha de nacimiento no puede ser posterior al día de hoy";
+        }
+
+        if (count($errores) > 0) {
+            $_SESSION['aviso'] = implode(' ', $errores);
+            header("Location: " . url . "index.php?controller=user&action=puser");
+            exit();
+        }
+
+        $_SESSION['usuario']->setEmail($email);
+        $_SESSION['usuario']->setTelefono($telefono);
+        $_SESSION['usuario']->setDireccion($direccion);
+        $_SESSION['usuario']->setFechaNacimiento($fechaNacimiento);
+
+        UsuariosDAO::update($_SESSION['usuario']);
+        if ($password !== '') {
+            $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            UsuariosDAO::updatePassword($_SESSION['usuario']->getId(), $hash);
+        }
+
+        $_SESSION['aviso'] = "Usuario actualizado";
+        header("Location: " . url . "index.php?controller=user&action=puser");
         exit();
     }
 }

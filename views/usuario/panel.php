@@ -124,8 +124,13 @@ $clienteDesde = mesAnio($usuario->getFechaRegistro());
         <!-- COLUMNA DERECHA: datos y códigos. En el móvil queda debajo de los pedidos -->
         <div class="col-lg-4">
             <section class="bg-light rounded-4 p-4 mb-4">
-                <h2 class="fs-4 mb-3">Mis datos</h2>
-                <!-- text-break parte los emails largos para que no se salgan de la tarjeta -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="fs-4">Mis datos</h2>
+                    <!-- El editar llama al modal de abajo del todo del codigo -->
+                    <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEditarDatos">
+                        Editar
+                    </button>
+                </div>
                 <dl class="mb-0">
                     <dt class="small">Nombre</dt>
                     <dd class="mb-3 text-break"><?= dato($usuario->getNombre()) ?></dd>
@@ -145,21 +150,43 @@ $clienteDesde = mesAnio($usuario->getFechaRegistro());
                     </dd>
                 </dl>
             </section>
-
-            <?php if (count($codigos) > 0) { ?>
-                <section class="bg-light rounded-4 p-4">
-                    <h2 class="fs-4 mb-3">Tus códigos</h2>
-                    <div class="d-flex flex-column gap-3">
-                        <?php foreach ($codigos as $codigo) { ?>
-                            <!-- Cada código parece un cupón recortable (el borde discontinuo está en panel.css) -->
-                            <div class="codigo p-3 bg-white rounded-4 border border-2 border-primary">
-                                <span class="d-block fw-bold fs-5 text-primary"><?= dato($codigo->getCodigo()) ?></span>
-                                <p class="mb-0 small"><?= dato($codigo->getDescripcion()) ?></p>
-                            </div>
-                        <?php } ?>
-                    </div>
-                </section>
-            <?php } ?>
         </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEditarDatos" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-content" method="post" action="<?= url ?>index.php?controller=user&action=actualizarDatos">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5">Editar mis datos</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Déjala vacía para no cambiarla">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="<?= dato($usuario->getEmail()) ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="tel" class="form-control" id="telefono" name="telefono" value="<?= dato($usuario->getTelefono()) ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="direccion" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="direccion" name="direccion" value="<?= dato($usuario->getDireccion()) ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="fechaNacimiento" class="form-label">Fecha de nacimiento</label>
+                    <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" value="<?= dato($usuario->getFechaNacimiento()) ?>">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
     </div>
 </div>
