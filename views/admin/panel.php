@@ -1,7 +1,7 @@
 <div class="container">
     <nav id="menu-admin" class="navbar mb-5">
         <!-- Importante poner # para no recargar pag -->
-        <a href="#" data-view="menu">Menu</a>
+        <a href="#" class="fw-bold" data-view="menu">Menu</a>
         <a href="#" data-view="pedidos">Pedidos</a>
         <a href="#" data-view="usuarios">Usuarios</a>
         <a href="#" data-view="productos">Productos</a>
@@ -59,9 +59,10 @@
     </section>
 
     <section data-view="productos" hidden>
-        <!-- idea para filtrar dentro del filtro <nav id="navprod" class="navbar mb-5">
+         <!-- <nav id="navprod" class="navbar mb-5">
+            idea para filtrar dentro del filtro
             Importante poner # para no recargar pag
-            <a href="#" data-view="Todo">Menu</a>
+            <a href="#" data-view="Todo">Hamburgesas</a>
         </nav> -->
         <table id="productos" class="table">
             <thead>

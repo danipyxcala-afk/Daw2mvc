@@ -2,13 +2,13 @@
 
 > Volver al [README](../README.md).
 
-Comparación entre el enunciado `PROYECTO 1 RESTAURANTE (APP WEB) (1).docx` y el estado del proyecto a 14/11/2026 (revisado el código, la base de datos y el historial de git).
+Comparación entre el enunciado `PROYECTO 1 RESTAURANTE (APP WEB) (1).docx` y el estado del proyecto a 20/11/2026 (revisado el código, la base de datos y el historial de git).
 
 **Leyenda:** `[x]` hecho · `[~]` a medias · `[ ]` sin hacer · `[?]` revisar a mano (no se puede comprobar desde el código)
 
 **Fechas:** entrega en Git el **martes 29/11/2026** (lo que se cambie después no se evalúa). Presentaciones entre el 29/11 y el 21/12.
 
-**Resumen:** la tienda está completa de principio a fin: home, carta, detalle con personalización, carrito con código promocional, registro con validación en el servidor, login, «Mi cuenta» y **compra guardada en la base de datos** con su pantalla de confirmación. Faltan las **ofertas**, **modificar los datos del usuario**, el **panel de administración con la API**, el **despliegue**, **trabajar con ramas** y la **memoria**.
+**Resumen:** la tienda está completa de principio a fin: home, carta, detalle con personalización, carrito con código promocional, registro con validación en el servidor, login, «Mi cuenta» y **compra guardada en la base de datos** con su pantalla de confirmación. El **panel de administración** ya está empezado: la API devuelve en JSON productos, pedidos, usuarios y categorías solo a los administradores, y el panel cambia de vista y rellena las tablas sin recargar. Faltan **editar, borrar, filtrar y ordenar** en el panel, las **ofertas**, **modificar los datos del usuario**, el **despliegue**, **trabajar con ramas** y la **memoria**.
 
 ---
 
@@ -17,7 +17,8 @@ Comparación entre el enunciado `PROYECTO 1 RESTAURANTE (APP WEB) (1).docx` y el
 - [x] **Mayúsculas en los `include`.** Todos los archivos, includes y `fetch_object` usan el nombre exacto de la clase (ver «Convención de nombres»).
 - [x] **Contraseña del admin en `sql/InsertarDatosBD.sql`:** guardada con hash bcrypt (`Admin1234!`).
 - [x] **Impuestos:** los precios de la BBDD ya incluyen un IVA del 10 %. El carrito lo enseña como información (subtotal sin IVA + IVA).
-- [ ] **Redirección de `ProductosController::anadirCarrito`** cuando no llega por POST: le falta `index.php?` en la URL y da un 404.
+- [x] **Redirección de `ProductosController::anadirCarrito`** cuando no llega por POST: ya lleva `index.php?` en la URL.
+- [x] **Rol del usuario:** al leer un usuario de la base de datos, el constructor de `Usuarios` volvía a poner el rol en `usuario` y el administrador no se reconocía. Corregido: el valor por defecto va en la propiedad.
 - [?] **JavaScript en el detalle del producto** (`assets/js/app.js`, recuperado el 14/11): el enunciado pide que la parte del usuario se haga **solo con PHP, HTML y CSS**. Confirmar con la profesora si se permite; si no, quitarlo y hacer el total con un botón «Actualizar total» (`formaction`) y la cantidad sin los botones −/+.
 - [ ] **Empezar a trabajar con ramas** (ver «GitHub»): se evalúa y ahora todo está en `main`.
 
@@ -63,7 +64,7 @@ en mvl hacer los botones mas grandes que llegen mas de lado a lado
 ### Panel de usuario («Mi cuenta»)
 
 - [x] Ver los datos personales.
-- [ ] **Modificar los datos personales** (lo pide el enunciado): hace falta `UsuariosDAO::update`, un formulario y actualizar `$_SESSION['usuario']` (sin la contraseña).
+- [ ] **Modificar los datos personales** (lo pide el enunciado): `UsuariosDAO::update` y `updatePassword` ya existen; falta el formulario y actualizar `$_SESSION['usuario']` (sin la contraseña).
 - [x] Ver los pedidos realizados, con el detalle desplegable, el resumen y los códigos de descuento (`views/usuario/panel.php`).
 - [~] **Ver los datos del último pedido al volver a entrar:** la lista sale ordenada del más reciente al más antiguo y el resumen enseña el estado del último. Falta destacar los datos del último pedido (un bloque «Tu último pedido»).
 
@@ -137,7 +138,8 @@ en mvl hacer los botones mas grandes que llegen mas de lado a lado
 - [x] Limpiar `views/productos/carta.php`: llevaba un `<!DOCTYPE>` completo dentro de `main.php`.
 - [~] **Polimorfismo:** las hijas de `Productos` solo heredan y no cambian ningún método. Añadir uno con comportamiento distinto en cada hija.
 - [~] Comentarios: el CSS y lo último están comentados; falta repasar DAO y controladores antiguos.
-- [ ] Quitar el `?>` final de los archivos que solo tienen PHP (`UserController`, los DAO, `config/parameters.php`): un salto de línea detrás puede romper las redirecciones en el servidor.
+- [~] Quitar el `?>` final de los archivos que solo tienen PHP: un salto de línea detrás puede romper las redirecciones en el servidor. Hecho en los DAO, `UserController` y `Usuarios`; faltan `HomeController`, el resto de modelos y `config/parameters.php`.
+- [x] Todos los DAO tienen `update`; `insert` devuelve el id creado y `delete` las filas borradas. Nuevo `ProductosDAO` con todos los productos (crea la clase hija según la categoría).
 - [ ] `config/parameters.php`: las líneas `$_SESSION[...] = null` no hacen nada (se ejecutan antes de `session_start()`).
 - [ ] Revisar el `<form>` de filtros de la carta: su `action` no se usa porque las píldoras son enlaces.
 
@@ -149,6 +151,8 @@ en mvl hacer los botones mas grandes que llegen mas de lado a lado
 - [x] Precios y totales recalculados siempre en el servidor.
 - [x] Validación en el servidor del registro y de la compra.
 - [x] La confirmación solo enseña pedidos del propio usuario.
+- [x] El panel y la API solo responden a administradores (se comprueba en PHP en cada petición, no solo ocultando el botón).
+- [x] La API no envía la contraseña de los usuarios.
 - [ ] `.htaccess` que bloquee `.env`, `.git/`, `sql/`, `config/` y los `.md`.
 - [ ] Token CSRF en los formularios.
 - [ ] `config/DataBase.php`: no mostrar el error de MySQL con `die()` y leer la conexión de variables de entorno (para el servidor).
@@ -157,37 +161,41 @@ en mvl hacer los botones mas grandes que llegen mas de lado a lado
 
 ## Panel de administración
 
-**No hay nada hecho:** ni API, ni `fetch`, ni panel. Ya existen la columna `rol`, `Usuarios::getRol()` y un usuario administrador en los datos de ejemplo.
+**Cómo se entra:** el administrador inicia sesión en la tienda y en su menú de usuario aparece «Panel administración» (solo si su rol es `admin`). `AdminController` vuelve a comprobar el rol antes de enseñar el panel (`views/admin/panel.php`), y su JavaScript (`assets/js/admin.js`) solo se carga en esa vista.
 
-### API en PHP
+### API en PHP (`ApiController`)
 
-- [ ] Controlador de API que responda en JSON con sus códigos HTTP.
-- [ ] Login de administrador mediante un endpoint, comprobando `rol = admin`.
-- [ ] Proteger los endpoints: que solo respondan a un administrador.
-- [ ] Endpoints de productos: listar y modificar.
-- [ ] Endpoints de pedidos: listar, modificar, añadir o quitar productos y cambiar el precio final.
-- [ ] Endpoints de usuarios: listar e historial de pedidos (se puede reutilizar `PedidosDAO::getPedidosByUsuario`).
-- [ ] Añadir los `update` que faltan: ningún DAO tiene ese método.
+- [x] Controlador de API que responde en JSON con sus códigos HTTP (403 sin permiso, 404 sin acción, 405 método no permitido).
+- [x] Proteger los endpoints: cada acción comprueba en PHP que el usuario de la sesión es administrador.
+- [?] **Login de administrador mediante un endpoint** (lo pide el enunciado): ahora se usa el login de la tienda. Confirmar con la profesora si vale; si no, añadir una acción `login` o una acción `sesion` que devuelva los datos del admin.
+- [~] Endpoints de productos: listar y ver uno por id (GET) hechos; falta modificar (PUT) y eliminar (DELETE).
+- [~] Endpoints de pedidos: listar y ver uno hechos; falta cambiar el estado y el precio final, y añadir o quitar productos.
+- [~] Endpoints de usuarios: listar y ver uno hechos; falta el historial de pedidos de cada usuario.
+- [x] Endpoint de categorías: listar y ver una.
+- [x] Métodos `getAllJson` y `getByIdJson` en todos los DAO (devuelven arrays para `json_encode`).
+- [x] Métodos `update` en los DAO.
+- [ ] Método en `PedidosDAO` para cambiar el precio final del pedido.
 
 ### Funciones del panel
 
-- [ ] Listar, modificar y ordenar productos y pedidos sin recargar.
+- [~] Listar productos, pedidos, usuarios y categorías sin recargar (hecho); falta **modificar y ordenar**.
+- [~] Botones «Detalle» y «Eliminar» en cada fila, y sección de detalle con «Volver»; falta enseñar los datos reales, el formulario para editar y borrar de verdad.
 - [ ] Añadir o eliminar productos de un pedido y modificar el precio final.
 - [ ] Filtrar productos y pedidos por nombre, ID, precio, etc.
-- [ ] Listar usuarios y ver el historial de cada uno.
-- [ ] Cambiar entre las vistas del panel sin recargar.
+- [~] Listar usuarios (hecho); falta ver el historial de cada uno.
+- [x] Cambiar entre las vistas del panel sin recargar, con el apartado actual marcado en negrita.
 - [ ] Revisar la accesibilidad: el diseño no puntúa, pero esto sí.
 
 ### Requisitos técnicos en JavaScript
 
-- [ ] DOM: crear y modificar elementos de forma dinámica.
-- [ ] Eventos: clics, envíos de formularios y escritura.
+- [x] DOM: crear y modificar elementos de forma dinámica (filas y botones de las tablas).
+- [~] Eventos: clics hechos; faltan envíos de formularios y escritura (buscador).
 - [ ] `map`, `filter`, `reduce` o similares.
-- [ ] Al menos 2 clases.
-- [ ] Una clase específica para cambiar de vista sin recargar.
+- [ ] **Al menos 2 clases:** ahora hay una (`AdministradorVistas`). Separar los `fetch` en una clase `Api`.
+- [~] Una clase específica para cambiar de vista sin recargar: `AdministradorVistas` lo hace, pero también pide y pinta los datos.
 - [ ] `localStorage` o `sessionStorage` para la sesión.
 - [ ] Un segundo uso de Storage, **justificado en la memoria** (por ejemplo, recordar el último filtro).
-- [ ] `fetch` o axios para enviar formularios y pedir datos.
+- [~] `fetch` para pedir datos (hecho); falta para enviar formularios.
 - [ ] Opcional: funcionalidades adicionales que aporten valor.
 
 ---
@@ -251,8 +259,8 @@ en mvl hacer los botones mas grandes que llegen mas de lado a lado
 
 ## GitHub
 
-- [x] Repositorio `danipyxcala-afk/Daw2mvc` con 38 commits.
-- [ ] **Trabajar en ramas:** los 38 commits están en `main`, sin ramas ni fusiones. **Esto se evalúa**, así que cada tarea nueva debería ir en su rama (por ejemplo `feature/ofertas`, `feature/panel-admin`, `fix/anadir-carrito`).
+- [x] Repositorio `danipyxcala-afk/Daw2mvc` con 48 commits.
+- [ ] **Trabajar en ramas:** los 48 commits están en `main`, sin ramas ni fusiones. **Esto se evalúa**, así que cada tarea nueva debería ir en su rama (por ejemplo `feature/ofertas`, `feature/panel-admin`, `fix/anadir-carrito`).
 - [ ] Fusionar en `main` todo lo que se suba.
 - [x] Añadir `.gitignore`.
 - [x] Dar acceso al repositorio a todos los profesores.
@@ -285,14 +293,15 @@ Hay un esqueleto en `docs/memoria/memoria.md` (aún sin subir). Conviene escribi
 
 ## Orden recomendado
 
-Las fechas son orientativas y cuentan con entregar el 29/11 (revisado el 14/11):
+Las fechas son orientativas y cuentan con entregar el 29/11 (revisado el 20/11):
 
 1. ~~Hasta el 8/11: aclarar dudas y «Corregir ya».~~ Hecho.
 2. ~~Hasta el 12/11: login, registro, cierre de sesión y datos de usuario.~~ Hecho (falta modificar datos).
 3. ~~Hasta el 17/11: lógica de datos y pago y confirmación, guardar el pedido.~~ Hecho el 14/11.
-4. **Hasta el 16/11:** «Corregir ya» (redirección, decisión sobre el JavaScript) y **empezar a usar ramas**.
-5. **Hasta el 18/11:** modificar los datos del usuario y bloque «Tu último pedido».
-6. **Hasta el 20/11:** ofertas (página, diseño individual, añadir al carrito, oferta por cantidad).
-7. **Hasta el 26/11:** API y panel de administración, el bloque más grande.
-8. **Hasta el 28/11:** Xdebug, despliegue (servidor, FTP, dominio), prototipo de compra y repaso de móvil.
-9. **Hasta el 29/11:** cerrar la memoria, subir memoria y diagramas, fusionar todo en `main` y prueba completa.
+4. ~~Hasta el 20/11: base del panel y de la API.~~ Hecho: acceso del admin, API en JSON protegida, tablas y cambio de vista.
+5. **Ya:** crear la rama `feature/panel-admin` y seguir el panel en ella.
+6. **Hasta el 24/11:** panel: detalle y edición de productos (PUT), eliminar, 2 clases en JS, filtrar y ordenar, pedidos (estado, precio final y productos), historial de usuarios y Storage.
+7. **Hasta el 25/11:** modificar los datos del usuario y bloque «Tu último pedido».
+8. **Hasta el 27/11:** ofertas (página, diseño individual, añadir al carrito, oferta por cantidad).
+9. **Hasta el 28/11:** Xdebug, despliegue (servidor, FTP, dominio), prototipo de compra y repaso de móvil.
+10. **Hasta el 29/11:** cerrar la memoria, subir memoria y diagramas, fusionar todo en `main` y prueba completa.

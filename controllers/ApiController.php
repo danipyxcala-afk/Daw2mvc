@@ -75,7 +75,7 @@ class ApiController
         switch ($metodo = $_SERVER['REQUEST_METHOD']) {
             case 'GET':
                 //El get mira si tiene la id en el link
-                //controller=api&action=usuarios&id=1
+                //controller=api&action=pedidos&id=1
                 if (isset($_GET['id'])) {
                     echo json_encode(PedidosDAO::getByIdJson($_GET['id']));
                 } else {
@@ -103,7 +103,7 @@ class ApiController
         switch ($metodo = $_SERVER['REQUEST_METHOD']) {
             case 'GET':
                 //El get mira si tiene la id en el link
-                //controller=api&action=usuarios&id=1
+                //controller=api&action=categorias&id=1
                 if (isset($_GET['id'])) {
                     echo json_encode(CategoriasDAO::getByIdJson($_GET['id']));
                 } else {
@@ -123,6 +123,8 @@ class ApiController
                 break;
         }
     }
+
+    //añadir ingredientes y ofertas
     private function checkUser()
     {
         if (!isset($_SESSION['usuario']) || $_SESSION['usuario']->getRol() != 'admin') {
