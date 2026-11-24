@@ -11,7 +11,7 @@
 
     </nav>
     <section data-view="menu">
-        <h1>Hola <?= dato($_SESSION['usuario']->getNombre()) ?></h1>
+        <h1>Hola <span id="admin-nombre"></span></h1>
         <p>Aqui tienes disponibles los paneles de pedidos para gestionarlos</p>
     </section>
 
@@ -66,10 +66,11 @@
             Importante poner # para no recargar pag
             <a href="#" data-view="Todo">Hamburgesas</a>
         </nav> -->
+
         <table id="productos" class="table">
             <thead>
                 <tr>
-                    <th scope="col">Activo</th>
+                    <th scope="col">Estado</th>
                     <th scope="col">ID</th>
                     <th scope="col">Cat_Id</th>
                     <th scope="col">Nombre</th>
@@ -88,11 +89,11 @@
         <table id="categorias" class="table">
             <thead>
                 <tr>
-                    <th scope="col">Activo</th>
+                    <th scope="col">Estado</th>
                     <th scope="col">ID</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Descripcion</th>
-                    <th scope="col">Detalle</th>
+                    <th scope="col" colspan="2">Acción</th>
                 </tr>
             </thead>
             <tbody>
@@ -106,7 +107,7 @@
         <table id="ingredientes" class="table">
             <thead>
                 <tr>
-                    <th scope="col">Activo</th>
+                    <th scope="col">Estado</th>
                     <th scope="col">Id</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Precio_extra</th>

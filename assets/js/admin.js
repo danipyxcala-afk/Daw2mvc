@@ -6,6 +6,7 @@ class AdministradorVistas {
     this.ofertas = null;
     this.usuarios = null;
     this.pedidos = null;
+    this.sesion = new Sesion();
   }
 
   inicializar() {
@@ -15,6 +16,7 @@ class AdministradorVistas {
     this.cargarPedidos();
     this.cargarProductos();
     this.cargarUsuarios();
+    this.cargarSesion();
 
     //con esto unicamente pilla los del menu admin
     this.enlaces = document.querySelectorAll("#menu-admin a[data-view]");
@@ -22,27 +24,47 @@ class AdministradorVistas {
 
     this.enlaces.forEach((e) => {
       e.addEventListener("click", () => {
-        this.vista = e.dataset.view;
-        this.enlaces.forEach((enlace) => {
-          enlace.classList.toggle("fw-bold", enlace === e);
-        });
-
-        this.secciones.forEach((u) => {
-          if (u.dataset.view == e.dataset.view) {
-            //mostramos seccion correspondiente
-            u.hidden = false;
-          } else {
-            u.hidden = true;
-          }
-        });
+        localStorage.setItem("vistaAdmin", e.dataset.view);
+        this.mostrarVista(e.dataset.view);
       });
     });
     //boton volver al menu principal
     document.querySelector("#detalle-volver").addEventListener("click", () => {
-      this.secciones.forEach((s) => {
-        s.hidden = s.dataset.view !== this.vistaAnterior;
-      });
+      this.mostrarVista(this.vistaAnterior);
     });
+    //al cerrar sesion borramos los datos del navegador
+    document.querySelectorAll('form[action*="action=logout"]').forEach((f) => {
+      f.addEventListener("submit", () => this.sesion.borrar());
+    });
+    //abrimos la ultima vista guardada, o el menu si no hay ninguna
+    this.mostrarVista(localStorage.getItem("vistaAdmin") ?? "menu");
+  }
+
+  mostrarVista(vista) {
+    //negrita en el enlace de la vista actual
+    this.enlaces.forEach((enlace) => {
+      enlace.classList.toggle("fw-bold", enlace.dataset.view === vista);
+    });
+    //solo se ve la seccion de esa vista
+    this.secciones.forEach((s) => {
+      s.hidden = s.dataset.view !== vista;
+    });
+  }
+
+  cargarSesion() {
+    fetch("index.php?controller=api&action=sesion")
+      .then((respuesta) => {
+        if (!respuesta.ok) {
+          this.sesion.borrar();
+          throw new Error("Sin sesión de administrador");
+        }
+        return respuesta.json();
+      })
+      .then((datos) => {
+        this.sesion.guardar(datos);
+        document.querySelector("#admin-nombre").textContent =
+          this.sesion.leer().nombre;
+      });
   }
   cargarPedidos() {
     fetch("index.php?controller=api&action=pedidos")
@@ -116,21 +138,15 @@ class AdministradorVistas {
     fetch("index.php?controller=api&action=categorias")
       .then((respuesta) => respuesta.json())
       .then((r) => {
-        this.categorias = r;
         const tablaProductos = document
           .getElementById("categorias")
           .querySelector("tbody");
         //vaciamos la tabla para no duplicar filas al recargarla
         tablaProductos.replaceChildren();
-        this.categorias.forEach((r) => {
-          const tr = document.createElement("tr");
-          crearCelda(tr, r.activa ? "Activa" : "Inactiva");
-          crearCelda(tr, r.id);
-          crearCelda(tr, r.nombre);
-          crearCelda(tr, r.descripcion);
-          this.crearBotonDetalle(tr, "categorias", r.id);
-          tablaProductos.append(tr);
-        });
+        this.categorias = r.map((datos) => new Categoria(datos));
+        this.categorias.forEach((c) =>
+          tablaProductos.append(c.crearFila(this)),
+        );
       });
   }
   cargarProductos() {
@@ -158,7 +174,7 @@ class AdministradorVistas {
         tablaProductos.replaceChildren();
         this.ingredientes.forEach((r) => {
           const tr = document.createElement("tr");
-          crearCelda(tr, r.activo ? "Activo" : "Inactiva");
+          crearCelda(tr, r.activo ? "Activado" : "Desactivado");
           crearCelda(tr, r.id);
           crearCelda(tr, r.nombre);
           crearCelda(tr, r.precio_extra);
@@ -268,7 +284,10 @@ class AdministradorVistas {
           }
           //en categorias y ofertas el campo se llama activa
           if (campo === "activo" || campo === "activa") {
-            input = this.crearSelect([1, 0], valor, ["Activo", "Desactivado"]);
+            input = this.crearSelect([1, 0], valor, [
+              "Activado",
+              "Desactivado",
+            ]);
             input.name = campo;
           }
           grupo.append(label, input);
@@ -333,25 +352,7 @@ class AdministradorVistas {
     tdDetalle.append(botonDetalle);
     tr.append(tdDetalle);
   }
-
-  crearBotonEliminar(tr, tabla, id) {
-    // Celda con el botón Eliminar
-    const tdEliminar = document.createElement("td");
-    const botonEliminar = document.createElement("button");
-    botonEliminar.type = "button";
-    botonEliminar.className = "btn btn-sm btn-outline-danger";
-    botonEliminar.textContent = "Eliminar";
-    botonEliminar.addEventListener("click", () => this.eliminar(tabla, id));
-    tdEliminar.append(botonEliminar);
-    tr.append(tdEliminar);
-  }
-
-  eliminar(tabla, id) {
-    console.log("Eliminar de", tabla, id);
-  }
 }
-let admin = new AdministradorVistas();
-admin.inicializar();
 
 function crearCelda(tr, texto) {
   const td = document.createElement("td");
@@ -367,7 +368,7 @@ class Producto {
 
   crearFila(admin) {
     const tr = document.createElement("tr");
-    crearCelda(tr, this.activo ? "Activo" : "Inactivo");
+    crearCelda(tr, this.activo ? "Activado" : "Desactivado");
     crearCelda(tr, this.id);
     crearCelda(tr, this.categoria_id);
     crearCelda(tr, this.nombre);
@@ -410,3 +411,70 @@ class Producto {
       });
   }
 }
+
+class Categoria {
+  constructor(datos) {
+    // copia id, nombre, precio... en el objeto
+    Object.assign(this, datos);
+  }
+
+  crearFila(admin) {
+    const tr = document.createElement("tr");
+    crearCelda(tr, this.activa ? "Activado" : "Desactivado");
+    crearCelda(tr, this.id);
+    crearCelda(tr, this.nombre);
+    crearCelda(tr, this.descripcion);
+    admin.crearBotonDetalle(tr, "categorias", this.id);
+    this.crearBotonActivo(tr, admin);
+    return tr;
+  }
+
+  crearBotonActivo(tr, admin) {
+    const td = document.createElement("td");
+    const boton = document.createElement("button");
+    boton.type = "button";
+    boton.className = this.activa
+      ? "btn btn-sm btn-outline-danger"
+      : "btn btn-sm btn-outline-success";
+    boton.textContent = this.activa ? "Desactivar" : "Activar";
+    boton.addEventListener("click", () => this.cambiarActivo(admin));
+    td.append(boton);
+    tr.append(td);
+  }
+
+  cambiarActivo(admin) {
+    // copia del categoría, con activo al revés
+    const datos = { ...this, activa: this.activa ? 0 : 1 };
+
+    fetch(`index.php?controller=api&action=categorias&id=${this.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(datos),
+    })
+      .then((respuesta) => respuesta.json())
+      .then((resultado) => {
+        if (resultado.ok) {
+          admin.cargarCategorias();
+        } else {
+          alert(resultado.error);
+        }
+      });
+  }
+}
+
+class Sesion {
+  guardar(datos) {
+    sessionStorage.setItem("sesionAdmin", JSON.stringify(datos));
+  }
+
+  leer() {
+    return JSON.parse(sessionStorage.getItem("sesionAdmin"));
+  }
+
+  borrar() {
+    sessionStorage.removeItem("sesionAdmin");
+  }
+}
+
+let admin = new AdministradorVistas();
+admin.inicializar();

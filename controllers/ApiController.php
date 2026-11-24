@@ -108,6 +108,17 @@ class ApiController
                 break;
         }
     }
+
+    public function sesion()
+    {
+        $this->checkUser(); // si no es admin, 403 y se para
+        $usuario = $_SESSION['usuario'];
+        echo json_encode([
+            "id" => $usuario->getId(),
+            "nombre" => $usuario->getNombre(),
+            "rol" => $usuario->getRol(),
+        ]);
+    }
     public function usuarios()
     {
         $this->checkUser();
@@ -218,7 +229,7 @@ class ApiController
                 if (isset($_GET['id'])) {
                     echo json_encode(CategoriasDAO::getByIdJson($_GET['id']));
                 } else {
-                    //controller=api&action=usuarios
+                    //controller=api&action=categorias
                     echo json_encode(CategoriasDAO::getAllJson());
                 }
 
@@ -239,10 +250,10 @@ class ApiController
                 $categorias = CategoriasDAO::getById($_GET['id']);
                 if (!$categorias) {
                     http_response_code(404);
-                    echo json_encode(["error" => "Producto no encontrado"]);
+                    echo json_encode(["error" => "Categoría no encontrada"]);
                     break;
                 }
-                $activo = trim($datos->activo ?? "");
+                $activa = trim($datos->activa ?? "");
                 $nombre = trim($datos->nombre ?? "");
                 $descripcion = trim($datos->descripcion ?? "");
 
@@ -250,11 +261,11 @@ class ApiController
                 $errores = [];
                 if ($nombre === '') {
                     $errores[] = "El nombre es obligatorio.";
-                } elseif (mb_strlen($nombre) > 150) {
-                    $errores[] = "El nombre no puede pasar de 150 caracteres.";
+                } elseif (mb_strlen($nombre) > 100) {
+                    $errores[] = "El nombre no puede pasar de 100 caracteres.";
                 }
 
-                if ($activo !== '0' && $activo !== '1') {
+                if ($activa !== '0' && $activa !== '1') {
                     $errores[] = "Activo tiene que ser 0 o 1.";
                 }
 
@@ -266,10 +277,15 @@ class ApiController
 
                 $categorias->setNombre($nombre);
                 $categorias->setDescripcion($descripcion);
-                $categorias->setActivo($activo);
+                $categorias->setActiva($activa);
 
-                CategoriasDAO::update($categorias);
-                echo json_encode(["ok" => true]);
+                try {
+                    CategoriasDAO::update($categorias);
+                    echo json_encode(["ok" => true]);
+                } catch (mysqli_sql_exception $e) {
+                    http_response_code(409);
+                    echo json_encode(["error" => "No se ha podido guardar. ¿Ya existe ese nombre?"]);
+                }
 
                 break;
             default:
