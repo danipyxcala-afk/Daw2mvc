@@ -34,6 +34,8 @@ class ProductosController
         $listadoProductos = $this->getListadoProductos();
 
 
+        $listadoProductos = $this->quitarCategoriasInactivas($listadoProductos);
+
         $view = "views/productos/carta.php";
         include_once 'views/main.php';
     }
@@ -66,6 +68,8 @@ class ProductosController
                 $listadoProductos["postres"] = PostresDAO::getAll();
                 break;
         }
+        $listadoProductos = $this->quitarCategoriasInactivas($listadoProductos);
+
         $view = "views/productos/carta.php";
         include_once 'views/main.php';
     }
@@ -167,10 +171,24 @@ class ProductosController
             ?: BebidasDAO::getById($id)
             ?: PostresDAO::getById($id);
 
-        if (!$producto || !$producto->getActivo()) {
+        if (
+            !$producto || !$producto->getActivo()
+            || !CategoriasDAO::getById($producto->getCategoriaId())->getActiva()
+        ) {
             showError(404, "No existe este producto");
         }
         return $producto;
+    }
+    private function quitarCategoriasInactivas($listado)
+    {
+        $resultado = [];
+        foreach ($listado as $nombre => $productos) {
+            // solo se queda el grupo si tiene productos y su categoría está activa
+            if (count($productos) > 0 && CategoriasDAO::getById($productos[0]->getCategoriaId())->getActiva()) {
+                $resultado[$nombre] = $productos;
+            }
+        }
+        return $resultado;
     }
 
     // Separa los ingredientes en base (cantidad > 0) y extras (cantidad = 0)
