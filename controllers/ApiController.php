@@ -227,7 +227,50 @@ class ApiController
                 # code...
                 break;
             case 'PUT':
-                # code...
+
+                $datos = json_decode(file_get_contents('php://input'));
+                // para que no explote el codigo cuando se pida a bd
+                if (!isset($_GET['id'])) {
+                    http_response_code(400);
+                    echo json_encode(["error" => "Falta el id"]);
+                    break;
+                }
+                //pedir a bd y si llega null que salga y pare la ejecucion del update
+                $categorias = CategoriasDAO::getById($_GET['id']);
+                if (!$categorias) {
+                    http_response_code(404);
+                    echo json_encode(["error" => "Producto no encontrado"]);
+                    break;
+                }
+                $activo = trim($datos->activo ?? "");
+                $nombre = trim($datos->nombre ?? "");
+                $descripcion = trim($datos->descripcion ?? "");
+
+                //validacion errores del formulario
+                $errores = [];
+                if ($nombre === '') {
+                    $errores[] = "El nombre es obligatorio.";
+                } elseif (mb_strlen($nombre) > 150) {
+                    $errores[] = "El nombre no puede pasar de 150 caracteres.";
+                }
+
+                if ($activo !== '0' && $activo !== '1') {
+                    $errores[] = "Activo tiene que ser 0 o 1.";
+                }
+
+                if (count($errores) > 0) {
+                    http_response_code(400);
+                    echo json_encode(["error" => implode(' ', $errores)]);
+                    break;
+                }
+
+                $categorias->setNombre($nombre);
+                $categorias->setDescripcion($descripcion);
+                $categorias->setActivo($activo);
+
+                CategoriasDAO::update($categorias);
+                echo json_encode(["ok" => true]);
+
                 break;
             default:
                 $this->noMetodo();
