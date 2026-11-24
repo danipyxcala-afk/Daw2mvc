@@ -123,10 +123,10 @@ class ProductosController
         }
         if (!empty($quitados)) {
 
-            foreach ($ingredientesProducto['base'] as $base) {
-                if (in_array($base['id'], $quitados)) {
-                    $quitadosElegidos[] = $base;
-                }
+            // siempre tiene que quedar al menos un ingrediente base
+            $totalBase = count($ingredientesProducto['base']);
+            if ($totalBase > 0 && count($quitadosElegidos) === $totalBase) {
+                array_pop($quitadosElegidos);
             }
         }
         // Calcular el precio total del producto con extras y cantidad
