@@ -144,12 +144,6 @@ class UserController
                 $detalles[$pedido->getId()][] = ['linea' => $linea, 'mods' => $mods];
             }
         }
-        // Obtener los códigos de descuento activos y filtrar el código de bienvenida si el usuario ya ha realizado pedidos
-        $codigos = OfertasDAO::getCodigosActivos();
-        if ($resumen['num'] > 0) {
-            // Filtrar el código de bienvenida si el usuario ya ha realizado pedidos
-            $codigos = array_filter($codigos, fn($c) => $c->getCodigo() !== 'BIENVENIDA15');
-        }
 
         $view = "views/usuario/panel.php";
         include_once 'views/main.php';
