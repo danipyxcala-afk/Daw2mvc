@@ -52,6 +52,8 @@ class AdministradorVistas {
         const tablaProductos = document
           .getElementById("pedidos")
           .querySelector("tbody");
+        //vaciamos la tabla para no duplicar filas al recargarla
+        tablaProductos.replaceChildren();
         const estados = [
           "pendiente",
           "confirmado",
@@ -77,10 +79,10 @@ class AdministradorVistas {
           });
           td6.append(select);
           tr.append(td6);
-          this.crearCelda(tr, r.id);
-          this.crearCelda(tr, r.usuario_id);
-          this.crearCelda(tr, r.fecha_pedido);
-          this.crearCelda(tr, r.total);
+          crearCelda(tr, r.id);
+          crearCelda(tr, r.usuario_id);
+          crearCelda(tr, r.fecha_pedido);
+          crearCelda(tr, r.total);
           this.crearBotonDetalle(tr, "pedidos", r.id);
 
           tablaProductos.append(tr);
@@ -95,13 +97,15 @@ class AdministradorVistas {
         const tablaProductos = document
           .getElementById("usuarios")
           .querySelector("tbody");
+        //vaciamos la tabla para no duplicar filas al recargarla
+        tablaProductos.replaceChildren();
         this.usuarios.forEach((r) => {
           const tr = document.createElement("tr");
-          this.crearCelda(tr, r.id);
-          this.crearCelda(tr, r.nombre);
-          this.crearCelda(tr, r.email);
-          this.crearCelda(tr, r.telefono);
-          this.crearCelda(tr, r.direccion);
+          crearCelda(tr, r.id);
+          crearCelda(tr, r.nombre);
+          crearCelda(tr, r.email);
+          crearCelda(tr, r.telefono);
+          crearCelda(tr, r.direccion);
           this.crearBotonDetalle(tr, "usuarios", r.id);
 
           tablaProductos.append(tr);
@@ -116,14 +120,15 @@ class AdministradorVistas {
         const tablaProductos = document
           .getElementById("categorias")
           .querySelector("tbody");
+        //vaciamos la tabla para no duplicar filas al recargarla
+        tablaProductos.replaceChildren();
         this.categorias.forEach((r) => {
           const tr = document.createElement("tr");
-          this.crearCelda(tr, r.activa ? "Activa" : "Inactiva");
-          this.crearCelda(tr, r.id);
-          this.crearCelda(tr, r.nombre);
-          this.crearCelda(tr, r.descripcion);
+          crearCelda(tr, r.activa ? "Activa" : "Inactiva");
+          crearCelda(tr, r.id);
+          crearCelda(tr, r.nombre);
+          crearCelda(tr, r.descripcion);
           this.crearBotonDetalle(tr, "categorias", r.id);
-
           tablaProductos.append(tr);
         });
       });
@@ -132,22 +137,13 @@ class AdministradorVistas {
     fetch("index.php?controller=api&action=productos")
       .then((respuesta) => respuesta.json())
       .then((r) => {
-        this.productos = r;
         const tablaProductos = document
           .getElementById("productos")
           .querySelector("tbody");
-        this.productos.forEach((r) => {
-          const tr = document.createElement("tr");
-          this.crearCelda(tr, r.activo ? "Activo" : "Inactivo");
-          this.crearCelda(tr, r.id);
-          this.crearCelda(tr, r.categoria_id);
-          this.crearCelda(tr, r.nombre);
-          this.crearCelda(tr, r.descripcion);
-          this.crearCelda(tr, r.precio);
-          this.crearBotonDetalle(tr, "productos", r.id);
-
-          tablaProductos.append(tr);
-        });
+        //vaciamos la tabla para no duplicar filas al recargarla
+        tablaProductos.replaceChildren();
+        this.productos = r.map((datos) => new Producto(datos));
+        this.productos.forEach((p) => tablaProductos.append(p.crearFila(this)));
       });
   }
   cargarIngredientes() {
@@ -158,12 +154,14 @@ class AdministradorVistas {
         const tablaProductos = document
           .getElementById("ingredientes")
           .querySelector("tbody");
+        //vaciamos la tabla para no duplicar filas al recargarla
+        tablaProductos.replaceChildren();
         this.ingredientes.forEach((r) => {
           const tr = document.createElement("tr");
-          this.crearCelda(tr, r.activo ? "Activo" : "Inactiva");
-          this.crearCelda(tr, r.id);
-          this.crearCelda(tr, r.nombre);
-          this.crearCelda(tr, r.precio_extra);
+          crearCelda(tr, r.activo ? "Activo" : "Inactiva");
+          crearCelda(tr, r.id);
+          crearCelda(tr, r.nombre);
+          crearCelda(tr, r.precio_extra);
           this.crearBotonDetalle(tr, "ingredientes", r.id);
 
           tablaProductos.append(tr);
@@ -178,41 +176,42 @@ class AdministradorVistas {
         const tablaProductos = document
           .getElementById("ofertas")
           .querySelector("tbody");
+        //vaciamos la tabla para no duplicar filas al recargarla
+        tablaProductos.replaceChildren();
         this.ofertas.forEach((r) => {
           const tr = document.createElement("tr");
-          this.crearCelda(tr, r.id);
-          this.crearCelda(tr, r.nombre);
-          this.crearCelda(tr, r.descripcion);
-          this.crearCelda(tr, r.tipo);
-          this.crearCelda(tr, r.valor);
-          this.crearCelda(tr, r.codigo);
+          crearCelda(tr, r.id);
+          crearCelda(tr, r.nombre);
+          crearCelda(tr, r.descripcion);
+          crearCelda(tr, r.tipo);
+          crearCelda(tr, r.valor);
+          crearCelda(tr, r.codigo);
           this.crearBotonDetalle(tr, "ofertas", r.id);
 
           tablaProductos.append(tr);
         });
       });
   }
-  crearBotonDetalle(tr, tabla, id) {
-    // Celda con el botón Detalle
-    const tdDetalle = document.createElement("td");
-    const botonDetalle = document.createElement("button");
-    botonDetalle.type = "button";
-    botonDetalle.className = "btn btn-sm btn-outline-primary";
-    botonDetalle.textContent = "Detalle";
-    botonDetalle.addEventListener("click", () => this.verDetalle(tabla, id));
-    tdDetalle.append(botonDetalle);
-    tr.append(tdDetalle);
-  }
-  crearBotonEliminar(tr, tabla, id) {
-    // Celda con el botón Eliminar
-    const tdEliminar = document.createElement("td");
-    const botonEliminar = document.createElement("button");
-    botonEliminar.type = "button";
-    botonEliminar.className = "btn btn-sm btn-outline-danger";
-    botonEliminar.textContent = "Eliminar";
-    botonEliminar.addEventListener("click", () => this.eliminar(tabla, id));
-    tdEliminar.append(botonEliminar);
-    tr.append(tdEliminar);
+
+  //vuelve a pedir y pintar solo una tabla, sin recargar la página
+  recargarTabla(tabla) {
+    switch (tabla) {
+      case "productos":
+        this.cargarProductos();
+        break;
+      case "categorias":
+        this.cargarCategorias();
+        break;
+      case "ingredientes":
+        this.cargarIngredientes();
+        break;
+      case "ofertas":
+        this.cargarOfertas();
+        break;
+      case "usuarios":
+        this.cargarUsuarios();
+        break;
+    }
   }
 
   verDetalle(tabla, id) {
@@ -267,6 +266,11 @@ class AdministradorVistas {
             input = this.crearSelect(roles, valor);
             input.name = campo;
           }
+          //en categorias y ofertas el campo se llama activa
+          if (campo === "activo" || campo === "activa") {
+            input = this.crearSelect([1, 0], valor, ["Activo", "Desactivado"]);
+            input.name = campo;
+          }
           grupo.append(label, input);
           form.append(grupo);
         });
@@ -288,10 +292,11 @@ class AdministradorVistas {
             })
               .then((respuesta) => respuesta.json())
               .then((resultado) => {
-                // Si se ha guardado, recargamos para ver los datos nuevos;
+                // Si se ha guardado, recargamos solo la tabla y volvemos a ella;
                 // si no, avisamos y nos quedamos en el formulario para corregir
                 if (resultado.ok) {
-                  location.reload();
+                  this.recargarTabla(tabla);
+                  document.querySelector("#detalle-volver").click();
                 } else {
                   alert(resultado.error);
                 }
@@ -301,24 +306,44 @@ class AdministradorVistas {
         contenido.replaceChildren(form);
       });
   }
-  crearCelda(tr, texto) {
-    const td = document.createElement("td");
-    td.textContent = texto;
-    tr.append(td);
-  }
 
-  crearSelect(opciones, valor) {
+  //textos es opcional: lo que se ve en cada opción, si es distinto de su valor
+  crearSelect(opciones, valor, textos = opciones) {
     const select = document.createElement("select");
     select.className = "form-select";
-    opciones.forEach((opcion) => {
+    opciones.forEach((opcion, i) => {
       const option = document.createElement("option");
       option.value = opcion;
-      option.textContent = opcion;
+      option.textContent = textos[i];
       select.append(option);
     });
     //se marca después del bucle, cuando las opciones ya existen
     select.value = valor ?? "";
     return select;
+  }
+
+  crearBotonDetalle(tr, tabla, id) {
+    // Celda con el botón Detalle
+    const tdDetalle = document.createElement("td");
+    const botonDetalle = document.createElement("button");
+    botonDetalle.type = "button";
+    botonDetalle.className = "btn btn-sm btn-outline-primary";
+    botonDetalle.textContent = "Detalle";
+    botonDetalle.addEventListener("click", () => this.verDetalle(tabla, id));
+    tdDetalle.append(botonDetalle);
+    tr.append(tdDetalle);
+  }
+
+  crearBotonEliminar(tr, tabla, id) {
+    // Celda con el botón Eliminar
+    const tdEliminar = document.createElement("td");
+    const botonEliminar = document.createElement("button");
+    botonEliminar.type = "button";
+    botonEliminar.className = "btn btn-sm btn-outline-danger";
+    botonEliminar.textContent = "Eliminar";
+    botonEliminar.addEventListener("click", () => this.eliminar(tabla, id));
+    tdEliminar.append(botonEliminar);
+    tr.append(tdEliminar);
   }
 
   eliminar(tabla, id) {
@@ -327,3 +352,61 @@ class AdministradorVistas {
 }
 let admin = new AdministradorVistas();
 admin.inicializar();
+
+function crearCelda(tr, texto) {
+  const td = document.createElement("td");
+  td.textContent = texto;
+  tr.append(td);
+}
+
+class Producto {
+  constructor(datos) {
+    // copia id, nombre, precio... en el objeto
+    Object.assign(this, datos);
+  }
+
+  crearFila(admin) {
+    const tr = document.createElement("tr");
+    crearCelda(tr, this.activo ? "Activo" : "Inactivo");
+    crearCelda(tr, this.id);
+    crearCelda(tr, this.categoria_id);
+    crearCelda(tr, this.nombre);
+    crearCelda(tr, this.descripcion);
+    crearCelda(tr, this.precio);
+    admin.crearBotonDetalle(tr, "productos", this.id);
+    this.crearBotonActivo(tr, admin);
+    return tr;
+  }
+
+  crearBotonActivo(tr, admin) {
+    const td = document.createElement("td");
+    const boton = document.createElement("button");
+    boton.type = "button";
+    boton.className = this.activo
+      ? "btn btn-sm btn-outline-danger"
+      : "btn btn-sm btn-outline-success";
+    boton.textContent = this.activo ? "Desactivar" : "Activar";
+    boton.addEventListener("click", () => this.cambiarActivo(admin));
+    td.append(boton);
+    tr.append(td);
+  }
+
+  cambiarActivo(admin) {
+    // copia del producto, con activo al revés
+    const datos = { ...this, activo: this.activo ? 0 : 1 };
+
+    fetch(`index.php?controller=api&action=productos&id=${this.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(datos),
+    })
+      .then((respuesta) => respuesta.json())
+      .then((resultado) => {
+        if (resultado.ok) {
+          admin.cargarProductos();
+        } else {
+          alert(resultado.error);
+        }
+      });
+  }
+}

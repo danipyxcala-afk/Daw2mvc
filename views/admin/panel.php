@@ -75,7 +75,7 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Descripcion</th>
                     <th scope="col">Precio</th>
-                    <th scope="col">Detalle</th>
+                    <th scope="col" colspan="2">Acción</th>
                 </tr>
             </thead>
             <tbody>
