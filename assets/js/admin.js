@@ -297,6 +297,9 @@ class AdministradorVistas {
     this.vistaAnterior = tabla;
     //dejar los datos vacios del detalle
     const contenido = document.querySelector("#detalle-contenido");
+    const divTablaIngredientes = document.getElementById(
+      "detalle-ingredientes",
+    );
     //sin nada dentro, replaceChildren vacia el elemento
     contenido.replaceChildren();
 
@@ -329,6 +332,7 @@ class AdministradorVistas {
           const grupo = document.createElement("div");
           const label = document.createElement("label");
           let input = document.createElement("input");
+
           //crear clases para añadir
           grupo.className = "col-md-6 mb-3";
           label.className = "form-label fw-bold";
@@ -360,9 +364,27 @@ class AdministradorVistas {
             input.name = campo;
             input.disabled = !editable;
           }
-          grupo.append(label, input);
-          form.append(grupo);
+          if (campo !== "ingredientes") {
+            grupo.append(label, input);
+            form.append(grupo);
+          }
         });
+        if (r.ingredientes) {
+          divTablaIngredientes.hidden = false;
+          const tbodytabla = document.querySelector(
+            "#ingredientes-producto tbody",
+          );
+          tbodytabla.textContent = "";
+          r.ingredientes.forEach((element) => {
+            const tr = document.createElement("tr");
+            crearCelda(tr, element.nombre);
+            crearCelda(tr, element.cantidad);
+            crearCelda(tr, element.precio_extra+" €");
+            tbodytabla.append(tr);
+          });
+        } else {
+          divTablaIngredientes.hidden = true;
+        }
         //el boton Guardar solo aparece en las tablas que se pueden guardar
         if (editable) {
           const boton = document.createElement("button");
@@ -437,21 +459,23 @@ function leerCelda(td) {
 //envia los cambios de un registro a la API; devuelve true si se ha guardado
 function enviarPut(tabla, id, datos) {
   //devuelve una promesa: el resultado llega mas tarde y se recoge con then
-  return fetch(`index.php?controller=api&action=${tabla}&id=${id}`, {
-    method: "PUT",
-    //avisa de que los datos van en JSON
-    headers: { "Content-Type": "application/json" },
-    //stringify pasa el objeto a texto JSON, como json_encode en PHP
-    body: JSON.stringify(datos),
-  })
-    .then((respuesta) => respuesta.json())
-    .then((resultado) => {
-      //la API manda ok si se ha guardado y error si no
-      if (!resultado.ok) alert(resultado.error);
-      return resultado.ok;
+  return (
+    fetch(`index.php?controller=api&action=${tabla}&id=${id}`, {
+      method: "PUT",
+      //avisa de que los datos van en JSON
+      headers: { "Content-Type": "application/json" },
+      //stringify pasa el objeto a texto JSON, como json_encode en PHP
+      body: JSON.stringify(datos),
     })
-    //catch salta si falla la conexion o la respuesta no es JSON
-    .catch(() => alert("No se ha podido conectar con el servidor"));
+      .then((respuesta) => respuesta.json())
+      .then((resultado) => {
+        //la API manda ok si se ha guardado y error si no
+        if (!resultado.ok) alert(resultado.error);
+        return resultado.ok;
+      })
+      //catch salta si falla la conexion o la respuesta no es JSON
+      .catch(() => alert("No se ha podido conectar con el servidor"))
+  );
 }
 
 //un producto: crea su fila y se activa o desactiva

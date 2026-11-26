@@ -35,11 +35,27 @@
             </tbody>
         </table>
     </section>
+
     <section data-view="detalle" hidden>
         <div class="bg-light rounded-4 p-4 p-sm-5">
             <h2 class="fs-3 mb-4" id="detalle-titulo">Detalle</h2>
             <div id="detalle-contenido"></div>
             <button type="button" class="btn btn-outline-secondary mt-3" id="detalle-volver">Volver</button>
+        </div>
+        <div class="bg-light rounded-4 p-4 p-sm-5 mt-5" id="detalle-ingredientes" hidden>
+            <h3 class="fs-5">Ingredientes</h3>
+            <table class="table table-sm" id="ingredientes-producto">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Precio extra</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
         </div>
     </section>
 
@@ -88,6 +104,7 @@
 
             </tbody>
         </table>
+
     </section>
 
     <section data-view="categorias" hidden>

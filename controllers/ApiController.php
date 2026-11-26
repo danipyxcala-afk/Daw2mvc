@@ -23,7 +23,13 @@ class ApiController
                 //El get mira si tiene la id en el link
                 //controller=api&action=productos&id=1
                 if (isset($_GET['id'])) {
-                    echo json_encode(ProductosDAO::getByIdJson($_GET['id']));
+                    $productos = ProductosDAO::getByIdJson($_GET['id']);
+                    //reviso que exita el producto para poder asignarle ingredientes en la variable
+                    if ($productos) {
+                        $productos['ingredientes'] = IngredientesDAO::getDetalleByProducto($productos['id']);
+                    }
+
+                    echo json_encode($productos);
                 } else {
                     //controller=api&action=productos
                     echo json_encode(ProductosDAO::getAllJson());
@@ -301,7 +307,9 @@ class ApiController
                 //El get mira si tiene la id en el link
                 //controller=api&action=categorias&id=1
                 if (isset($_GET['id'])) {
-                    echo json_encode(IngredientesDAO::getByIdJson($_GET['id']));
+                    $ingredientes = IngredientesDAO::getByIdJson($_GET['id']);
+
+                    echo json_encode($ingredientes);
                 } else {
                     //controller=api&action=usuarios
                     echo json_encode(IngredientesDAO::getAllJson());
