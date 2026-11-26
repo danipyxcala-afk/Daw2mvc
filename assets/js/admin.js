@@ -15,8 +15,7 @@ class AdministradorVistas {
     this.cargarUsuarios();
     this.cargarSesion();
 
-    //con esto unicamente pilla los del menu admin
-    //querySelectorAll devuelve todos los elementos que cumplen el selector
+    //querySelectorAll devuelve todos los elementos que cumplen el selector (aqui, solo los del menu admin)
     this.enlaces = document.querySelectorAll("#menu-admin a[data-view]");
     this.secciones = document.querySelectorAll("section[data-view]");
 
@@ -32,13 +31,11 @@ class AdministradorVistas {
     document.querySelector("#detalle-volver").addEventListener("click", () => {
       this.mostrarVista(this.vistaAnterior);
     });
-    //al cerrar sesion borramos los datos del navegador
-    //action*= busca los form cuyo action contiene ese texto
+    //al cerrar sesion borramos los datos del navegador; action*= busca los form cuyo action contiene ese texto
     document.querySelectorAll('form[action*="action=logout"]').forEach((f) => {
       f.addEventListener("submit", () => this.sesion.borrar());
     });
-    //abrimos la ultima vista guardada, o el menu si no hay ninguna
-    //?? usa lo de la derecha si lo de la izquierda es null
+    //abrimos la ultima vista guardada, o el menu si no hay ninguna; ?? usa lo de la derecha si lo de la izquierda es null
     this.mostrarVista(localStorage.getItem("vistaAdmin") ?? "menu");
     //cada input filtra la tabla que indica su data-filtro
     document.querySelectorAll("[data-filtro]").forEach((input) => {
@@ -47,18 +44,13 @@ class AdministradorVistas {
       );
     });
 
-    //al pulsar el titulo de una columna se ordena la tabla por ella
-    //th[data-ordenar] son los titulos que tienen data-ordenar en el html
+    //al pulsar el titulo de una columna se ordena la tabla por ella; th[data-ordenar] son los titulos que tienen data-ordenar en el html
     document.querySelectorAll("th[data-ordenar]").forEach((th) => {
       th.addEventListener("click", () => {
-        //dataset.sentido lee el atributo data-sentido de ese titulo
-        //la primera vez no existe: la condicion es false y sale "asc"
-        //si ya estaba en "asc", pasa a "desc"; y el siguiente clic, otra vez a "asc"
+        //la primera vez no hay data-sentido y sale "asc"; despues va alternando entre "asc" y "desc"
         const sentido = th.dataset.sentido === "asc" ? "desc" : "asc";
 
-        //closest("tr") sube a la fila de los titulos de esa tabla
-        //y recorremos todos sus th para quitarles el sentido anterior:
-        //solo puede ordenar una columna (la ultima que se ha pulsado)
+        //closest("tr") sube a la fila de titulos y se quita el sentido a todos: solo ordena la ultima columna pulsada
         th.closest("tr")
           .querySelectorAll("th")
           .forEach((otro) => {
@@ -226,6 +218,9 @@ class AdministradorVistas {
     //...filas saca los elementos del array: replaceChildren(fila1, fila2...)
     tbody.replaceChildren(...filas);
     this.filtrarTabla(tabla);
+    //si se habia ordenado por una columna (su th tiene data-sentido), se vuelve a ordenar
+    const th = document.querySelector(`#${tabla} th[data-sentido]`);
+    if (th) this.ordenarTabla(th);
   }
 
   //esconde las filas de una tabla que no contienen el texto buscado
@@ -237,9 +232,7 @@ class AdministradorVistas {
     const texto = input.value.trim().toLowerCase();
 
     document.querySelectorAll(`#${tabla} tbody tr`).forEach((fila) => {
-      //los botones no se tienen en cuenta
-      //[...fila.cells] pasa las celdas a un array, para poder usar filter y some
-      //filter se queda solo con las que cumplen: las que no tienen boton
+      //[...fila.cells] pasa las celdas a un array; filter quita las que tienen boton
       const celdas = [...fila.cells].filter(
         (td) => !td.querySelector("button"),
       );
@@ -260,11 +253,9 @@ class AdministradorVistas {
     //cellIndex es el numero de columna: 0, 1, 2...
     const columna = th.cellIndex;
 
-    //[...tbody.rows] pasa las filas a un array para poder usar sort
-    //sort compara las filas de dos en dos: a y b
+    //[...tbody.rows] pasa las filas a un array para poder usar sort; sort compara las filas de dos en dos: a y b
     const filas = [...tbody.rows].sort((a, b) => {
-      //localeCompare compara dos textos (como strcmp): negativo si a va antes
-      //numeric hace que 9 vaya antes que 10
+      //localeCompare compara dos textos (como strcmp): negativo si a va antes; numeric hace que 9 vaya antes que 10
       const resultado = leerCelda(a.cells[columna]).localeCompare(
         leerCelda(b.cells[columna]),
         "es",
@@ -297,16 +288,21 @@ class AdministradorVistas {
         break;
     }
   }
-  //abre un registro en un formulario, que se puede guardar (menos los pedidos)
+  //abre un registro en un formulario; solo se puede guardar en las tablas editables
   verDetalle(tabla, id) {
+    //tablas que se pueden guardar (las que tienen PUT en la API); se añaden al hacer su PUT
+    const editables = ["productos", "categorias"];
+    //includes mira si la tabla esta en la lista, como in_array en PHP
+    const editable = editables.includes(tabla);
     this.vistaAnterior = tabla;
     //dejar los datos vacios del detalle
     const contenido = document.querySelector("#detalle-contenido");
     //sin nada dentro, replaceChildren vacia el elemento
     contenido.replaceChildren();
 
+    //el titulo dice Editar o Ver segun se pueda guardar o no
     document.querySelector("#detalle-titulo").textContent =
-      `Editar ${tabla} #${id}`;
+      `${editable ? "Editar" : "Ver"} ${tabla} #${id}`;
 
     this.secciones.forEach((s) => {
       s.hidden = s.dataset.view !== "detalle";
@@ -342,8 +338,8 @@ class AdministradorVistas {
 
           input.name = campo;
           input.value = valor ?? "";
-          //la tabla pedidos y los campos ID no se pueden editar y se quedan con readonly
-          if (campo === "id" || tabla === "pedidos") {
+          //el id y los campos de las tablas que no se pueden guardar se quedan con readonly
+          if (campo === "id" || !editable) {
             input.readOnly = true;
             input.classList.add("bg-body-secondary");
           }
@@ -352,6 +348,8 @@ class AdministradorVistas {
           if (campo === "rol") {
             input = this.crearSelect(roles, valor);
             input.name = campo;
+            //los select no tienen readOnly: se bloquean con disabled si la tabla no es editable
+            input.disabled = !editable;
           }
           //en categorias y ofertas el campo se llama activa
           if (campo === "activo" || campo === "activa") {
@@ -360,12 +358,13 @@ class AdministradorVistas {
               "Desactivado",
             ]);
             input.name = campo;
+            input.disabled = !editable;
           }
           grupo.append(label, input);
           form.append(grupo);
         });
-        //si la tabla es pedidos no aparece el boton de actualizar
-        if (tabla !== "pedidos") {
+        //el boton Guardar solo aparece en las tablas que se pueden guardar
+        if (editable) {
           const boton = document.createElement("button");
           boton.type = "submit";
           boton.className = "btn btn-primary";
@@ -377,8 +376,7 @@ class AdministradorVistas {
             e.preventDefault();
             //FormData recoge los campos por su name y fromEntries los pasa a un objeto
             const datos = Object.fromEntries(new FormData(form));
-            // Si se ha guardado, recargamos solo la tabla y volvemos a ella;
-            // si no, nos quedamos en el formulario para corregir
+            //si se ha guardado, recargamos la tabla y volvemos a ella; si no, nos quedamos para corregir
             enviarPut(tabla, id, datos).then((ok) => {
               if (ok) {
                 this.recargarTabla(tabla);
@@ -460,7 +458,7 @@ function enviarPut(tabla, id, datos) {
 class Producto {
   //recibe los datos de la API
   constructor(datos) {
-    // copia id, nombre, precio... en el objeto
+    //copia id, nombre, precio... en el objeto
     Object.assign(this, datos);
   }
 
@@ -494,8 +492,7 @@ class Producto {
 
   //envia a la API el producto con el estado contrario y recarga la tabla
   cambiarActivo(admin) {
-    // copia del producto, con activo al revés
-    //...this copia todas las propiedades y activo pisa solo esa
+    //copia del producto, con activo al revés; ...this copia todas las propiedades y activo pisa solo esa
     const datos = { ...this, activo: this.activo ? 0 : 1 };
 
     //ok es lo que devuelve enviarPut cuando termina
@@ -509,7 +506,7 @@ class Producto {
 class Categoria {
   //recibe los datos de la API
   constructor(datos) {
-    // copia id, nombre, descripcion... en el objeto
+    //copia id, nombre, descripcion... en el objeto
     Object.assign(this, datos);
   }
 
@@ -541,8 +538,7 @@ class Categoria {
 
   //envia a la API la categoria con el estado contrario y recarga la tabla
   cambiarActivo(admin) {
-    // copia de la categoría, con activa al revés
-    //...this copia todas las propiedades y activa pisa solo esa
+    //copia de la categoría, con activa al revés; ...this copia todas las propiedades y activa pisa solo esa
     const datos = { ...this, activa: this.activa ? 0 : 1 };
 
     enviarPut("categorias", this.id, datos).then((ok) => {

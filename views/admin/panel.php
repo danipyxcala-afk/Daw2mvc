@@ -22,11 +22,11 @@
         <table id="pedidos" class="table">
             <thead>
                 <tr>
-                    <th scope="col">estadoPed</th>
-                    <th scope="col">idPed</th>
-                    <th scope="col">clienteId</th>
-                    <th scope="col">fechaPedido</th>
-                    <th scope="col">Total</th>
+                    <th scope="col" data-ordenar role="button">estadoPed</th>
+                    <th scope="col" data-ordenar role="button">idPed</th>
+                    <th scope="col" data-ordenar role="button">clienteId</th>
+                    <th scope="col" data-ordenar role="button">fechaPedido</th>
+                    <th scope="col" data-ordenar role="button">Total</th>
                     <th scope="col">Detalle</th>
                 </tr>
             </thead>
@@ -50,11 +50,11 @@
         <table id="usuarios" class="table">
             <thead>
                 <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">telefono</th>
-                    <th scope="col">direccion</th>
+                    <th scope="col" data-ordenar role="button">ID</th>
+                    <th scope="col" data-ordenar role="button">Nombre</th>
+                    <th scope="col" data-ordenar role="button">Email</th>
+                    <th scope="col" data-ordenar role="button">telefono</th>
+                    <th scope="col" data-ordenar role="button">direccion</th>
                     <th scope="col">Detalle</th>
                 </tr>
             </thead>
@@ -75,12 +75,12 @@
         <table id="productos" class="table">
             <thead>
                 <tr>
-                    <th scope="col">Estado</th>
-                    <th scope="col">ID</th>
-                    <th scope="col">Cat_Id</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Descripcion</th>
-                    <th scope="col">Precio</th>
+                    <th scope="col" data-ordenar role="button">Estado</th>
+                    <th scope="col" data-ordenar role="button">ID</th>
+                    <th scope="col" data-ordenar role="button">Cat_Id</th>
+                    <th scope="col" data-ordenar role="button">Nombre</th>
+                    <th scope="col" data-ordenar role="button">Descripcion</th>
+                    <th scope="col" data-ordenar role="button">Precio</th>
                     <th scope="col" colspan="2">Acción</th>
                 </tr>
             </thead>
@@ -97,10 +97,10 @@
         <table id="categorias" class="table">
             <thead>
                 <tr>
-                    <th scope="col">Estado</th>
-                    <th scope="col">ID</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Descripcion</th>
+                    <th scope="col" data-ordenar role="button">Estado</th>
+                    <th scope="col" data-ordenar role="button">ID</th>
+                    <th scope="col" data-ordenar role="button">Nombre</th>
+                    <th scope="col" data-ordenar role="button">Descripcion</th>
                     <th scope="col" colspan="2">Acción</th>
                 </tr>
             </thead>
@@ -117,10 +117,10 @@
         <table id="ingredientes" class="table">
             <thead>
                 <tr>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Id</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Precio_extra</th>
+                    <th scope="col" data-ordenar role="button">Estado</th>
+                    <th scope="col" data-ordenar role="button">Id</th>
+                    <th scope="col" data-ordenar role="button">Nombre</th>
+                    <th scope="col" data-ordenar role="button">Precio_extra</th>
                     <th scope="col">Detalle</th>
                 </tr>
             </thead>
@@ -136,12 +136,12 @@
         <table id="ofertas" class="table">
             <thead>
                 <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Descripcion</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">Valor</th>
-                    <th scope="col">Codigo</th>
+                    <th scope="col" data-ordenar role="button">Id</th>
+                    <th scope="col" data-ordenar role="button">Nombre</th>
+                    <th scope="col" data-ordenar role="button">Descripcion</th>
+                    <th scope="col" data-ordenar role="button">Tipo</th>
+                    <th scope="col" data-ordenar role="button">Valor</th>
+                    <th scope="col" data-ordenar role="button">Codigo</th>
                     <th scope="col">Detalle</th>
                 </tr>
             </thead>
