@@ -134,7 +134,11 @@ class ApiController
                 //El get mira si tiene la id en el link
                 //controller=api&action=usuarios&id=1
                 if (isset($_GET['id'])) {
-                    echo json_encode(UsuariosDAO::getByIdJson($_GET['id']));
+                    $usuarios = UsuariosDAO::getByIdJson($_GET['id']);
+                    if ($usuarios) {
+                        $usuarios['pedidosArray'] = PedidosDAO::getPedidosByUsuarioJson($usuarios['id']);
+                    }
+                    echo json_encode($usuarios);
                 } else {
                     //controller=api&action=usuarios
                     echo json_encode(UsuariosDAO::getAllJson());

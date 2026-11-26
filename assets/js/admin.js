@@ -300,6 +300,7 @@ class AdministradorVistas {
     const divTablaIngredientes = document.getElementById(
       "detalle-ingredientes",
     );
+    const divTablaUsuarios = document.getElementById("detalle-usuarios");
     const divTablaPedidos = document.getElementById("detalle-pedidos");
     //sin nada dentro, replaceChildren vacia el elemento
     contenido.replaceChildren();
@@ -365,11 +366,30 @@ class AdministradorVistas {
             input.name = campo;
             input.disabled = !editable;
           }
-          if (campo !== "ingredientes" && campo !== "detalle") {
+          const noSonCampos = ["ingredientes", "detalle", "pedidosArray"];
+          //claves que son listas y van en su propia caja, no en el formulario
+          if (!noSonCampos.includes(campo)) {
             grupo.append(label, input);
             form.append(grupo);
           }
         });
+
+        if (r.pedidosArray) {
+          divTablaUsuarios.hidden = false;
+          const tbodytabla = document.querySelector("#detalle-usu tbody");
+          tbodytabla.textContent = "";
+          r.pedidosArray.forEach((linea) => {
+            const tr = document.createElement("tr");
+            crearCelda(tr, linea.id);
+            crearCelda(tr, linea.fecha_pedido);
+            crearCelda(tr, linea.estado);
+            crearCelda(tr, linea.total);
+            tbodytabla.append(tr);
+          });
+        } else {
+          divTablaUsuarios.hidden = true;
+        }
+
         if (r.detalle) {
           divTablaPedidos.hidden = false;
           const tbodytabla = document.querySelector(

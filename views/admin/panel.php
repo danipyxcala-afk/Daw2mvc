@@ -42,10 +42,26 @@
             <div id="detalle-contenido"></div>
             <button type="button" class="btn btn-outline-secondary mt-3" id="detalle-volver">Volver</button>
         </div>
+        <div class="bg-light rounded-4 p-4 p-sm-5 mt-5" id="detalle-usuarios" hidden>
+            <h3 class="fs-5">Historial de pedidos</h3>
+            <table class="table table-sm table-hover" id="detalle-usu">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
         <div class="bg-light rounded-4 p-4 p-sm-5 mt-5" id="detalle-pedidos" hidden>
             <h3 class="fs-5">Productos del pedido</h3>
-            <table class="table table-sm" id="detalle-ing-producto">
-                <thead>
+            <table class="table table-sm table-hover" id="detalle-ing-producto">
+                <thead class="table-light">
                     <tr>
                         <th>Producto</th>
                         <th>Cantidad</th>
@@ -60,8 +76,8 @@
         </div>
         <div class="bg-light rounded-4 p-4 p-sm-5 mt-5" id="detalle-ingredientes" hidden>
             <h3 class="fs-5">Ingredientes</h3>
-            <table class="table table-sm" id="ingredientes-producto">
-                <thead>
+            <table class="table table-sm table-hover" id="ingredientes-producto">
+                <thead class="table-light">
                     <tr>
                         <th>Nombre</th>
                         <th>Cantidad</th>
