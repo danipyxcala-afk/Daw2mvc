@@ -1,14 +1,11 @@
+//controla el panel: pide los datos, pinta las tablas y cambia de vista
 class AdministradorVistas {
+  //al crear el panel se prepara la sesion
   constructor() {
-    this.productos = null;
-    this.categorias = null;
-    this.ingredientes = null;
-    this.ofertas = null;
-    this.usuarios = null;
-    this.pedidos = null;
     this.sesion = new Sesion();
   }
 
+  //arranque: carga las tablas, prepara los eventos y abre la ultima vista (una sola vez)
   inicializar() {
     this.cargarCategorias();
     this.cargarIngredientes();
@@ -19,11 +16,14 @@ class AdministradorVistas {
     this.cargarSesion();
 
     //con esto unicamente pilla los del menu admin
+    //querySelectorAll devuelve todos los elementos que cumplen el selector
     this.enlaces = document.querySelectorAll("#menu-admin a[data-view]");
     this.secciones = document.querySelectorAll("section[data-view]");
 
+    //forEach recorre la lista; (e) => {...} es una funcion flecha y e es cada enlace
     this.enlaces.forEach((e) => {
       e.addEventListener("click", () => {
+        //dataset.view lee el atributo data-view del html
         localStorage.setItem("vistaAdmin", e.dataset.view);
         this.mostrarVista(e.dataset.view);
       });
@@ -33,31 +33,70 @@ class AdministradorVistas {
       this.mostrarVista(this.vistaAnterior);
     });
     //al cerrar sesion borramos los datos del navegador
+    //action*= busca los form cuyo action contiene ese texto
     document.querySelectorAll('form[action*="action=logout"]').forEach((f) => {
       f.addEventListener("submit", () => this.sesion.borrar());
     });
     //abrimos la ultima vista guardada, o el menu si no hay ninguna
+    //?? usa lo de la derecha si lo de la izquierda es null
     this.mostrarVista(localStorage.getItem("vistaAdmin") ?? "menu");
-  }
+    //cada input filtra la tabla que indica su data-filtro
+    document.querySelectorAll("[data-filtro]").forEach((input) => {
+      input.addEventListener("input", () =>
+        this.filtrarTabla(input.dataset.filtro),
+      );
+    });
 
+    //al pulsar el titulo de una columna se ordena la tabla por ella
+    //th[data-ordenar] son los titulos que tienen data-ordenar en el html
+    document.querySelectorAll("th[data-ordenar]").forEach((th) => {
+      th.addEventListener("click", () => {
+        //dataset.sentido lee el atributo data-sentido de ese titulo
+        //la primera vez no existe: la condicion es false y sale "asc"
+        //si ya estaba en "asc", pasa a "desc"; y el siguiente clic, otra vez a "asc"
+        const sentido = th.dataset.sentido === "asc" ? "desc" : "asc";
+
+        //closest("tr") sube a la fila de los titulos de esa tabla
+        //y recorremos todos sus th para quitarles el sentido anterior:
+        //solo puede ordenar una columna (la ultima que se ha pulsado)
+        th.closest("tr")
+          .querySelectorAll("th")
+          .forEach((otro) => {
+            //delete borra el atributo data-sentido de ese th
+            delete otro.dataset.sentido;
+          });
+
+        //guardamos el sentido nuevo en el titulo pulsado: data-sentido="asc"
+        th.dataset.sentido = sentido;
+        //ordenarTabla lee ese sentido y la columna del th, y mueve las filas
+        this.ordenarTabla(th);
+      });
+    });
+  }
+  //enseña la vista elegida y pone en negrita su enlace del menu
   mostrarVista(vista) {
     //negrita en el enlace de la vista actual
     this.enlaces.forEach((enlace) => {
+      //toggle pone la clase si la condicion es true y la quita si es false
       enlace.classList.toggle("fw-bold", enlace.dataset.view === vista);
     });
     //solo se ve la seccion de esa vista
     this.secciones.forEach((s) => {
+      //!== da true o false: se esconden todas menos la elegida
       s.hidden = s.dataset.view !== vista;
     });
   }
-
+  //pide los datos del admin, los guarda en el navegador y saluda con su nombre
   cargarSesion() {
+    //fetch pide los datos; los then se ejecutan cuando llega la respuesta
     fetch("index.php?controller=api&action=sesion")
       .then((respuesta) => {
+        //ok es false si la API responde con un error (por ejemplo 403)
         if (!respuesta.ok) {
           this.sesion.borrar();
           throw new Error("Sin sesión de administrador");
         }
+        //json() convierte la respuesta en un objeto, como json_decode en PHP
         return respuesta.json();
       })
       .then((datos) => {
@@ -66,147 +105,176 @@ class AdministradorVistas {
           this.sesion.leer().nombre;
       });
   }
+  //pide los datos de una tabla y la pinta; crearFila convierte cada dato en un tr
+  cargarTabla(tabla, crearFila) {
+    //con las comillas ` se puede meter una variable dentro del texto: ${variable}
+    fetch(`index.php?controller=api&action=${tabla}`)
+      .then((respuesta) => respuesta.json())
+      .then((r) =>
+        this.pintarTabla(
+          tabla,
+          //map devuelve un array nuevo: de cada dato saca su fila
+          r.map((datos) => crearFila(datos)),
+        ),
+      );
+  }
+
+  //pinta los pedidos; el estado es un select que se guarda al cambiarlo
   cargarPedidos() {
-    fetch("index.php?controller=api&action=pedidos")
-      .then((respuesta) => respuesta.json())
-      .then((r) => {
-        this.pedidos = r;
-        const tablaProductos = document
-          .getElementById("pedidos")
-          .querySelector("tbody");
-        //vaciamos la tabla para no duplicar filas al recargarla
-        tablaProductos.replaceChildren();
-        const estados = [
-          "pendiente",
-          "confirmado",
-          "preparando",
-          "enviado",
-          "entregado",
-          "cancelado",
-        ];
-        this.pedidos.forEach((r) => {
-          const tr = document.createElement("tr");
-          const td6 = document.createElement("td");
-          const select = this.crearSelect(estados, r.estado);
-          select.classList.add("form-select-sm");
-          select.addEventListener("change", () => {
-            fetch(`index.php?controller=api&action=pedidos&id=${r.id}`, {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                estado: select.value,
-                estado_pago: r.estado_pago,
-              }),
-            }).then((respuesta) => respuesta.json());
-          });
-          td6.append(select);
-          tr.append(td6);
-          crearCelda(tr, r.id);
-          crearCelda(tr, r.usuario_id);
-          crearCelda(tr, r.fecha_pedido);
-          crearCelda(tr, r.total);
-          this.crearBotonDetalle(tr, "pedidos", r.id);
-
-          tablaProductos.append(tr);
+    const estados = [
+      "pendiente",
+      "confirmado",
+      "preparando",
+      "enviado",
+      "entregado",
+      "cancelado",
+    ];
+    //p es cada pedido; esta funcion crea su fila
+    this.cargarTabla("pedidos", (p) => {
+      const fila = this.crearFila("pedidos", p.id, [
+        p.id,
+        p.usuario_id,
+        p.fecha_pedido,
+        p.total,
+      ]);
+      //el estado es un select, en la primera celda
+      const tdEstado = document.createElement("td");
+      const select = this.crearSelect(estados, p.estado);
+      select.classList.add("form-select-sm");
+      //change salta cuando se elige otra opcion del select
+      select.addEventListener("change", () => {
+        enviarPut("pedidos", p.id, {
+          estado: select.value,
+          estado_pago: p.estado_pago,
         });
       });
+      tdEstado.append(select);
+      //prepend lo añade el primero (append lo añade el ultimo)
+      fila.prepend(tdEstado);
+      return fila;
+    });
   }
+
+  //pinta los usuarios
   cargarUsuarios() {
-    fetch("index.php?controller=api&action=usuarios")
-      .then((respuesta) => respuesta.json())
-      .then((r) => {
-        this.usuarios = r;
-        const tablaProductos = document
-          .getElementById("usuarios")
-          .querySelector("tbody");
-        //vaciamos la tabla para no duplicar filas al recargarla
-        tablaProductos.replaceChildren();
-        this.usuarios.forEach((r) => {
-          const tr = document.createElement("tr");
-          crearCelda(tr, r.id);
-          crearCelda(tr, r.nombre);
-          crearCelda(tr, r.email);
-          crearCelda(tr, r.telefono);
-          crearCelda(tr, r.direccion);
-          this.crearBotonDetalle(tr, "usuarios", r.id);
-
-          tablaProductos.append(tr);
-        });
-      });
+    //u es cada usuario; sin llaves, la flecha devuelve sola el resultado
+    this.cargarTabla("usuarios", (u) =>
+      this.crearFila("usuarios", u.id, [
+        u.id,
+        u.nombre,
+        u.email,
+        u.telefono,
+        u.direccion,
+      ]),
+    );
   }
+
+  //pinta las categorias, con su boton de activar o desactivar
   cargarCategorias() {
-    fetch("index.php?controller=api&action=categorias")
-      .then((respuesta) => respuesta.json())
-      .then((r) => {
-        const tablaProductos = document
-          .getElementById("categorias")
-          .querySelector("tbody");
-        //vaciamos la tabla para no duplicar filas al recargarla
-        tablaProductos.replaceChildren();
-        this.categorias = r.map((datos) => new Categoria(datos));
-        this.categorias.forEach((c) =>
-          tablaProductos.append(c.crearFila(this)),
-        );
-      });
+    //crea un objeto Categoria con los datos y le pide su fila
+    this.cargarTabla("categorias", (datos) =>
+      new Categoria(datos).crearFila(this),
+    );
   }
+
+  //pinta los productos, con su boton de activar o desactivar
   cargarProductos() {
-    fetch("index.php?controller=api&action=productos")
-      .then((respuesta) => respuesta.json())
-      .then((r) => {
-        const tablaProductos = document
-          .getElementById("productos")
-          .querySelector("tbody");
-        //vaciamos la tabla para no duplicar filas al recargarla
-        tablaProductos.replaceChildren();
-        this.productos = r.map((datos) => new Producto(datos));
-        this.productos.forEach((p) => tablaProductos.append(p.crearFila(this)));
-      });
+    //crea un objeto Producto con los datos y le pide su fila
+    this.cargarTabla("productos", (datos) =>
+      new Producto(datos).crearFila(this),
+    );
   }
+
+  //pinta los ingredientes
   cargarIngredientes() {
-    fetch("index.php?controller=api&action=ingredientes")
-      .then((respuesta) => respuesta.json())
-      .then((r) => {
-        this.ingredientes = r;
-        const tablaProductos = document
-          .getElementById("ingredientes")
-          .querySelector("tbody");
-        //vaciamos la tabla para no duplicar filas al recargarla
-        tablaProductos.replaceChildren();
-        this.ingredientes.forEach((r) => {
-          const tr = document.createElement("tr");
-          crearCelda(tr, r.activo ? "Activado" : "Desactivado");
-          crearCelda(tr, r.id);
-          crearCelda(tr, r.nombre);
-          crearCelda(tr, r.precio_extra);
-          this.crearBotonDetalle(tr, "ingredientes", r.id);
-
-          tablaProductos.append(tr);
-        });
-      });
+    this.cargarTabla("ingredientes", (i) =>
+      this.crearFila("ingredientes", i.id, [
+        //condicion ? si se cumple : si no se cumple (un if corto)
+        i.activo ? "Activado" : "Desactivado",
+        i.id,
+        i.nombre,
+        i.precio_extra,
+      ]),
+    );
   }
-  cargarOfertas() {
-    fetch("index.php?controller=api&action=ofertas")
-      .then((respuesta) => respuesta.json())
-      .then((r) => {
-        this.ofertas = r;
-        const tablaProductos = document
-          .getElementById("ofertas")
-          .querySelector("tbody");
-        //vaciamos la tabla para no duplicar filas al recargarla
-        tablaProductos.replaceChildren();
-        this.ofertas.forEach((r) => {
-          const tr = document.createElement("tr");
-          crearCelda(tr, r.id);
-          crearCelda(tr, r.nombre);
-          crearCelda(tr, r.descripcion);
-          crearCelda(tr, r.tipo);
-          crearCelda(tr, r.valor);
-          crearCelda(tr, r.codigo);
-          this.crearBotonDetalle(tr, "ofertas", r.id);
 
-          tablaProductos.append(tr);
-        });
+  //pinta las ofertas
+  cargarOfertas() {
+    this.cargarTabla("ofertas", (o) =>
+      this.crearFila("ofertas", o.id, [
+        o.id,
+        o.nombre,
+        o.descripcion,
+        o.tipo,
+        o.valor,
+        o.codigo,
+      ]),
+    );
+  }
+
+  //crea una fila con una celda por cada valor y el boton de detalle
+  crearFila(tabla, id, valores) {
+    const tr = document.createElement("tr");
+    valores.forEach((valor) => crearCelda(tr, valor));
+    this.crearBotonDetalle(tr, tabla, id);
+    return tr;
+  }
+
+  //cambia las filas de una tabla por las nuevas, sin duplicarlas
+  pintarTabla(tabla, filas) {
+    const tbody = document.querySelector(`#${tabla} tbody`);
+    //...filas saca los elementos del array: replaceChildren(fila1, fila2...)
+    tbody.replaceChildren(...filas);
+    this.filtrarTabla(tabla);
+  }
+
+  //esconde las filas de una tabla que no contienen el texto buscado
+  filtrarTabla(tabla) {
+    //busca el input que tiene el data-filtro de esa tabla
+    const input = document.querySelector(`[data-filtro="${tabla}"]`);
+    if (!input) return; //esa tabla no tiene filtro
+    //trim quita los espacios de los lados y toLowerCase lo pasa a minusculas
+    const texto = input.value.trim().toLowerCase();
+
+    document.querySelectorAll(`#${tabla} tbody tr`).forEach((fila) => {
+      //los botones no se tienen en cuenta
+      //[...fila.cells] pasa las celdas a un array, para poder usar filter y some
+      //filter se queda solo con las que cumplen: las que no tienen boton
+      const celdas = [...fila.cells].filter(
+        (td) => !td.querySelector("button"),
+      );
+      //some da true si al menos una celda cumple la condicion
+      const coincide = celdas.some((td) => {
+        //includes mira si un texto contiene otro, como str_contains en PHP
+        return leerCelda(td).toLowerCase().includes(texto);
       });
+      //! da la vuelta al valor: si no coincide, se esconde
+      fila.hidden = !coincide;
+    });
+  }
+
+  //ordena las filas de la tabla por la columna de ese th
+  ordenarTabla(th) {
+    //closest sube hasta la tabla del th; de ahi bajamos a su tbody
+    const tbody = th.closest("table").querySelector("tbody");
+    //cellIndex es el numero de columna: 0, 1, 2...
+    const columna = th.cellIndex;
+
+    //[...tbody.rows] pasa las filas a un array para poder usar sort
+    //sort compara las filas de dos en dos: a y b
+    const filas = [...tbody.rows].sort((a, b) => {
+      //localeCompare compara dos textos (como strcmp): negativo si a va antes
+      //numeric hace que 9 vaya antes que 10
+      const resultado = leerCelda(a.cells[columna]).localeCompare(
+        leerCelda(b.cells[columna]),
+        "es",
+        { numeric: true },
+      );
+      //asc deja el resultado; desc le cambia el signo
+      return th.dataset.sentido === "asc" ? resultado : -resultado;
+    });
+    //append mueve las filas que ya estaban, en el orden nuevo
+    tbody.append(...filas);
   }
 
   //vuelve a pedir y pintar solo una tabla, sin recargar la página
@@ -229,11 +297,12 @@ class AdministradorVistas {
         break;
     }
   }
-
+  //abre un registro en un formulario, que se puede guardar (menos los pedidos)
   verDetalle(tabla, id) {
     this.vistaAnterior = tabla;
     //dejar los datos vacios del detalle
     const contenido = document.querySelector("#detalle-contenido");
+    //sin nada dentro, replaceChildren vacia el elemento
     contenido.replaceChildren();
 
     document.querySelector("#detalle-titulo").textContent =
@@ -245,6 +314,7 @@ class AdministradorVistas {
     fetch(`index.php?controller=api&action=${tabla}&id=${id}`)
       .then((respuesta) => {
         if (!respuesta.ok) {
+          //throw para aqui y no se ejecuta el siguiente then
           throw new Error("Error " + respuesta.status);
         }
         return respuesta.json();
@@ -257,6 +327,7 @@ class AdministradorVistas {
         const form = document.createElement("form");
         form.className = "row";
 
+        //como foreach ($r as $campo => $valor) en PHP
         Object.entries(r).forEach(([campo, valor]) => {
           //crear elementos para añadir los botones
           const grupo = document.createElement("div");
@@ -302,34 +373,30 @@ class AdministradorVistas {
           form.append(boton);
 
           form.addEventListener("submit", (e) => {
+            //evita que el formulario recargue la pagina
             e.preventDefault();
+            //FormData recoge los campos por su name y fromEntries los pasa a un objeto
             const datos = Object.fromEntries(new FormData(form));
-            fetch(`index.php?controller=api&action=${tabla}&id=${id}`, {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(datos),
-            })
-              .then((respuesta) => respuesta.json())
-              .then((resultado) => {
-                // Si se ha guardado, recargamos solo la tabla y volvemos a ella;
-                // si no, avisamos y nos quedamos en el formulario para corregir
-                if (resultado.ok) {
-                  this.recargarTabla(tabla);
-                  document.querySelector("#detalle-volver").click();
-                } else {
-                  alert(resultado.error);
-                }
-              });
+            // Si se ha guardado, recargamos solo la tabla y volvemos a ella;
+            // si no, nos quedamos en el formulario para corregir
+            enviarPut(tabla, id, datos).then((ok) => {
+              if (ok) {
+                this.recargarTabla(tabla);
+                //click() pulsa el boton Volver desde el codigo
+                document.querySelector("#detalle-volver").click();
+              }
+            });
           });
         }
         contenido.replaceChildren(form);
       });
   }
 
-  //textos es opcional: lo que se ve en cada opción, si es distinto de su valor
+  //crea un select; textos es opcional: lo que se ve en cada opción, si es distinto de su valor
   crearSelect(opciones, valor, textos = opciones) {
     const select = document.createElement("select");
     select.className = "form-select";
+    //opcion es el valor y i su posicion (0, 1, 2...)
     opciones.forEach((opcion, i) => {
       const option = document.createElement("option");
       option.value = opcion;
@@ -340,32 +407,64 @@ class AdministradorVistas {
     select.value = valor ?? "";
     return select;
   }
-
+  //crea el boton Detalle y lo añade a la fila
   crearBotonDetalle(tr, tabla, id) {
-    // Celda con el botón Detalle
     const tdDetalle = document.createElement("td");
     const botonDetalle = document.createElement("button");
     botonDetalle.type = "button";
     botonDetalle.className = "btn btn-sm btn-outline-primary";
     botonDetalle.textContent = "Detalle";
+    //con () => se espera al clic; sin ello se ejecutaria al momento
     botonDetalle.addEventListener("click", () => this.verDetalle(tabla, id));
     tdDetalle.append(botonDetalle);
     tr.append(tdDetalle);
   }
 }
 
+//crea un td con ese texto y lo añade a la fila
 function crearCelda(tr, texto) {
   const td = document.createElement("td");
+  //textContent lo mete como texto, no como html (como htmlspecialchars)
   td.textContent = texto;
   tr.append(td);
 }
 
+//devuelve el valor de una celda: lo elegido si tiene select, o su texto
+function leerCelda(td) {
+  const select = td.querySelector("select");
+  //si hay select se usa lo elegido; si no, el texto de la celda
+  return select ? select.value : td.textContent;
+}
+
+//envia los cambios de un registro a la API; devuelve true si se ha guardado
+function enviarPut(tabla, id, datos) {
+  //devuelve una promesa: el resultado llega mas tarde y se recoge con then
+  return fetch(`index.php?controller=api&action=${tabla}&id=${id}`, {
+    method: "PUT",
+    //avisa de que los datos van en JSON
+    headers: { "Content-Type": "application/json" },
+    //stringify pasa el objeto a texto JSON, como json_encode en PHP
+    body: JSON.stringify(datos),
+  })
+    .then((respuesta) => respuesta.json())
+    .then((resultado) => {
+      //la API manda ok si se ha guardado y error si no
+      if (!resultado.ok) alert(resultado.error);
+      return resultado.ok;
+    })
+    //catch salta si falla la conexion o la respuesta no es JSON
+    .catch(() => alert("No se ha podido conectar con el servidor"));
+}
+
+//un producto: crea su fila y se activa o desactiva
 class Producto {
+  //recibe los datos de la API
   constructor(datos) {
     // copia id, nombre, precio... en el objeto
     Object.assign(this, datos);
   }
 
+  //devuelve la fila del producto; admin es el panel, para usar su boton de detalle
   crearFila(admin) {
     const tr = document.createElement("tr");
     crearCelda(tr, this.activo ? "Activado" : "Desactivado");
@@ -379,6 +478,7 @@ class Producto {
     return tr;
   }
 
+  //crea el boton de activar o desactivar, segun como este el producto
   crearBotonActivo(tr, admin) {
     const td = document.createElement("td");
     const boton = document.createElement("button");
@@ -392,32 +492,28 @@ class Producto {
     tr.append(td);
   }
 
+  //envia a la API el producto con el estado contrario y recarga la tabla
   cambiarActivo(admin) {
     // copia del producto, con activo al revés
+    //...this copia todas las propiedades y activo pisa solo esa
     const datos = { ...this, activo: this.activo ? 0 : 1 };
 
-    fetch(`index.php?controller=api&action=productos&id=${this.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(datos),
-    })
-      .then((respuesta) => respuesta.json())
-      .then((resultado) => {
-        if (resultado.ok) {
-          admin.cargarProductos();
-        } else {
-          alert(resultado.error);
-        }
-      });
+    //ok es lo que devuelve enviarPut cuando termina
+    enviarPut("productos", this.id, datos).then((ok) => {
+      if (ok) admin.cargarProductos();
+    });
   }
 }
 
+//una categoria: crea su fila y se activa o desactiva
 class Categoria {
+  //recibe los datos de la API
   constructor(datos) {
-    // copia id, nombre, precio... en el objeto
+    // copia id, nombre, descripcion... en el objeto
     Object.assign(this, datos);
   }
 
+  //devuelve la fila de la categoria; admin es el panel, para usar su boton de detalle
   crearFila(admin) {
     const tr = document.createElement("tr");
     crearCelda(tr, this.activa ? "Activado" : "Desactivado");
@@ -429,6 +525,7 @@ class Categoria {
     return tr;
   }
 
+  //crea el boton de activar o desactivar, segun como este la categoria
   crearBotonActivo(tr, admin) {
     const td = document.createElement("td");
     const boton = document.createElement("button");
@@ -442,39 +539,38 @@ class Categoria {
     tr.append(td);
   }
 
+  //envia a la API la categoria con el estado contrario y recarga la tabla
   cambiarActivo(admin) {
-    // copia del categoría, con activo al revés
+    // copia de la categoría, con activa al revés
+    //...this copia todas las propiedades y activa pisa solo esa
     const datos = { ...this, activa: this.activa ? 0 : 1 };
 
-    fetch(`index.php?controller=api&action=categorias&id=${this.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(datos),
-    })
-      .then((respuesta) => respuesta.json())
-      .then((resultado) => {
-        if (resultado.ok) {
-          admin.cargarCategorias();
-        } else {
-          alert(resultado.error);
-        }
-      });
+    enviarPut("categorias", this.id, datos).then((ok) => {
+      if (ok) admin.cargarCategorias();
+    });
   }
 }
 
+//datos del admin guardados en el navegador (no dan permisos, eso lo mira PHP)
 class Sesion {
+  //guarda los datos del admin
   guardar(datos) {
+    //sessionStorage solo guarda texto, por eso se pasa a JSON
     sessionStorage.setItem("sesionAdmin", JSON.stringify(datos));
   }
 
+  //devuelve los datos guardados
   leer() {
+    //parse hace lo contrario: del texto saca el objeto
     return JSON.parse(sessionStorage.getItem("sesionAdmin"));
   }
 
+  //borra los datos al cerrar sesion
   borrar() {
     sessionStorage.removeItem("sesionAdmin");
   }
 }
 
-let admin = new AdministradorVistas();
+//crea el panel y lo arranca
+const admin = new AdministradorVistas();
 admin.inicializar();

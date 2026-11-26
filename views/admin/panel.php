@@ -3,11 +3,11 @@
         <!-- Importante poner # para no recargar pag -->
         <a href="#" class="fw-bold" data-view="menu">Menu</a>
         <a href="#" data-view="pedidos">Pedidos</a>
-        <a href="#" data-view="usuarios">Usuarios</a>
         <a href="#" data-view="productos">Productos</a>
         <a href="#" data-view="ingredientes">Ingredientes</a>
         <a href="#" data-view="categorias">Categorias</a>
         <a href="#" data-view="ofertas">Ofertas</a>
+        <a href="#" data-view="usuarios">Usuarios</a>
 
     </nav>
     <section data-view="menu">
@@ -16,7 +16,8 @@
     </section>
 
     <section data-view="pedidos" hidden>
-
+        <label for="filtrar-pedidos">Filtrar pedidos</label>
+        <input type="search" id="filtrar-pedidos" data-filtro="pedidos" class="form-control mb-3">
         <!-- Revisar idea de productos para filtrar pedidos pendientes -->
         <table id="pedidos" class="table">
             <thead>
@@ -43,6 +44,9 @@
     </section>
 
     <section data-view="usuarios" hidden>
+        <label for="filtrar-usuarios">Filtrar usuarios</label>
+        <input type="search" id="filtrar-usuarios" data-filtro="usuarios" class="form-control mb-3">
+
         <table id="usuarios" class="table">
             <thead>
                 <tr>
@@ -66,7 +70,8 @@
             Importante poner # para no recargar pag
             <a href="#" data-view="Todo">Hamburgesas</a>
         </nav> -->
-
+        <label for="filtrar-productos">Filtrar productos</label>
+        <input type="search" id="filtrar-productos" data-filtro="productos" class="form-control mb-3">
         <table id="productos" class="table">
             <thead>
                 <tr>
@@ -86,6 +91,9 @@
     </section>
 
     <section data-view="categorias" hidden>
+        <label for="filtrar-categorias">Filtrar categorías</label>
+        <input type="search" id="filtrar-categorias" data-filtro="categorias" class="form-control mb-3">
+
         <table id="categorias" class="table">
             <thead>
                 <tr>
@@ -102,6 +110,8 @@
         </table>
     </section>
     <section data-view="ingredientes" hidden>
+        <label for="filtrar-ingredientes">Filtrar ingredientes</label>
+        <input type="search" id="filtrar-ingredientes" data-filtro="ingredientes" class="form-control mb-3">
 
         <!-- Revisar idea de productos para filtrar pedidos pendientes -->
         <table id="ingredientes" class="table">
@@ -120,7 +130,8 @@
         </table>
     </section>
     <section data-view="ofertas" hidden>
-
+        <label for="filtrar-ofertas">Filtrar ofertas</label>
+        <input type="search" id="filtrar-ofertas" data-filtro="ofertas" class="form-control mb-3">
         <!-- Revisar idea de productos para filtrar pedidos pendientes -->
         <table id="ofertas" class="table">
             <thead>

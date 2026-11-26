@@ -40,7 +40,10 @@ abstract class Productos
             $this->activo = $activo;
         }
     }
-
+    public function esIngredienteFijo($ingrediente)
+    {
+        return false;
+    }
     /**
      * Get the value of id
      */
@@ -182,4 +185,3 @@ abstract class Productos
     }
 
 }
-?>

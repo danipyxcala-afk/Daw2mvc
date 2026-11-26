@@ -17,7 +17,6 @@ include_once(__DIR__ . "/../modelos/Categorias.php");
 
 class ProductosController
 {
-    private const CATEGORIA_BEBIDAS = 3;
     private const CANTIDAD_MINIMA = 1;
     private const CANTIDAD_MAXIMA = 99;
 
@@ -123,6 +122,13 @@ class ProductosController
         }
         if (!empty($quitados)) {
 
+            foreach ($ingredientesProducto['base'] as $base) {
+                // los ingredientes fijos (la bebida) no se pueden quitar
+                if (!$base['fija'] && in_array($base['id'], $quitados)) {
+                    $quitadosElegidos[] = $base;
+                }
+            }
+
             // siempre tiene que quedar al menos un ingrediente base
             $totalBase = count($ingredientesProducto['base']);
             if ($totalBase > 0 && count($quitadosElegidos) === $totalBase) {
@@ -194,13 +200,12 @@ class ProductosController
     // Separa los ingredientes en base (cantidad > 0) y extras (cantidad = 0)
     private function getIngredientesProducto($producto)
     {
-        $esBebida = (int) $producto->getCategoriaId() === self::CATEGORIA_BEBIDAS;
         $resultado = ['base' => [], 'extras' => []];
 
         foreach (IngredientesDAO::getDetalleByProducto($producto->getId()) as $ingrediente) {
             if ((float) $ingrediente['cantidad'] > 0) {
-                // En las bebidas solo se puede quitar el hielo, no la bebida
-                $ingrediente['fija'] = $esBebida && $ingrediente['nombre'] !== 'Hielo';
+                // Polimorfismo: cada producto decide qué ingredientes no se pueden quitar
+                $ingrediente['fija'] = $producto->esIngredienteFijo($ingrediente);
                 $resultado['base'][] = $ingrediente;
             } else {
                 $resultado['extras'][] = $ingrediente;

@@ -1,4 +1,4 @@
-<?php include_once(__DIR__."/Productos.php");
+<?php include_once(__DIR__ . "/Productos.php");
 
 class Bebidas extends Productos
 {
@@ -13,5 +13,9 @@ class Bebidas extends Productos
     ) {
         parent::__construct($id, $categoria_id, $nombre, $descripcion, $precio, $imagen, $activo);
     }
+    // en las bebidas solo se puede quitar el hielo
+    public function esIngredienteFijo($ingrediente)
+    {
+        return $ingrediente['nombre'] !== 'Hielo';
+    }
 }
-?>
