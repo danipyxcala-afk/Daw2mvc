@@ -162,7 +162,18 @@ class ApiController
                 //El get mira si tiene la id en el link
                 //controller=api&action=pedidos&id=1
                 if (isset($_GET['id'])) {
-                    echo json_encode(PedidosDAO::getByIdJson($_GET['id']));
+                    $pedidos = PedidosDAO::getByIdJson($_GET['id']);
+
+                    if ($pedidos) {
+                        $pedidos['detalle'] = PedidosDAO::getDetalleJson($pedidos['id']);
+                        foreach ($pedidos['detalle'] as $key => $value) {
+                            //los ingredientes de esa linea, guardados dentro de ella en el original
+                            $pedidos['detalle'][$key]['ingredientes'] = PedidosDAO::getIngredientesDetalleJson($value['id']);
+
+                        }
+
+                    }
+                    echo json_encode($pedidos);
                 } else {
                     //controller=api&action=usuarios
                     echo json_encode(PedidosDAO::getAllJson());

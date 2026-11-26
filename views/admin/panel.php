@@ -42,6 +42,22 @@
             <div id="detalle-contenido"></div>
             <button type="button" class="btn btn-outline-secondary mt-3" id="detalle-volver">Volver</button>
         </div>
+        <div class="bg-light rounded-4 p-4 p-sm-5 mt-5" id="detalle-pedidos" hidden>
+            <h3 class="fs-5">Productos del pedido</h3>
+            <table class="table table-sm" id="detalle-ing-producto">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Cambios de extras</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
         <div class="bg-light rounded-4 p-4 p-sm-5 mt-5" id="detalle-ingredientes" hidden>
             <h3 class="fs-5">Ingredientes</h3>
             <table class="table table-sm" id="ingredientes-producto">
@@ -57,12 +73,12 @@
                 </tbody>
             </table>
         </div>
+
     </section>
 
     <section data-view="usuarios" hidden>
         <label for="filtrar-usuarios">Filtrar usuarios</label>
         <input type="search" id="filtrar-usuarios" data-filtro="usuarios" class="form-control mb-3">
-
         <table id="usuarios" class="table">
             <thead>
                 <tr>

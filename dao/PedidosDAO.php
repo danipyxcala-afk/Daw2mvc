@@ -71,7 +71,8 @@ class PedidosDAO
         return $pedido_id;
 
     }
-    public static function delete($id){
+    public static function delete($id)
+    {
         //Conexion a BBDD + Consulta
         $con = DataBase::connect();
         $stmt = $con->prepare("DELETE FROM pedidos WHERE id = ?");
@@ -105,7 +106,7 @@ class PedidosDAO
 
         return $filas;
     }
-        public static function getPedidosByUsuario($usuario_id)
+    public static function getPedidosByUsuario($usuario_id)
     {
         //Conexion a BBDD + Consultas
         $con = DataBase::connect();
@@ -178,7 +179,8 @@ class PedidosDAO
         return $id;
 
     }
-    public static function deleteDetalle($id){
+    public static function deleteDetalle($id)
+    {
         //Conexion a BBDD + Consulta
         $con = DataBase::connect();
         $stmt = $con->prepare("DELETE FROM pedido_detalle WHERE id = ?");
@@ -240,7 +242,8 @@ class PedidosDAO
         $con->close();
 
     }
-    public static function deleteIngredienteDetalle($id){
+    public static function deleteIngredienteDetalle($id)
+    {
         //Conexion a BBDD + Consulta
         $con = DataBase::connect();
         $stmt = $con->prepare("DELETE FROM pedido_detalle_ingrediente WHERE id = ?");
@@ -296,5 +299,50 @@ class PedidosDAO
         $con->close();
 
         return $pedido ?: null;
+    }
+    public static function getDetalleJson($pedido_id)
+    {
+        //Conexion a BBDD + Consultas
+        $con = DataBase::connect();
+        //importante poner en mayus para que salga en rojo :3
+        $stmt = $con->prepare("SELECT * FROM pedido_detalle WHERE pedido_id = ?");
+        // Esto asignara a cada ? el valor que queramos
+        $stmt->bind_param("i", $pedido_id);
+        //Ejecuta la query
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $pedidos = [];
+        while ($pedido = $result->fetch_assoc()) {
+            $pedidos[] = $pedido;
+        }
+
+        //Cerramos conexiones
+        $stmt->close();
+        $con->close();
+        return $pedidos;
+    }
+    public static function getIngredientesDetalleJson($pedido_detalle_id)
+    {
+        //Conexion a BBDD + Consultas
+        $con = DataBase::connect();
+        //importante poner en mayus para que salga en rojo :3
+        $stmt = $con->prepare("SELECT * FROM pedido_detalle_ingrediente WHERE pedido_detalle_id = ?");
+        // Esto asignara a cada ? el valor que queramos
+        $stmt->bind_param("i", $pedido_detalle_id);
+        //Ejecuta la query
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $ingredientes = [];
+        while ($pedido = $result->fetch_assoc()) {
+            $ingredientes[] = $pedido;
+        }
+
+
+        //Cerramos conexiones
+        $stmt->close();
+        $con->close();
+        return $ingredientes;
     }
 }

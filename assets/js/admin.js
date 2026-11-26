@@ -300,6 +300,7 @@ class AdministradorVistas {
     const divTablaIngredientes = document.getElementById(
       "detalle-ingredientes",
     );
+    const divTablaPedidos = document.getElementById("detalle-pedidos");
     //sin nada dentro, replaceChildren vacia el elemento
     contenido.replaceChildren();
 
@@ -364,11 +365,40 @@ class AdministradorVistas {
             input.name = campo;
             input.disabled = !editable;
           }
-          if (campo !== "ingredientes") {
+          if (campo !== "ingredientes" && campo !== "detalle") {
             grupo.append(label, input);
             form.append(grupo);
           }
         });
+        if (r.detalle) {
+          divTablaPedidos.hidden = false;
+          const tbodytabla = document.querySelector(
+            "#detalle-ing-producto tbody",
+          );
+          tbodytabla.textContent = "";
+          r.detalle.forEach((linea) => {
+            const tr = document.createElement("tr");
+            crearCelda(tr, linea.nombre_producto);
+            crearCelda(tr, linea.cantidad);
+            crearCelda(tr, linea.precio_unitario);
+
+            //texto con los cambios de esa linea: "- Cebolla + Queso cheddar"
+            let cambios = "";
+            linea.ingredientes.forEach((ingrediente) => {
+              //si se quito va con -, si se añadio con +
+              if (ingrediente.accion === "quitado") {
+                cambios += "- " + ingrediente.nombre_ingrediente + " ";
+              } else {
+                cambios += "+ " + ingrediente.nombre_ingrediente + " ";
+              }
+            });
+            crearCelda(tr, cambios);
+
+            tbodytabla.append(tr);
+          });
+        } else {
+          divTablaPedidos.hidden = true;
+        }
         if (r.ingredientes) {
           divTablaIngredientes.hidden = false;
           const tbodytabla = document.querySelector(
@@ -379,7 +409,7 @@ class AdministradorVistas {
             const tr = document.createElement("tr");
             crearCelda(tr, element.nombre);
             crearCelda(tr, element.cantidad);
-            crearCelda(tr, element.precio_extra+" €");
+            crearCelda(tr, element.precio_extra + " €");
             tbodytabla.append(tr);
           });
         } else {
