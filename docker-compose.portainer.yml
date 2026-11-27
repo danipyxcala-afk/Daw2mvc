@@ -1,0 +1,58 @@
+# Stack para Portainer (Stacks > Add stack > Repository)
+# Compose path: docker-compose.portainer.yml
+#
+# A diferencia de docker-compose.yml (desarrollo local), aquí no hay montajes de carpetas:
+# Portainer no tiene acceso a los archivos del proyecto en el host, así que el código,
+# la config de nginx y los .sql van dentro de las imágenes. Para actualizar la web,
+# vuelve a desplegar el stack con "Re-pull and redeploy" (reconstruye las imágenes).
+#
+# Variables de entorno opcionales (Portainer > Environment variables):
+#   WEB_PORT             puerto de la web en el servidor (por defecto 47823)
+#   MYSQL_ROOT_PASSWORD  contraseña de root de MySQL (por defecto root)
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    restart: unless-stopped
+    # Único servicio publicado: Nginx Proxy Manager apunta a http://<ip-del-servidor>:47823
+    ports:
+      - "${WEB_PORT:-47823}:80"
+    depends_on:
+      - php
+
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    restart: unless-stopped
+    environment:
+      DB_HOST: mysql-db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASS: ${MYSQL_ROOT_PASSWORD:-root}
+      DB_NAME: daw2mvc
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+
+  mysql-db:
+    build:
+      context: .
+      dockerfile: docker/mysql/Dockerfile
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+    # Sin "ports": MySQL solo es accesible desde PHP dentro del stack, no desde fuera del servidor.
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$$MYSQL_ROOT_PASSWORD\""]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+volumes:
+  mysql_data:
