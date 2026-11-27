@@ -1,24 +1,62 @@
-# Base de datos MySQL del proyecto Daw2mvc (Sigmeat)
-# Es lo mismo que el "docker run" de la práctica, pero guardado en un archivo.
+# Entorno completo del proyecto Daw2mvc (Sigmeat): nginx + PHP-FPM + MySQL
 #
-# Arrancar:                     docker compose up -d
+# Arrancar:                     docker compose up -d --build
 # Parar:                        docker compose down
 # Borrar datos y empezar de 0:  docker compose down -v
+#
+# Web:   http://localhost:8080
+# MySQL: localhost:3308 (para Workbench, DBeaver...) · usuario root / root
 
 services:
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: daw2mvc-nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html:ro                                 # el código se monta: los cambios se ven al momento
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - php
+
+  php:
+    build: ./docker/php
+    container_name: daw2mvc-php
+    restart: unless-stopped
+    volumes:
+      - ./:/var/www/html
+    environment:
+      # Dentro de Docker la BD se llama por el nombre del servicio y su puerto interno.
+      # Fuera de Docker (XAMPP/WSL) no existen y DataBase.php usa 127.0.0.1:3308.
+      DB_HOST: mysql-db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASS: root
+      DB_NAME: daw2mvc
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+
   mysql-db:
     image: mysql:latest
     container_name: mysql-db
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: root          # igual que -e MYSQL_ROOT_PASSWORD=root
+      MYSQL_ROOT_PASSWORD: root
     ports:
-      - "3308:3306"                      # igual que -p 3308:3306 (evita choque con el MySQL de XAMPP, y el MySQL local esta en 3307)
+      - "3308:3306"                      # evita choque con el MySQL de XAMPP (3306) y el MySQL local (3307)
     volumes:
       - mysql_data:/var/lib/mysql        # los datos se guardan aunque se borre el contenedor
-      # Scripts que se ejecutan la primera vez, en orden alfabético (por eso el 00, 01 y 02)
+      # Scripts que se ejecutan solo la primera vez (volumen vacío), en orden alfabético
       - ./sql/CreacionBD.sql:/docker-entrypoint-initdb.d/01-CreacionBD.sql
       - ./sql/InsertarDatosBD.sql:/docker-entrypoint-initdb.d/02-InsertarDatosBD.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
 
 volumes:
   mysql_data:
