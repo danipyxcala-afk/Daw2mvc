@@ -41,7 +41,7 @@ class ProductosController
 
     public function carta()
     {
-        $seleccionadas = $_GET['pildora'];
+        $seleccionadas = $_GET['pildora'] ?:"Todo" ;
         $categorias = CategoriasDAO::getAll();
         $categoriasActivas = $this->getCategoriasActivas();
         $coloresCategorias = $this->getColoresCat();

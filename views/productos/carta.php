@@ -88,7 +88,7 @@
                                     <div class="d-flex flex-column gap-2">
                                         <a href="<?= url ?>index.php?controller=productos&action=detalle&id=<?= (int) $producto->getId() ?>"
                                             class="boton boton--borde boton--sm w-100">
-                                            Editar producto
+                                            Personalizar producto
                                             <span class="boton__icono boton__icono--flecha"></span>
                                         </a>
 
