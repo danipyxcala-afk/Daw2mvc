@@ -17,7 +17,7 @@
         <?php
         foreach ($categoriasActivas as $categoria) { ?>
 
-            <a href="<?= url ?>index.php?controller=productos&action=carta&pildora=<?= $categoria->getNombre() ?>"
+            <a href="<?= url ?>index.php?controller=productos&action=carta&pildora=<?= urlencode($categoria->getNombre()) ?>"
                 class="boton boton--filtro <?= ($_GET['pildora']) == $categoria->getNombre() ? 'is-activo' : '' ?>">
                 <?= texto($categoria->getNombre()) ?>
             </a>

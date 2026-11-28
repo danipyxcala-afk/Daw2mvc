@@ -166,11 +166,6 @@
 
     <!-- pantalla de productos, hidden la esconde hasta que se pulsa en el menu -->
     <section data-view="productos" hidden>
-        <!-- <nav id="navprod" class="navbar mb-5">
-            idea para filtrar dentro del filtro
-            Importante poner # para no recargar pag
-            <a href="#" data-view="Todo">Hamburgesas</a>
-        </nav> -->
         <!-- boton que enseña/oculta el formulario de crear -->
         <div>
             <button type="button" class="btn btn-primary mb-3" data-nuevo="productos">Crear producto</button>

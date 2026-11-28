@@ -147,9 +147,9 @@ class ProductosController
         sort($idsExtras);
         sort($idsQuitados);
         $clave = $id . '-e' . implode(',', $idsExtras) . '-q' . implode(',', $idsQuitados);
-        // Si ya existe la misma combinación de producto + extras + quitados, sumar la cantidad
+        // Si ya existe la misma combinación de producto + extras + quitados, sumar la cantidad sin pasar del maximo
         if (isset($_SESSION['carrito'][$clave])) {
-            $_SESSION['carrito'][$clave]['cantidad'] += $cantidad;
+            $_SESSION['carrito'][$clave]['cantidad'] = min(self::CANTIDAD_MAXIMA, $_SESSION['carrito'][$clave]['cantidad'] + $cantidad);
         } else {
             $_SESSION['carrito'][$clave] = [
                 'id' => $id,

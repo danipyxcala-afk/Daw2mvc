@@ -149,7 +149,8 @@ class CarritoController
         $subtotal = $totales['subtotal'] + $totales['iva'];
         $usuario = $_SESSION['usuario'];
         // se tiene que crear sin id porque lo asigna la bd
-        $pedido = new Pedidos(null, $usuario->getId(), 'pendiente', null, $subtotal, $totales['descuento'], $totales['total'], $metodoPago, 'pagado');
+        //en efectivo se paga al recibirlo, asi que el pago queda pendiente
+        $pedido = new Pedidos(null, $usuario->getId(), 'pendiente', null, $subtotal, $totales['descuento'], $totales['total'], $metodoPago, $metodoPago === 'efectivo' ? 'pendiente' : 'pagado');
         $pedidoId = PedidosDAO::insert($pedido);
 
         foreach ($lineas as $linea) {

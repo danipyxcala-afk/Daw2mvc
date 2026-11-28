@@ -34,8 +34,8 @@ class UserController
             exit();
         }
 
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
         // Obtener el usuario por correo electrónico
         $usuario = UsuariosDAO::getByEmail($email);
 
