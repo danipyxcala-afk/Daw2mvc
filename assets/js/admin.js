@@ -43,6 +43,35 @@ class AdministradorVistas {
         this.filtrarTabla(input.dataset.filtro),
       );
     });
+    //al pulsar un boton Crear se enseña o se esconde el formulario de su tabla
+    document.querySelectorAll("[data-nuevo]").forEach((boton) => {
+      boton.addEventListener("click", () => {
+        const form = document.querySelector(
+          `form[data-crear="${boton.dataset.nuevo}"]`,
+        );
+        if (form.hidden) {
+          form.hidden = false;
+        } else {
+          form.hidden = true;
+        }
+      });
+    });
+
+    //al guardar un formulario de crear, se envia por POST sin recargar la pagina
+    document.querySelectorAll("form[data-crear]").forEach((form) => {
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const datos = Object.fromEntries(new FormData(form));
+        //cuando responda la API, si se ha creado: vaciar, esconder y recargar la tabla
+        enviarPost(form.dataset.crear, datos).then((ok) => {
+          if (ok) {
+            form.reset();
+            form.hidden = true;
+            this.recargarTabla(form.dataset.crear);
+          }
+        });
+      });
+    });
 
     //al pulsar el titulo de una columna se ordena la tabla por ella; th[data-ordenar] son los titulos que tienen data-ordenar en el html
     document.querySelectorAll("th[data-ordenar]").forEach((th) => {
@@ -113,6 +142,7 @@ class AdministradorVistas {
 
   //pinta los pedidos; el estado es un select que se guarda al cambiarlo
   cargarPedidos() {
+    //estados que acepta la API para un pedido
     const estados = [
       "pendiente",
       "confirmado",
@@ -268,7 +298,7 @@ class AdministradorVistas {
     tbody.append(...filas);
   }
 
-  //vuelve a pedir y pintar solo una tabla, sin recargar la página
+  //vuelve a pedir y pintar solo una tabla, sin recargar la pagina
   recargarTabla(tabla) {
     switch (tabla) {
       case "productos":
@@ -291,7 +321,7 @@ class AdministradorVistas {
   //abre un registro en un formulario; solo se puede guardar en las tablas editables
   verDetalle(tabla, id) {
     //tablas que se pueden guardar (las que tienen PUT en la API); se añaden al hacer su PUT
-    const editables = ["productos", "categorias"];
+    const editables = ["productos", "categorias", "ingredientes", "ofertas"];
     //includes mira si la tabla esta en la lista, como in_array en PHP
     const editable = editables.includes(tabla);
     this.vistaAnterior = tabla;
@@ -309,9 +339,11 @@ class AdministradorVistas {
     document.querySelector("#detalle-titulo").textContent =
       `${editable ? "Editar" : "Ver"} ${tabla} #${id}`;
 
+    //solo se ve la seccion de detalle
     this.secciones.forEach((s) => {
       s.hidden = s.dataset.view !== "detalle";
     });
+    //pedir el registro a la API, con su id
     fetch(`index.php?controller=api&action=${tabla}&id=${id}`)
       .then((respuesta) => {
         if (!respuesta.ok) {
@@ -325,17 +357,18 @@ class AdministradorVistas {
           contenido.textContent = "No se ha encontrado.";
           return;
         }
+        //formulario donde va un campo por cada dato del registro
         const form = document.createElement("form");
         form.className = "row";
 
         //como foreach ($r as $campo => $valor) en PHP
         Object.entries(r).forEach(([campo, valor]) => {
-          //crear elementos para añadir los botones
+          //cada campo va en un div con su label y su input
           const grupo = document.createElement("div");
           const label = document.createElement("label");
           let input = document.createElement("input");
 
-          //crear clases para añadir
+          //clases de bootstrap
           grupo.className = "col-md-6 mb-3";
           label.className = "form-label fw-bold";
           input.className = "form-control";
@@ -349,6 +382,7 @@ class AdministradorVistas {
             input.readOnly = true;
             input.classList.add("bg-body-secondary");
           }
+          //el rol se elige con un select de admin o usuario
           const roles = ["admin", "usuario"];
 
           if (campo === "rol") {
@@ -374,6 +408,7 @@ class AdministradorVistas {
           }
         });
 
+        //en el detalle de un usuario sale su historial de pedidos
         if (r.pedidosArray) {
           divTablaUsuarios.hidden = false;
           const tbodytabla = document.querySelector("#detalle-usu tbody");
@@ -390,6 +425,7 @@ class AdministradorVistas {
           divTablaUsuarios.hidden = true;
         }
 
+        //en el detalle de un pedido salen sus productos y los cambios de cada uno
         if (r.detalle) {
           divTablaPedidos.hidden = false;
           const tbodytabla = document.querySelector(
@@ -419,6 +455,7 @@ class AdministradorVistas {
         } else {
           divTablaPedidos.hidden = true;
         }
+        //en el detalle de un producto salen sus ingredientes
         if (r.ingredientes) {
           divTablaIngredientes.hidden = false;
           const tbodytabla = document.querySelector(
@@ -461,8 +498,25 @@ class AdministradorVistas {
         contenido.replaceChildren(form);
       });
   }
-
-  //crea un select; textos es opcional: lo que se ve en cada opción, si es distinto de su valor
+  //Ojo: ya no se usa, ahora se crea con los formularios del html
+  nuevoRegistro(tabla) {
+    this.vistaAnterior = tabla;
+    const contenido = document.querySelector("#detalle-contenido");
+    const divTablaIngredientes = document.getElementById(
+      "detalle-ingredientes",
+    );
+    const divTablaUsuarios = document.getElementById("detalle-usuarios");
+    const divTablaPedidos = document.getElementById("detalle-pedidos");
+    contenido.replaceChildren();
+    document.querySelector("#detalle-titulo").textContent = `Nuevo ${tabla}`;
+    this.secciones.forEach((s) => {
+      s.hidden = s.dataset.view !== "detalle";
+      divTablaUsuarios.hidden = true;
+      divTablaPedidos.hidden = true;
+      divTablaIngredientes.hidden = true;
+    });
+  }
+  //crea un select; textos es opcional: lo que se ve en cada opcion, si es distinto de su valor
   crearSelect(opciones, valor, textos = opciones) {
     const select = document.createElement("select");
     select.className = "form-select";
@@ -473,7 +527,7 @@ class AdministradorVistas {
       option.textContent = textos[i];
       select.append(option);
     });
-    //se marca después del bucle, cuando las opciones ya existen
+    //se marca despues del bucle, cuando las opciones ya existen
     select.value = valor ?? "";
     return select;
   }
@@ -505,7 +559,27 @@ function leerCelda(td) {
   //si hay select se usa lo elegido; si no, el texto de la celda
   return select ? select.value : td.textContent;
 }
-
+//envia un registro nuevo a la API; devuelve true si se ha creado
+function enviarPost(tabla, datos) {
+  //devuelve una promesa: el resultado llega mas tarde y se recoge con then
+  return (
+    fetch(`index.php?controller=api&action=${tabla}`, {
+      method: "POST",
+      //avisa de que los datos van en JSON
+      headers: { "Content-Type": "application/json" },
+      //stringify pasa el objeto a texto JSON, como json_encode en PHP
+      body: JSON.stringify(datos),
+    })
+      .then((respuesta) => respuesta.json())
+      .then((resultado) => {
+        //la API manda ok si se ha guardado y error si no
+        if (!resultado.ok) alert(resultado.error);
+        return resultado.ok;
+      })
+      //catch salta si falla la conexion o la respuesta no es JSON
+      .catch(() => alert("No se ha podido conectar con el servidor"))
+  );
+}
 //envia los cambios de un registro a la API; devuelve true si se ha guardado
 function enviarPut(tabla, id, datos) {
   //devuelve una promesa: el resultado llega mas tarde y se recoge con then
@@ -555,6 +629,7 @@ class Producto {
     const td = document.createElement("td");
     const boton = document.createElement("button");
     boton.type = "button";
+    //rojo si esta activo (para desactivarlo) y verde si no
     boton.className = this.activo
       ? "btn btn-sm btn-outline-danger"
       : "btn btn-sm btn-outline-success";
@@ -566,7 +641,7 @@ class Producto {
 
   //envia a la API el producto con el estado contrario y recarga la tabla
   cambiarActivo(admin) {
-    //copia del producto, con activo al revés; ...this copia todas las propiedades y activo pisa solo esa
+    //copia del producto, con activo al reves; ...this copia todas las propiedades y activo pisa solo esa
     const datos = { ...this, activo: this.activo ? 0 : 1 };
 
     //ok es lo que devuelve enviarPut cuando termina
@@ -601,6 +676,7 @@ class Categoria {
     const td = document.createElement("td");
     const boton = document.createElement("button");
     boton.type = "button";
+    //rojo si esta activa (para desactivarla) y verde si no
     boton.className = this.activa
       ? "btn btn-sm btn-outline-danger"
       : "btn btn-sm btn-outline-success";
@@ -612,7 +688,7 @@ class Categoria {
 
   //envia a la API la categoria con el estado contrario y recarga la tabla
   cambiarActivo(admin) {
-    //copia de la categoría, con activa al revés; ...this copia todas las propiedades y activa pisa solo esa
+    //copia de la categoria, con activa al reves; ...this copia todas las propiedades y activa pisa solo esa
     const datos = { ...this, activa: this.activa ? 0 : 1 };
 
     enviarPut("categorias", this.id, datos).then((ok) => {
