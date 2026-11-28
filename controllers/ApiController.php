@@ -38,7 +38,48 @@ class ApiController
                 break;
             //crear
             case 'POST':
-                # code...
+                // $datos = json_decode(file_get_contents('php://input'));
+                // // para que no explote el codigo cuando se pida a bd
+
+                // $nombre = trim($datos->nombre ?? "");
+                // $descripcion = trim($datos->descripcion ?? "");
+                // $activa = trim($datos->activa ?? "");
+                // $categoriaId = trim($datos->categoriaId ?? "");
+
+                // $errores = [];
+                // if ($nombre === '') {
+                //     $errores[] = "El nombre es obligatorio.";
+                // } elseif (mb_strlen($nombre) > 150) {
+                //     $errores[] = "El nombre no puede pasar de 150 caracteres.";
+                // }
+
+                // if (count($errores) > 0) {
+                //     http_response_code(400);
+                //     echo json_encode(["error" => implode(' ', $errores)]);
+                //     break;
+                // }
+                // switch ($categoriaId) {
+                //     case '1':
+                //         $producto = new Hamburguesas();
+                //         HamburguesasDAO::insert($producto);
+                //         break;
+                //     case '2':
+                //         $producto = new Complementos();
+                //         ComplementosDAO::insert($producto);
+                //         break;
+                //     case '3':
+                //         $producto = new Bebidas();
+                //         BebidasDAO::insert($producto);
+                //         break;
+                //     case '4':
+                //         $producto = new Postres();
+                //         PostresDAO::insert($producto);
+                //         break;
+                //     default:
+                //         # code...
+                //         break;
+                // }
+
                 break;
             //modificar
             case 'PUT':
@@ -256,7 +297,37 @@ class ApiController
 
                 break;
             case 'POST':
-                # code...
+                $datos = json_decode(file_get_contents('php://input'));
+                // para que no explote el codigo cuando se pida a bd
+
+                $nombre = trim($datos->nombre ?? "");
+                $descripcion = trim($datos->descripcion ?? "");
+                $activa = trim($datos->activa ?? "");
+
+                $errores = [];
+                if ($nombre === '') {
+                    $errores[] = "El nombre es obligatorio.";
+                } elseif (mb_strlen($nombre) > 150) {
+                    $errores[] = "El nombre no puede pasar de 150 caracteres.";
+                }
+
+                if (count($errores) > 0) {
+                    http_response_code(400);
+                    echo json_encode(["error" => implode(' ', $errores)]);
+                    break;
+                }
+
+                $cat = new Categorias(null, $nombre, $descripcion, $activa);
+
+                try {
+                    $id = CategoriasDAO::insert($cat);
+                    http_response_code(201);
+                    echo json_encode(["ok" => true, "id" => $id]);
+                } catch (mysqli_sql_exception $e) {
+                    http_response_code(409);
+                    echo json_encode(["error" => "No se ha podido crear el registro"]);
+                }
+
                 break;
             case 'PUT':
 
